@@ -1,0 +1,28 @@
+#+TITLE: Cerberus: The LDAP Guardian
+#+AUTHOR: Soham S Gumaste
+
+Cerberus is everyone's favorite multi-headed watchdog guarding the doors of
++hell+ LDAP!
+
+* Goals
+
+- Create new users
+
+- View Users
+
+- User password management
+	(with Admin intervention)
+
+
+* Stack
+
+- SvelteKit
+
+- Typescript
+
+- Ldap.js
+
+
+* License
+
+[[https://www.gnu.org/licenses/agpl-3.0.txt][AGPL-3.0-only]]
