@@ -22,6 +22,20 @@ Cerberus is everyone's favorite multi-headed watchdog guarding the doors of
 
 - Ldap.js
 
+* Development Stages
+
+** TODO Build UI with dummy data [0/3]
+- [ ] Login Page
+- [ ] Registration
+- [ ] Change Password
+
+** TODO Connect to LDAP [0/3]
+- [ ] Member Area information
+- [ ] Club Membership verification for Registration
+- [ ] Admin intervention for change password
+
+** TODO Add CSS/decorations
+
 
 * License
 

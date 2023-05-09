@@ -12,7 +12,7 @@
         let pkgs = import inputs.nixpkgs {inherit system;};
         in {
           devShell = pkgs.mkShell {
-            name = "Cerberus Dev Env for ${system}"
+            name = "Cerberus Dev Env for ${system}";
             packages = with pkgs; [nodejs];
           };
         });
@@ -22,5 +22,5 @@
 # This flake is pinned to nixpkgs release 22.11
 # flake-utils gives a helper function to make
 # devShell.<system> for every Nix supported system
-# 
+#
 # TODO: Pin flake-utils
