@@ -22,10 +22,9 @@
 		</label>
 
 		<label>
-			Password: 
+			Password:
 			<input name="password" type="password" />
 		</label>
 		<button type="submit">Submit</button>
-
 	</form>
 </main>
