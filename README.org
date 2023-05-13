@@ -13,14 +13,9 @@ Cerberus is everyone's favorite multi-headed watchdog guarding the doors of
 - User password management
 	(with Admin intervention)
 
-
 * Stack
 
-- SvelteKit
-
-- Typescript
-
-- Ldap.js
+SvelteKit, Typescript, Ldap.js
 
 * Development Stages
 
@@ -36,6 +31,14 @@ Cerberus is everyone's favorite multi-headed watchdog guarding the doors of
 
 ** TODO Add CSS/decorations
 
+* Contributing
+
+1. Make sure your text editor uses [[https://editorconfig.org][editorconfig]].
+2. Read comments above unimplemented functions.
+3. Run ~npm run format~ before committing!
+
+** Optional
+To ensure Node.js version consistency, consider using [[https://zero-to-nix.com/start/install][Nix]]: ~nix develop~
 
 * License
 
