@@ -6,13 +6,12 @@
 	export let form: ActionData;
 	
 	export let data: PageData;
+
+	$: if(form?.success) data.user = form.user;
 </script>
 
 <!-- TODO: Make this pretty and usable -->
 <main>
-	<header>
-		Currently logged in as {data?.user}
-	</header>
 	<h1>
 		Welcome to {org}!
 	</h1>
