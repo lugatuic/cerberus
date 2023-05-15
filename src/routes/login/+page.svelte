@@ -1,5 +1,7 @@
 <script lang="ts">
 	import type {PageData} from './$types';
+	import { invalidateAll } from '$app/navigation';
+	import {enhance} from '$app/forms';
 	export let org;
 
 	org = 'ACM';
@@ -7,7 +9,11 @@
 	
 	export let data: PageData;
 
-	$: if(form?.success) data.user = form.user;
+	function handleClick() {
+		console.log("Invalidating!");
+		invalidateAll();
+	}
+
 </script>
 
 <!-- TODO: Make this pretty and usable -->
@@ -16,7 +22,7 @@
 		Welcome to {org}!
 	</h1>
 
-	<form method="POST" action="/login">
+	<form method="POST" action="/login" on:submit={handleClick} use:enhance>
 		{#if form?.error}
 			<h1>ERROR!</h1>
 		{/if}

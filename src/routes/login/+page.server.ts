@@ -3,6 +3,7 @@ import { fail } from '@sveltejs/kit';
 
 import { ldap, session } from '$lib/server/api.ts';
 
+
 export async function load ({ locals }) {
 	if (locals.user === null) {
 		return { user: "None"};
