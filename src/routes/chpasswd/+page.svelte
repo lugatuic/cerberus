@@ -1,6 +1,5 @@
 <script lang="ts">
-
-	import type {PageData} from './$types';
+	import type { PageData } from './$types';
 	export let data: PageData;
 </script>
 
@@ -23,6 +22,6 @@
 			<input id="newpass2" type="password" />
 		</label>
 
-		<button type="submit"> Submit </submit>
+		<button type="submit"> Submit </button>
 	</form>
 </main>

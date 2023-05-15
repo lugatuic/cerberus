@@ -1,19 +1,18 @@
 <script lang="ts">
-	import type {PageData} from './$types';
+	import type { PageData } from './$types';
 	import { invalidateAll } from '$app/navigation';
-	import {enhance} from '$app/forms';
+	import { enhance } from '$app/forms';
 	export let org;
 
 	org = 'ACM';
 	export let form: ActionData;
-	
+
 	export let data: PageData;
 
 	function handleClick() {
-		console.log("Invalidating!");
+		console.log('Invalidating!');
 		invalidateAll();
 	}
-
 </script>
 
 <!-- TODO: Make this pretty and usable -->

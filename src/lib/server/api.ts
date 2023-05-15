@@ -18,9 +18,8 @@ export type Result = { error: number; message: string };
  * This class should *only* contain static methods
  */
 class ldap_class {
-	
 	private client: any;
-	
+
 	constructor() {
 		/*
 		 * BIND to LDAP here! Use the service account.
@@ -45,7 +44,7 @@ class ldap_class {
 			return { error: 1, message: 'Error!' };
 		}
 	}
-	
+
 	/*
 	 * @function change_password
 	 * TODO: Implement this function!
@@ -53,14 +52,14 @@ class ldap_class {
 	 * Expected: User's password is changed to newpass.
 	 * Notes:
 	 * Need to BIND to LDAP with a service user (we already have one)
-	 * This function will need to consume a secret. 
+	 * This function will need to consume a secret.
 	 * This **MUST** be done with an environment variable. (.env file)
 	 * Use instance variables in this class. Ideally, bind when the class is created.
 	 * DO NOT ATTEMPT IF U DONT KNOW WHAT YOU ARE DOING
 	 */
 	change_password(user, newpass): Result {
-		console.log("change_password called!");
-		return {error: 0, message: ''};
+		console.log('change_password called!');
+		return { error: 0, message: '' };
 	}
 }
 
@@ -87,13 +86,13 @@ class session_class {
 	 */
 	async create_session_string(username: string): string {
 		// return username === 'ACM' ? 'ABCXYZ69420' : username;
-		const jwt = await new jose.SignJWT({username})
-		  .setProtectedHeader({alg: 'HS256'})
-		  .setIssuedAt()
-		  .setIssuer('acmlug')
-		  .setAudience('acmlug')
-		  .setExpirationTime('2h')
-		  .sign(this.secret);
+		const jwt = await new jose.SignJWT({ username })
+			.setProtectedHeader({ alg: 'HS256' })
+			.setIssuedAt()
+			.setIssuer('acmlug')
+			.setAudience('acmlug')
+			.setExpirationTime('2h')
+			.sign(this.secret);
 		console.log(`Created JWT for ${username}: \n ${jwt}`);
 		return jwt;
 	}
@@ -109,14 +108,14 @@ class session_class {
 	async get_session_string(cookie: string): string | null {
 		// return cookie === 'ABCXYZ69420' ? 'ACM' : null;
 		try {
-			const {payload} = await jose.jwtVerify(cookie, this.secret, {
+			const { payload } = await jose.jwtVerify(cookie, this.secret, {
 				issuer: 'acmlug',
 				audience: 'acmlug'
 			});
 			// console.log(`Header:${protectedHeader}\nPayload:${payload}`);
 			return payload.username;
 		} catch (e) {
-			console.log("JWTverify failed!");
+			console.log('JWTverify failed!');
 			console.log(e);
 			console.log(cookie);
 			console.log(await cookie);
