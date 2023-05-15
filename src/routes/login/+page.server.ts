@@ -3,6 +3,7 @@ import { fail } from '@sveltejs/kit';
 
 import { ldap, session } from '$lib/server/api.ts';
 
+
 export async function load ({ locals }) {
 	if (locals.user === null) {
 		return { user: "None"};
@@ -23,9 +24,9 @@ export const actions = {
 			return { error: true };
 		}
 
-		let session_token: str = session.create_session_string(user);
+		let session_token: string = await session.create_session_string(user);
 		event.cookies.set('cookie', session_token, { path: '/' });
 		console.log("set cookie!");
-		return { success: true, message };
+		return { success: true, message, user };
 	}
 } satisfies Actions;

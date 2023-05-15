@@ -3,7 +3,10 @@
  * This file is the "business logic" for this app.
  * LDAP interfacing, Session Management etc.
  */
-console.log('api.ts loaded!'); // Professional Debugging
+import { TOKEN } from '$env/static/private';
+import * as jose from 'jose';
+
+console.log('api.ts loaded!'); // Professionall Debugging
 
 export type Result = { error: number; message: string };
 
@@ -16,7 +19,7 @@ export type Result = { error: number; message: string };
  */
 class ldap_class {
 	
-	private let client: any;
+	private client: any;
 	
 	constructor() {
 		/*
@@ -27,7 +30,7 @@ class ldap_class {
 	}
 	/*
 	 * @function validateuser
-	 * TODO: Implement this function properly
+	 * TODO: Implement this function proper
 	 *
 	 * Input: {username: str, password: str}
 	 * Output: validationResult
@@ -68,9 +71,11 @@ class ldap_class {
 class session_class {
 	// TODO: Implement
 	private cookie_tray: any;
+	private secret;
 
 	constructor() {
 		this.cookie_tray = null;
+		this.secret = new TextEncoder().encode(TOKEN);
 	}
 
 	/*
@@ -80,8 +85,17 @@ class session_class {
 	 * This is a username --> time-bound string mapping.
 	 * Some form of hash function should ideally be used.
 	 */
-	create_session_string(username: string): string {
-		return username === 'ACM' ? 'ABCXYZ69420' : username;
+	async create_session_string(username: string): string {
+		// return username === 'ACM' ? 'ABCXYZ69420' : username;
+		const jwt = await new jose.SignJWT({username})
+		  .setProtectedHeader({alg: 'HS256'})
+		  .setIssuedAt()
+		  .setIssuer('acmlug')
+		  .setAudience('acmlug')
+		  .setExpirationTime('2h')
+		  .sign(this.secret);
+		console.log(`Created JWT for ${username}: \n ${jwt}`);
+		return jwt;
 	}
 
 	/*
@@ -92,8 +106,22 @@ class session_class {
 	 * If cookie is valid, return username.
 	 * Scaling: This function will be called quite a lot of times.
 	 */
-	get_session_string(cookie: string): string | null {
-		return cookie === 'ABCXYZ69420' ? 'ACM' : null;
+	async get_session_string(cookie: string): string | null {
+		// return cookie === 'ABCXYZ69420' ? 'ACM' : null;
+		try {
+			const {payload} = await jose.jwtVerify(cookie, this.secret, {
+				issuer: 'acmlug',
+				audience: 'acmlug'
+			});
+			// console.log(`Header:${protectedHeader}\nPayload:${payload}`);
+			return payload.username;
+		} catch (e) {
+			console.log("JWTverify failed!");
+			console.log(e);
+			console.log(cookie);
+			console.log(await cookie);
+			return null;
+		}
 	}
 }
 
