@@ -3,13 +3,6 @@ import { fail } from '@sveltejs/kit';
 
 import { ldap, session } from '$lib/server/api.ts';
 
-export async function load({ locals }) {
-	if (locals.user === null) {
-		return { user: 'None' };
-	}
-	return { user: locals.user };
-}
-
 export const actions = {
 	default: async (event) => {
 		const data = await event.request.formData();

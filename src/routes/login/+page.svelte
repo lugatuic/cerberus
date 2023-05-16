@@ -18,7 +18,7 @@
 <!-- TODO: Make this pretty and usable -->
 <main>
 	<h1>
-		Welcome to {org}!
+		Login to {org}!
 	</h1>
 
 	<form method="POST" action="/login" on:submit={handleClick} use:enhance>

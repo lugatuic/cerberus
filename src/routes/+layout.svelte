@@ -2,7 +2,6 @@
 	import { page } from '$app/stores';
 	import {invalidateAll} from '$app/navigation';
 
-	export const ssr = false;
 
 	function delCookie(e) {
 		// Thanks Stackoverflow!
@@ -18,10 +17,25 @@
 	<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
 </svelte:head>
 
-<header>
-	Currently logged in as {$page.data.user}
-	<a data-sveltekit-reload on:click|preventDefault={delCookie}>Logout</a>
-	<!-- This <a> gaslit me for way too long --->
-</header>
 
-<slot />
+<main>
+	<nav>
+		{#if $page.data?.user}
+		Currently logged in as {$page.data.user}
+		<a rel="external" href="/" on:click|preventDefault={delCookie}>Logout</a>
+	{:else}
+		Not logged in!
+		{/if}
+		<!-- This <a> gaslit me for way too long --->
+	</nav>
+
+	<!-- Slot means the component/page.svelte that needs to be shown -->
+	<slot />
+
+	<footer>
+		Member Area:
+		<a href="/member">Member</a>
+		<a href="/member/chpasswd">Chpasswd</a>
+	</footer>
+
+</main>
