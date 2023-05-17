@@ -10,10 +10,11 @@ export const actions = {
 
 		let user = data.get('username');
 		let pass = data.get('password');
+		console.log(`Validating user ${user}`)
 		let { error, message } = ldap.validateUser(user, pass);
 
-		if (error === 0) {
-			return { error: true };
+		if (error) {
+			return { error };
 		}
 
 		let session_token: string = await session.create_session_string(user);
