@@ -11,7 +11,7 @@ export const actions = {
 		let user = data.get('username');
 		let pass = data.get('password');
 		console.log(`Validating user ${user}`)
-		let { error, message } = ldap.validateUser(user, pass);
+		let { error, message } = await ldap.validateUser(user, pass);
 
 		if (error) {
 			return { error };
