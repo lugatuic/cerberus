@@ -15,27 +15,33 @@ Cerberus is everyone's favorite multi-headed watchdog guarding the doors of
 
 * Stack
 
-SvelteKit, Typescript, Ldap.js
+SvelteKit, Typescript, Ldap.js, JOSE (For JWT)
 
 * Development Stages
 
-** TODO Build UI with dummy data [0/3]
-- [ ] Login Page
-- [ ] Registration
-- [ ] Change Password
+** TODO Build UI with dummy data [3/3]
+- [X] Login Page
+- [X] Registration
+- [X] Change Password
 
-** TODO Connect to LDAP [0/3]
+** IN-PROG Connect to LDAP [0/3]
 - [ ] Member Area information
+	What information to show?
+	
 - [ ] Club Membership verification for Registration
+	Proposal: Discord Integration
+
 - [ ] Admin intervention for change password
 
-** TODO Add CSS/decorations
+** TODO Add CSS/decorations [0/1]
+- [ ] Make Pretty
 
 * Contributing
 
 1. Make sure your text editor uses [[https://editorconfig.org][editorconfig]].
 2. Read comments above unimplemented functions.
-3. Run ~npm run format~ before committing!
+3. +Run ~npm run format~ before committing!+
+	 prettier is broken (for me atleast)
 
 ** Optional
 To ensure Node.js version consistency, consider using [[https://zero-to-nix.com/start/install][Nix]]: ~nix develop~
