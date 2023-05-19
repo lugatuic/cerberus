@@ -17,10 +17,11 @@
 
 <!-- TODO: Make this pretty and usable -->
 <main>
-	<h1>
-		Login to {org}!
-	</h1>
+	<h1>Login to {org}!</h1>
 
+	<aside>
+		LDAP Connection: {data?.ldapStatus}
+	</aside>
 	<form method="POST" action="/login" on:submit={handleClick} use:enhance>
 		{#if form?.error}
 			<h1>ERROR!</h1>

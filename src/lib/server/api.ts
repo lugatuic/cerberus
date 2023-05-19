@@ -31,8 +31,15 @@ export type LdapClient = any;
 class ldap_class {
 	private client: LdapClient;
 	private client_user: LdapClient;
-	private isBound: boolean;
+	private error: boolean;
 
+	/**
+		* @method status
+		* @returns true if no error.
+		*/
+	public get status() {
+		return !this.error;
+	}
 	/**
 		*
 		*
@@ -45,18 +52,12 @@ class ldap_class {
 		*/
 	constructor() {
 		console.log("Attempting LDAP contact...");
-		this.isBound = false;
+		this.error = false;
 		this.client = this._connect();
 		this.client_user = this._connect();
 
-		this.isBound = false;
 		this.client.bind(LDAP_USER, LDAP_PASS, (err: any) => {
-			if (err !== null) {
-				this.isBound = false;
-				console.log(`Error in bind is ${err}`);
-			} else {
-				this.isBound = true;
-			}
+			this.error = err !== null;
 		});
 	}
 
@@ -67,8 +68,7 @@ class ldap_class {
 		});
 		/** @todo Better Error Reporting */
 		cl.on('error', (err: any) => {
-			if (err !== null)
-				console.log(`LdapClient: ${err}`);
+			this.error = err !== null;
 		});
 		return cl;
 	}
@@ -84,16 +84,19 @@ class ldap_class {
 		* @desc: This function should check if the username and password
 		*           exist in the ActiveDirectory (interfaced with LDAP.js)
 		*/
-	async validateUser(user: string, password: string): Promise<Result> {
+	async validateUser(user?: string, password?: string): Promise<Result> {
 		console.log('validateUser called!');
-		console.log(`Bound? ${this.isBound}`);
+		console.log(`Bound? ${this.error}`);
 		// if (username === 'ACM' && password === 'testing') {
 		//	return { error: 0, message: '' };
 		// } else {
 		//	return { error: 1, message: 'Error!' };
 		// }
 		console.log(`Attempting to bind as user ${user}`);
-
+		if (!user || !password) {
+			return {error: true, message:
+							`validateUser: no username or password given`}
+		}
 		let success = await util._bind(this.client_user, user, password);
 		console.log(`Returning Success ${success}`);
 		return { error: !success, message: '' };
@@ -162,8 +165,11 @@ class session_class {
 		* @desc Validates the JWT presented by the client
 		* Scaling: This function will be called quite a lot of times.
 		*/
-	async get_session_string(cookie: string): Promise<string | null> {
+	async get_session_string(cookie?: string): Promise<string | null> {
 		// return cookie === 'ABCXYZ69420' ? 'ACM' : null;
+		if (!cookie) {
+			return null;
+		}
 		try {
 			const { payload } = await jose.jwtVerify(cookie, this.secret, {
 				issuer: 'acmlug',
@@ -173,10 +179,7 @@ class session_class {
 			// @ts-ignore
 			return payload.username;
 		} catch (e) {
-			console.log('JWTverify failed!');
-			console.log(e);
-			console.log(cookie);
-			console.log(cookie);
+			console.log(`JWT Verification Failed E: ${e} Cookie: ${cookie}`);
 			return null;
 		}
 	}
