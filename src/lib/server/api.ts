@@ -1,72 +1,89 @@
-/*
+/**
  * @file api.ts
  * This file is the "business logic" for this app.
  * LDAP interfacing, Session Management etc.
  */
 import { TOKEN, LDAP_USER, LDAP_PASS, LDAP_URL } from '$env/static/private';
 import * as jose from 'jose';
+
+/** @ts-ignore */
 import * as ldapjs from 'ldapjs';
+
+import * as util from './util';
 
 console.log('api.ts loaded!'); // Professionall Debugging
 
 export type Result = { error: boolean; message: string };
+/**
+	* @type LdapClient
+	* @description Placeholder till I get LdapJS types
+	*/
+export type LdapClient = any;
 
 // Wait I'm supposed to hate OO?
 
-/*
+/**
  * @class ldap_class
  * Functions related to Ldap read/write
  * This class should *only* contain static methods
  */
-function _delay(time) {
-  return new Promise(resolve => setTimeout(resolve, time));
-}
 class ldap_class {
-	private client: any;
-	private client_user: any;
+	private client: LdapClient;
+	private client_user: LdapClient;
 	private isBound: boolean;
 
+	/**
+	* BIND to LDAP here! Use the service account.
+	* Add event handlers for reconnection, errors.
+	*
+	* UPDATE:
+	* It is best practice to bind as the user to
+	* authenticate! `client` is our client for admin
+	* ops, client_user is for binding.
+	* NOTE:
+	* Connecting here makes the first load very slow!
+	*/
 	constructor() {
-		/*
-		 * BIND to LDAP here! Use the service account.
-		 * Add event handlers for reconnection, errors.
-		 *
-		 * UPDATE:
-		 * It is best practice to bind as the user to
-		 * authenticate! `client` is our client for admin
-		 * ops, client_user is for binding.
-		 */
 		console.log("Attempting LDAP contact...");
 		this.isBound = false;
-		this.client = ldapjs.createClient({
-			url: [LDAP_URL],
-			reconnect: true
-		});
+		this.client = this._connect();
+		this.client_user = this._connect();
 
-		this.client_user = ldapjs.createClient({
-			url: [LDAP_URL],
-			reconnect: true
-		});
-
-		this.client.bind(LDAP_USER, LDAP_PASS, (err) => {
+		this.isBound = false;
+		this.client.bind(LDAP_USER, LDAP_PASS, (err: any) => {
 			if (err !== null) {
 				this.isBound = false;
 				console.log(`Error in bind is ${err}`);
+			} else {
+				this.isBound = true;
 			}
 		});
-		
-		this.isBound = true;
 	}
-	/*
-	 * @function validateuser
-	 * TODO: Implement this function proper
-	 *
-	 * Input: {username: str, password: str}
-	 * Output: validationResult
-	 * Expected: This function should check if the username and password
+
+	private _connect(): LdapClient {
+		const cl = ldapjs.createClient({
+			url: [LDAP_URL],
+			reconnect: true
+		});
+		cl.on('error', (err: any) => {
+			if (err !== null)
+				console.log(`LdapClient: ${err}`);
+		});
+		return cl;
+	}
+
+	/**
+	 * @function validateUser
+	 * This function is the single source of truth
+	 * for User Authentication!
+	 * 
+	 * @param {string} user
+	 * @param {string} password
+	 * @return {Promise<Result>} 
+	 * @desc: This function should check if the username and password
 	 *           exist in the ActiveDirectory (interfaced with LDAP.js)
 	 */
-	validateUser(user: string, password: string): Result {
+	async validateUser(user: string, password: string): Promise<Result> {
 		console.log('validateUser called!');
 		console.log(`Bound? ${this.isBound}`);
 		// if (username === 'ACM' && password === 'testing') {
@@ -76,19 +93,12 @@ class ldap_class {
 		// }
 		console.log(`Attempting to bind as user ${user}`);
 
-		let error = true;
-		this.client_user.bind(user, password, ((err) => {
-			if (err === null) {
-				error = false;
-				console.log(`Verified user ${user}`);
-			}
-		}));
-		_delay(1000);
-		console.log(`Returning Error ${error}`);
-		return {error, message:''};
+		let success = await util._bind(this.client_user, user, password);
+		console.log(`Returning Success ${success}`);
+		return {error: !success, message:''};
 	}
 
-	/*
+	/**
 	 * @function change_password
 	 * TODO: Implement this function!
 	 * Input: user: string, newpass: string
@@ -100,13 +110,13 @@ class ldap_class {
 	 * Use instance variables in this class. Ideally, bind when the class is created.
 	 * DO NOT ATTEMPT IF U DONT KNOW WHAT YOU ARE DOING
 	 */
-	change_password(user, newpass): Result {
+	change_password(user: string, newpass: string): Result {
 		console.log('change_password called!');
-		return { error: 0, message: '' };
+		return { error: false, message: '' };
 	}
 }
 
-/*
+/**
  * @class session_class
  * Functions related to cookies and session management
  */

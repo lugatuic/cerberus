@@ -13,7 +13,7 @@
         in {
           devShell = pkgs.mkShell {
             name = "Cerberus Dev Env for ${system}";
-            packages = with pkgs; [nodejs];
+            packages = with pkgs; [nodejs nodePackages.typescript-language-server];
           };
         });
 }
