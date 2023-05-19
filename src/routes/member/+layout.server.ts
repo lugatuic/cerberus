@@ -1,7 +1,7 @@
 import type { Actions } from './$types';
 import { fail, redirect } from '@sveltejs/kit';
 
-import { ldap, session, member } from '$lib/server/api.ts';
+import { ldap, session, member } from '$lib/server/api';
 
 export async function load({ locals }) {
 	console.log('loading member data');
