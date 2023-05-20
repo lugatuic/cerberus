@@ -3,15 +3,13 @@
  * This file is the "business logic" for this app.
  * LDAP interfacing, Session Management etc.
  */
+/// <reference path="api.d.ts" />
 import { TOKEN, LDAP_USER, LDAP_PASS, LDAP_URL } from '$env/static/private';
 import * as jose from 'jose';
 
 /** @ts-ignore */
 import * as ldapjs from 'ldapjs';
 import * as util from './util';
-
-/// <reference path="./api.d.ts" />
-import type * as Api from 'api-types';
 
 console.log('api.ts loaded!'); // Professionall Debugging
 
@@ -23,11 +21,9 @@ console.log('api.ts loaded!'); // Professionall Debugging
  * This class should *only* contain static methods
  */
 class ldap_class {
-	/// <reference path="api.d.ts" />
 	private client: Api.LdapClient;
 	private client_user: Api.LdapClient;
 	private error: boolean;
-
 	/**
 	 * @method status
 	 * @returns true if no error.
