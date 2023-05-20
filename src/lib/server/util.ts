@@ -29,3 +29,5 @@ export async function _bind(cl: any, username: string, password: string): Promis
 		});
 	});
 }
+
+// export async function _search(cl: any, username: string): 

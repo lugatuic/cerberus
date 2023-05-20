@@ -8,18 +8,12 @@ import * as jose from 'jose';
 
 /** @ts-ignore */
 import * as ldapjs from 'ldapjs';
-
 import * as util from './util';
 
-console.log('api.ts loaded!'); // Professionall Debugging
+/// <reference path="./api.d.ts" />
+import type * as Api from 'api-types';
 
-export type Result = { error: boolean; message: string };
-/**
- * @type LdapClient
- * @description Placeholder till I get LdapJS types
- * @todo Get real types for LdapJS
- */
-export type LdapClient = any;
+console.log('api.ts loaded!'); // Professionall Debugging
 
 // Wait I'm supposed to hate OO?
 
@@ -29,8 +23,9 @@ export type LdapClient = any;
  * This class should *only* contain static methods
  */
 class ldap_class {
-	private client: LdapClient;
-	private client_user: LdapClient;
+	/// <reference path="api.d.ts" />
+	private client: Api.LdapClient;
+	private client_user: Api.LdapClient;
 	private error: boolean;
 
 	/**
@@ -61,7 +56,7 @@ class ldap_class {
 		});
 	}
 
-	private _connect(): LdapClient {
+	private _connect(): Api.LdapClient {
 		const cl = ldapjs.createClient({
 			url: [LDAP_URL],
 			reconnect: true
@@ -84,7 +79,7 @@ class ldap_class {
 	 * @desc: This function should check if the username and password
 	 *           exist in the ActiveDirectory (interfaced with LDAP.js)
 	 */
-	async validateUser(user?: string, password?: string): Promise<Result> {
+	async validateUser(user?: string, password?: string): Promise<Api.Result> {
 		console.log('validateUser called!');
 		console.log(`Bound? ${this.error}`);
 		// if (username === 'ACM' && password === 'testing') {
@@ -117,7 +112,7 @@ class ldap_class {
 	 * Ideally, bind when the class is created.
 	 * DO NOT ATTEMPT IF U DONT KNOW WHAT YOU ARE DOING
 	 */
-	change_password(user: string, newpass: string): Result {
+	change_password(user: string, newpass: string): Api.Result {
 		console.log('change_password called!');
 		return { error: false, message: '' };
 	}
@@ -187,4 +182,4 @@ class session_class {
 const ldap = new ldap_class();
 const session = new session_class();
 
-export { ldap, session };
+export {ldap, session};
