@@ -1,9 +1,8 @@
-import type { Actions } from './$types';
-import { fail, redirect } from '@sveltejs/kit';
+import { redirect } from '@sveltejs/kit';
 
-import { ldap, session, member } from '$lib/server/api';
+import type {LayoutServerLoad} from './$types';
 
-export async function load({ locals }) {
+export let load: LayoutServerLoad = async function ({ locals }) {
 	console.log('loading member data');
 	if (locals.user === null) {
 		console.log('redirecting to login...');

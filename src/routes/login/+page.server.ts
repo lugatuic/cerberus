@@ -1,11 +1,10 @@
-import type { Actions } from './$types';
+import type { Actions, PageServerLoad } from './$types';
 import { fail } from '@sveltejs/kit';
 
 import { ldap, session } from '$lib/server/api';
 
-/** @type {import('./$types').PageLoad} */
-export async function load({ locals }) {
-	return { ldapStatus: ldap.status };
+export let load: PageServerLoad = async function ({ locals }) {
+	return { ldapStatus: "Testing"};
 }
 
 export const actions = {
@@ -31,3 +30,4 @@ export const actions = {
 		return { success: true, message, user };
 	}
 } satisfies Actions;
+

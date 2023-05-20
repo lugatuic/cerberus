@@ -1,4 +1,6 @@
-export async function load({ locals }) {
+import type { LayoutServerLoad } from './$types';
+
+export let load: LayoutServerLoad = async function ({ locals }) {
 	if (locals.user === null) {
 		return { user: null };
 	}
