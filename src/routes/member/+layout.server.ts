@@ -8,5 +8,6 @@ export let load: LayoutServerLoad = async function ({ locals }) {
 		console.log('redirecting to login...');
 		throw redirect(301, '/login');
 	}
-	return { user: locals.user };
+	const result = { user: locals.user } satisfies App.Locals;
+	return result;
 }
