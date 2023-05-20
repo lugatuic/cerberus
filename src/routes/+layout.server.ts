@@ -5,7 +5,7 @@ export let load: LayoutServerLoad = async function ({ locals }) {
 		return { user: null };
 	}
 	return { user: locals.user };
-}
+};
 
 /*
  * Note to self:

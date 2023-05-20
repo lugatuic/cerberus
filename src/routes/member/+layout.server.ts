@@ -1,6 +1,6 @@
 import { redirect } from '@sveltejs/kit';
 
-import type {LayoutServerLoad} from './$types';
+import type { LayoutServerLoad } from './$types';
 
 export let load: LayoutServerLoad = async function ({ locals }) {
 	console.log('loading member data');
@@ -10,4 +10,4 @@ export let load: LayoutServerLoad = async function ({ locals }) {
 	}
 	const result = { user: locals.user } satisfies App.Locals;
 	return result;
-}
+};

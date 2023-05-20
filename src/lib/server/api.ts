@@ -15,43 +15,43 @@ console.log('api.ts loaded!'); // Professionall Debugging
 
 export type Result = { error: boolean; message: string };
 /**
-	* @type LdapClient
-	* @description Placeholder till I get LdapJS types
-	* @todo Get real types for LdapJS
-	*/
+ * @type LdapClient
+ * @description Placeholder till I get LdapJS types
+ * @todo Get real types for LdapJS
+ */
 export type LdapClient = any;
 
 // Wait I'm supposed to hate OO?
 
 /**
-	* @class ldap_class
-	* Functions related to Ldap read/write
-	* This class should *only* contain static methods
-	*/
+ * @class ldap_class
+ * Functions related to Ldap read/write
+ * This class should *only* contain static methods
+ */
 class ldap_class {
 	private client: LdapClient;
 	private client_user: LdapClient;
 	private error: boolean;
 
 	/**
-		* @method status
-		* @returns true if no error.
-		*/
+	 * @method status
+	 * @returns true if no error.
+	 */
 	public get status() {
 		return !this.error;
 	}
 	/**
-		*
-		*
-		* UPDATE:
-		* It is best practice to bind as the user to
-		* authenticate! `client` is our client for admin
-		* ops, client_user is for binding.
-		* NOTE:
-		* Connecting here makes the first load very slow!
-		*/
+	 *
+	 *
+	 * UPDATE:
+	 * It is best practice to bind as the user to
+	 * authenticate! `client` is our client for admin
+	 * ops, client_user is for binding.
+	 * NOTE:
+	 * Connecting here makes the first load very slow!
+	 */
 	constructor() {
-		console.log("Attempting LDAP contact...");
+		console.log('Attempting LDAP contact...');
 		this.error = false;
 		this.client = this._connect();
 		this.client_user = this._connect();
@@ -74,16 +74,16 @@ class ldap_class {
 	}
 
 	/**
-		* @function validateUser
-		* This function is the single source of truth
-		* for User Authentication!
-		*
-		* @param {string} user
-		* @param {string} password
-		* @return {Promise<Result>}
-		* @desc: This function should check if the username and password
-		*           exist in the ActiveDirectory (interfaced with LDAP.js)
-		*/
+	 * @function validateUser
+	 * This function is the single source of truth
+	 * for User Authentication!
+	 *
+	 * @param {string} user
+	 * @param {string} password
+	 * @return {Promise<Result>}
+	 * @desc: This function should check if the username and password
+	 *           exist in the ActiveDirectory (interfaced with LDAP.js)
+	 */
 	async validateUser(user?: string, password?: string): Promise<Result> {
 		console.log('validateUser called!');
 		console.log(`Bound? ${this.error}`);
@@ -94,8 +94,7 @@ class ldap_class {
 		// }
 		console.log(`Attempting to bind as user ${user}`);
 		if (!user || !password) {
-			return {error: true, message:
-							`validateUser: no username or password given`}
+			return { error: true, message: `validateUser: no username or password given` };
 		}
 		let success = await util._bind(this.client_user, user, password);
 		console.log(`Returning Success ${success}`);
@@ -129,12 +128,11 @@ class ldap_class {
  * Functions related to cookies and session management
  */
 class session_class {
-
 	/**
-		* @desc
-		* Contains the JWT signing secret
-		* Leaking this will allow anyone to fake any user!
-		*/
+	 * @desc
+	 * Contains the JWT signing secret
+	 * Leaking this will allow anyone to fake any user!
+	 */
 	private secret: Uint8Array;
 
 	constructor() {
@@ -142,10 +140,10 @@ class session_class {
 	}
 
 	/**
-		* @function @static create_session_string
-		* @desc Issues a JWT to the user
-		* This function **must** be called only after authentication!
-		*/
+	 * @function @static create_session_string
+	 * @desc Issues a JWT to the user
+	 * This function **must** be called only after authentication!
+	 */
 	async create_session_string(username: string): Promise<string> {
 		// return username === 'ACM' ? 'ABCXYZ69420' : username;
 		const jwt = await new jose.SignJWT({ username })
@@ -160,11 +158,11 @@ class session_class {
 	}
 
 	/**
-		* @function get_session_string
-		* @see {@link create_session_string}
-		* @desc Validates the JWT presented by the client
-		* Scaling: This function will be called quite a lot of times.
-		*/
+	 * @function get_session_string
+	 * @see {@link create_session_string}
+	 * @desc Validates the JWT presented by the client
+	 * Scaling: This function will be called quite a lot of times.
+	 */
 	async get_session_string(cookie?: string): Promise<string | null> {
 		// return cookie === 'ABCXYZ69420' ? 'ACM' : null;
 		if (!cookie) {
