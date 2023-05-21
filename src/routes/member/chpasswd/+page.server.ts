@@ -1,7 +1,7 @@
 import type { Actions } from './$types';
 import { fail, redirect } from '@sveltejs/kit';
 
-import { ldap, session, member } from '$lib/server/api';
+import { ldap, session } from '$lib/server/api';
 
 export const actions = {
 	default: async (event) => {
@@ -14,7 +14,8 @@ export const actions = {
 
 		// Check if pass === pass2
 
-		let { error, message } = ldap.change_password(user, newpass);
+		// @ts-ignore
+		let { error, message } = ldap.change_password(user, pass2);
 
 		return { success: error, message };
 	}

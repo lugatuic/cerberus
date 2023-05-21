@@ -1,5 +1,4 @@
-declare global {
-	declare namespace Api {
+declare namespace Api {
 	 type Result = { error: boolean; message: string };
 	/**
 		* @type LdapClient
@@ -14,7 +13,4 @@ declare global {
 		memberOf: string[],
 		badPasswordTime: string
 	};
-	}
 }
-
-export {};
