@@ -1,0 +1,30 @@
+name: Generate and publish documentation
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v1
+
+      - name: Install npm
+        run: sudo apt install nodejs npm
+        
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Build the docs
+        run: npm run docs
+
+      - name: Publish generated content to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@4.1.4
+        with:
+          branch: gh-pages
+          folder: docs
+          git-config-user: "gh-runner"
+          git-config-email: "gh@example.com"
