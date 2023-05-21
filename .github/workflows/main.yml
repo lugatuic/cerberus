@@ -9,7 +9,7 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     container:
-      image: node:latest-alpine
+      image: node:slim
     steps:
       - name: Check out
         uses: actions/checkout@v1
