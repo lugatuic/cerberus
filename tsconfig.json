@@ -30,6 +30,7 @@
 		"blockTags": ["@desc"],
 		"excludeReferences": true,
 		"excludeNotDocumented": true,
-		"skipErrorChecking": true
+		"skipErrorChecking": true,
+		"includeVersion": true,
 	}
 }

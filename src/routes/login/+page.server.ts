@@ -1,12 +1,22 @@
+/**
+ * @module
+ * This file contains server-side code for the /login component.
+ */
 import type { Actions, PageServerLoad } from './$types';
 import { fail } from '@sveltejs/kit';
 
 import { ldap, session } from '$lib/server/api';
 
+/** @remarks This is the `load` function for the /login page */
 export let load: PageServerLoad = async function ({ locals }) {
 	return { ldapStatus: 'Testing' };
 };
 
+/**
+ * This object represents "actions" that can be
+ * triggered from the client.
+ * Used to receive and process the form data from the client.
+ */
 export const actions = {
 	default: async (event) => {
 		const data = await event.request.formData();
@@ -30,3 +40,4 @@ export const actions = {
 		return { success: true, message, user };
 	}
 } satisfies Actions;
+

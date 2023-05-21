@@ -1,3 +1,9 @@
+/**
+ * @module
+ * This file runs server-side to provide data for the
+ * `layout` of every page.
+ * @todo Document param type
+ */
 import type { LayoutServerLoad } from './$types';
 
 export let load: LayoutServerLoad = async function ({ locals }) {

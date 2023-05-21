@@ -3,7 +3,7 @@
  * @remarks
  * This file is the `"business logic"` for this app.
  * LDAP interfacing, Session Management etc.
- * The <reference> tag at the top of this file has been has caused
+ * The `<reference>` tag at the top of this file has been has caused
  * untold suffering agony pain and distress to the author.
  * JS was a mistake.
  */
@@ -22,7 +22,6 @@ console.log('api.ts loaded!'); // Professionall Debugging
 /**
  * @class ldap_class
  * Functions related to Ldap read/write
- * This class should *only* contain static methods
  */
 class ldap_class {
 	private client: Api.LdapClient;
@@ -30,15 +29,12 @@ class ldap_class {
 	private error: boolean;
 	/**
 	 * @method status
-	 * @returns true if no error.
+	 * @returns true if no error has occured in ldap.
 	 */
 	public get status() {
 		return !this.error;
 	}
 	/**
-	 *
-	 *
-	 * UPDATE:
 	 * It is best practice to bind as the user to
 	 * authenticate! `client` is our client for admin
 	 * ops, client_user is for binding.
@@ -75,9 +71,9 @@ class ldap_class {
 	 *
 	 * @param {string} user
 	 * @param {string} password
-	 * @return {Promise<Result>}
-	 * @desc: This function should check if the username and password
-	 *           exist in the ActiveDirectory (interfaced with LDAP.js)
+	 * @return {Promise<Api.Result>}
+	 * @remarks This function should check if the username and password
+	 *          exist in the ActiveDirectory (interfaced with LDAP.js)
 	 */
 	async validateUser(user?: string, password?: string): Promise<Api.Result> {
 		console.log('validateUser called!');
@@ -117,6 +113,18 @@ class ldap_class {
 		return { error: false, message: '' };
 	}
 
+	/**
+	 * This function should fetch information from LDAP for the current user.
+	 * List of information fetched (subject to change):
+	 * 1. cn
+	 * 2. badPasswordTime [password expiry]
+	 * 3. description
+	 * 4. memberOf
+	 *
+	 * Filtering on `userPrincipalName` which is in the form
+	 * <username>@acmuic.org
+	 * @todo Make the filter a ENV Var.
+		*/
 	async get_member_info(username: string): Promise<Api.MemberInfo> {
 		let info: Api.MemberInfo = {
 			cn: "",
@@ -149,7 +157,7 @@ class ldap_class {
  */
 class session_class {
 	/**
-	 * @desc
+	 * @remarks
 	 * Contains the JWT signing secret
 	 * Leaking this will allow anyone to fake any user!
 	 */
@@ -163,6 +171,7 @@ class session_class {
 	 * @function @static create_session_string
 	 * @desc Issues a JWT to the user
 	 * This function **must** be called only after authentication!
+	 * Calling this function implies the `username` is authenticated!
 	 */
 	async create_session_string(username: string): Promise<string> {
 		// return username === 'ACM' ? 'ABCXYZ69420' : username;
@@ -180,8 +189,9 @@ class session_class {
 	/**
 	 * @function get_session_string
 	 * @see {@link create_session_string}
-	 * @desc Validates the JWT presented by the client
+	 * @remarks Validates the JWT presented by the client
 	 * Scaling: This function will be called quite a lot of times.
+	 * Potentially switch to Elliptic-Curve keys for more security
 	 */
 	async get_session_string(cookie?: string): Promise<string | null> {
 		// return cookie === 'ABCXYZ69420' ? 'ACM' : null;
