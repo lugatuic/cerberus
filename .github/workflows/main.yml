@@ -9,7 +9,7 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     container:
-      image: node:slim
+      image: node:latest
     steps:
       - name: Check out
         uses: actions/checkout@v1
@@ -25,5 +25,5 @@ jobs:
         with:
           branch: gh-pages
           folder: docs
-          git-config-user: "gh-runner"
+          git-config-name: "gh-runner"
           git-config-email: "gh@example.com"
