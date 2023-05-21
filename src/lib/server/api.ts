@@ -1,5 +1,4 @@
 /**
- * @module lib/server/api
  * @remarks
  * This file is the `"business logic"` for this app.
  * LDAP interfacing, Session Management etc.

@@ -1,5 +1,4 @@
 /** 
- * @packageDocumentation
  * @alpha
  * This page should let the user change their password.
  * [WIP]

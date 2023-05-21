@@ -1,5 +1,4 @@
 /**
- * @packageDocumentation 
  * This file contains server-side code for the /login component.
  */
 import type { Actions, PageServerLoad } from './$types';

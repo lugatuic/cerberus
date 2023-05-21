@@ -1,5 +1,4 @@
 /**
- * @packageDocumentation
  * @remarks This file contains middleware code.
  * Called for every HTTP request made to the app.
  * Used to inject login information.

@@ -1,7 +1,6 @@
 /// <reference path="api.d.ts" />
 import { LDAP_BASE } from '$env/static/private';
 /**
- * @packageDocumentation
  * @description General utility functions for server
  * side use.
  */
