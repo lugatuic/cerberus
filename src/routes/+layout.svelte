@@ -12,7 +12,7 @@
 
 <svelte:head>
 	<!-- Temporary prettiness -->
-	<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
+	<!-- <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" /> -->
 </svelte:head>
 
 <main>
@@ -35,3 +35,4 @@
 		<a href="/member/chpasswd">Chpasswd</a>
 	</footer>
 </main>
+

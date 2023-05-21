@@ -1,7 +1,11 @@
 /**
  * @file api.ts
- * This file is the "business logic" for this app.
+ * @desc
+ * This file is the `"business logic"` for this app.
  * LDAP interfacing, Session Management etc.
+ * The <reference> tag at the top of this file has been has caused
+ * untold suffering agony pain and distress to the author.
+ * JS was a mistake.
  */
 /// <reference path="api.d.ts" />
 import { TOKEN, LDAP_USER, LDAP_PASS, LDAP_URL } from '$env/static/private';
@@ -111,6 +115,31 @@ class ldap_class {
 	change_password(user: string, newpass: string): Api.Result {
 		console.log('change_password called!');
 		return { error: false, message: '' };
+	}
+
+	async get_member_info(username: string): Promise<Api.MemberInfo> {
+		let info: Api.MemberInfo = {
+			cn: "",
+			badPasswordTime: "",
+			description: "",
+			memberOf: []
+		} satisfies Api.MemberInfo;
+		const opts = {
+			filter: `(userPrincipalName=${username})`,
+			scope: 'sub',
+			attributes: Object.keys(info),
+		};
+		console.log("Performing search!");
+		console.log(`Error? : ${this.error}`);
+		let result = await util._search(this.client, opts);
+		console.log(`Got back ${result.attributes}`);
+		// @ts-ignore
+		for (const obj of result.attributes) {
+			console.log(`Object: ${obj.toString()}`);
+			console.log(`Keys: ${Object.getOwnPropertyNames(obj)}`);
+			console.log(JSON.stringify(obj));
+		}
+		return info;
 	}
 }
 
