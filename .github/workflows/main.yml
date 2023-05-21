@@ -21,7 +21,10 @@ jobs:
         run: npm run docs
         
       - name: Configure git to trust the workspace despite the different owner
-        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"        
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE" 
+        
+      - name: Install deps
+        run: sudo apt-get install rsync
 
       - name: Publish generated content to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@4.1.4
