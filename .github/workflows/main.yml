@@ -7,7 +7,9 @@ on:
 
 jobs:
   publish:
-    runs-on: node:latest-alpine
+    runs-on: ubuntu-latest
+    container:
+      image: node:latest-alpine
     steps:
       - name: Check out
         uses: actions/checkout@v1
