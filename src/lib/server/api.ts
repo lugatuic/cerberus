@@ -1,6 +1,6 @@
 /**
- * @file api.ts
- * @desc
+ * @module lib/server/api
+ * @remarks
  * This file is the `"business logic"` for this app.
  * LDAP interfacing, Session Management etc.
  * The <reference> tag at the top of this file has been has caused
