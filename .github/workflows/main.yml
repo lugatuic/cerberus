@@ -19,6 +19,9 @@ jobs:
         
       - name: Build the docs
         run: npm run docs
+        
+      - name: Configure git to trust the workspace despite the different owner
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"        
 
       - name: Publish generated content to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@4.1.4
