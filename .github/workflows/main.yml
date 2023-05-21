@@ -24,7 +24,7 @@ jobs:
         run: git config --global --add safe.directory "$GITHUB_WORKSPACE" 
         
       - name: Install deps
-        run: apt-get install rsync
+        run: apt-get update && apt-get install rsync
 
       - name: Publish generated content to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@4.1.4
