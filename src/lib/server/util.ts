@@ -1,7 +1,7 @@
 /// <reference path="api.d.ts" />
 import { LDAP_BASE } from '$env/static/private';
 /**
- * @description General utility functions for server
+ * General utility functions for server
  * side use.
  */
 export async function _delay(time: number) {

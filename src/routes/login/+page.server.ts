@@ -1,6 +1,3 @@
-/**
- * This file contains server-side code for the /login component.
- */
 import type { Actions, PageServerLoad } from './$types';
 import { fail } from '@sveltejs/kit';
 
@@ -12,6 +9,9 @@ export let load: PageServerLoad = async function ({ locals }) {
 };
 
 /**
+ *
+ * This file contains server-side code for the /login component.
+ *
  * This object represents "actions" that can be
  * triggered from the client.
  * Used to receive and process the form data from the client.

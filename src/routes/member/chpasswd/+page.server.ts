@@ -1,13 +1,13 @@
-/** 
- * @alpha
- * This page should let the user change their password.
- * [WIP]
- */
 import type { Actions } from './$types';
 import { fail, redirect } from '@sveltejs/kit';
 
 import { ldap, session } from '$lib/server/api';
 
+/** 
+ * @alpha
+ * This page should let the user change their password.
+ * [WIP]
+ */
 export const actions = {
 	default: async (event) => {
 		const data = await event.request.formData();

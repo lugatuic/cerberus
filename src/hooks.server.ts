@@ -1,13 +1,14 @@
 /**
- * @remarks This file contains middleware code.
- * Called for every HTTP request made to the app.
- * Used to inject login information.
- * This file reads the user's JWT cookie.
  */
 import type { Handle } from '@sveltejs/kit';
 import { ldap, session } from '$lib/server/api';
 
 /**
+ * This file contains middleware code.
+ * Called for every HTTP request made to the app.
+ * Used to inject login information.
+ * This file reads the user's JWT cookie.
+ * @remarks
  * This function gets the cookie `cerberus` from the
  * clients cookiejar and validates it using
  * {@see} {@link lib/server/api/<internal>/session_class}

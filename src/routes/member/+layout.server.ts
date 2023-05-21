@@ -1,7 +1,3 @@
-/**
- * Server-side code common to all pages /member/*
- * Enforces user login.
- */
 import { redirect } from '@sveltejs/kit';
 
 import type { LayoutServerLoad } from './$types';
@@ -9,6 +5,8 @@ import type { LayoutServerLoad } from './$types';
 import { ldap } from '$lib/server/api';
 
 /**
+ * Server-side code common to all pages /member/*
+ * Enforces user login.
  * This function redirects any client that is not authenticated
  * @experimental Fetch logged in users info from LDAP and display
  */

@@ -1,11 +1,3 @@
-/**
- * @remarks
- * This file is the `"business logic"` for this app.
- * LDAP interfacing, Session Management etc.
- * The `<reference>` tag at the top of this file has been has caused
- * untold suffering agony pain and distress to the author.
- * JS was a mistake.
- */
 /// <reference path="api.d.ts" />
 import { TOKEN, LDAP_USER, LDAP_PASS, LDAP_URL } from '$env/static/private';
 import * as jose from 'jose';
@@ -34,6 +26,12 @@ class ldap_class {
 		return !this.error;
 	}
 	/**
+	 * This file is the `"business logic"` for this app.
+	 * LDAP interfacing, Session Management etc.
+	 * The `<reference>` tag at the top of this file has been has caused
+	 * untold suffering agony pain and distress to the author.
+	 * JS was a mistake.
+	 * @remarks
 	 * It is best practice to bind as the user to
 	 * authenticate! `client` is our client for admin
 	 * ops, client_user is for binding.
