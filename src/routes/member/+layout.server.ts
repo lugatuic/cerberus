@@ -1,5 +1,5 @@
 /**
- * @module
+ * @packageDocumentation
  * Server-side code common to all pages /member/*
  * Enforces user login.
  */

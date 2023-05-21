@@ -1,5 +1,5 @@
 /**
- * @module
+ * @packageDocumentation
  * This file runs server-side to provide data for the
  * `layout` of every page.
  * @todo Document param type
