@@ -29,6 +29,7 @@
 		"categorizeByGroup": false,
 		"blockTags": ["@desc"],
 		"excludeReferences": true,
-		"excludeNotDocumented": true
+		"excludeNotDocumented": true,
+		"skipErrorChecking": true
 	}
 }
