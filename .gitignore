@@ -262,3 +262,4 @@ tags
 # End of https://www.toptal.com/developers/gitignore/api/linux,emacs,vim,git,svelte,node.direnv/*
 .direnv
 docs/
+scratch

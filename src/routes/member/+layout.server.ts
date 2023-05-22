@@ -17,8 +17,7 @@ export let load: LayoutServerLoad = async function ({ locals }) {
 		throw redirect(301, '/login');
 	}
 	// const result = { user: locals.user } satisfies App.Locals;
-	const userinfo = ldap.get_member_info(locals.user);
-	return userinfo;
+	return locals;
 };
 
 export const prerender = false;

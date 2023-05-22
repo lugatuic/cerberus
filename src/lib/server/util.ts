@@ -16,7 +16,7 @@ export async function _delay(time: number) {
  * Maybe this should be an instance method?
  */
 export async function _bind(cl: Api.LdapClient, username: string,
-														password: string): Promise<boolean> {
+	password: string): Promise<boolean> {
 	return new Promise((resolve, reject) => {
 		cl.bind(username, password, (err: any) => {
 			if (err === null) {
@@ -32,7 +32,7 @@ export async function _bind(cl: Api.LdapClient, username: string,
 }
 
 export async function _search(cl: Api.LdapClient,
-															opts: object): Promise<any> {
+	opts: object): Promise<any> {
 	return new Promise((resolve, reject) => {
 		cl.search(LDAP_BASE, opts, (err: any, res: any) => {
 			if (err) {
@@ -55,4 +55,34 @@ export async function _search(cl: Api.LdapClient,
 			res.on('end', result => console.log(`End: ${result}`));
 		});
 	});
+}
+/** Utility to get blank object */
+export function _new_memberinfo(): Api.MemberInfo {
+		return {
+			"cn": "",
+			"description": "",
+			"memberOf": "",
+			"badPasswordTime": "",
+		} satisfies Api.MemberInfo;
+}
+/**
+ * @function _marshall
+ * @remarks This is a utility to massage the LDAP returned data
+ * into type {@link Api.MemberInfo}.
+ * @todo This function uses disgusting unsafe JS.
+ */
+export function _marshall(attrs: Api.LdapAttribute[]): Api.MemberInfo {
+	console.log(`** Attrs: ${JSON.stringify(attrs)}`);
+	let result = _new_memberinfo() satisfies Api.MemberInfo;
+	for (let a of attrs) {
+		console.log(`** A is ${JSON.stringify(a)}`);
+		let t = a["type"];
+		let val = a["values"].join(' | ');
+
+		// @ts-ignore
+		result[t] = val; // This is disgusting.
+
+		console.log(`Assigning ${t} to ${val}`);
+	}
+	return result;
 }

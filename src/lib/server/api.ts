@@ -123,12 +123,7 @@ class ldap_class {
 	 * @todo Make the filter a ENV Var.
 		*/
 	async get_member_info(username: string): Promise<Api.MemberInfo> {
-		let info: Api.MemberInfo = {
-			cn: "",
-			badPasswordTime: "",
-			description: "",
-			memberOf: []
-		} satisfies Api.MemberInfo;
+		let info = util._new_memberinfo();
 		const opts = {
 			filter: `(userPrincipalName=${username})`,
 			scope: 'sub',
@@ -138,12 +133,9 @@ class ldap_class {
 		console.log(`Error? : ${this.error}`);
 		let result = await util._search(this.client, opts);
 		console.log(`Got back ${result.attributes}`);
-		// @ts-ignore
-		for (const obj of result.attributes) {
-			console.log(`Object: ${obj.toString()}`);
-			console.log(`Keys: ${Object.getOwnPropertyNames(obj)}`);
-			console.log(JSON.stringify(obj));
-		}
+
+		let attrs = result.attributes satisfies Api.LdapAttribute[];
+		info = util._marshall(attrs);
 		return info;
 	}
 }
@@ -213,5 +205,4 @@ class session_class {
 // Exports
 const ldap = new ldap_class();
 const session = new session_class();
-
 export {ldap, session};
