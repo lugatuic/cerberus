@@ -24,14 +24,17 @@ SvelteKit, Typescript, Ldap.js, JOSE (For JWT)
 - [X] Registration
 - [X] Change Password
 
-** IN-PROG Connect to LDAP [0/3]
-- [ ] Member Area information
+** IN-PROG Connect to LDAP [1/3]
+- [X] Member Area information
 	What information to show?
+	+ Currently showing CN, Groups, Password Expiry and Description
+	+ Trivial to add more
 	
 - [ ] Club Membership verification for Registration
 	Proposal: Discord Integration
 
-- [ ] Admin intervention for change password
+- [ ] Allow users to change their password
+	+ Maybe add some verification?
 
 ** TODO Add CSS/decorations [0/1]
 - [ ] Make Pretty

@@ -22,7 +22,7 @@
 		"compilerOptions": {
 			"strict": false
 		},
-		"readme": "./README.org",
+		"readme": "./README.html",
 		"plugin": "typedoc-plugin-missing-exports",
 		"categorizeByGroup": false,
 		"blockTags": ["@desc"],
