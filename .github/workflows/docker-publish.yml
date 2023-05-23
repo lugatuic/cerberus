@@ -8,13 +8,16 @@ name: Docker
 on:
   push:
     branches: [ "deploy" ]
-
 env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
-
+  LDAP_URL: ldap://example.com
+  LDAP_BASE: "dc=test,dc=com"
+  LDAP_USER: "testuser"
+  LDAP_PASS: "notarealpassword"
+  TOKEN: abc123
 
 jobs:
   build:
