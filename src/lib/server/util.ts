@@ -1,4 +1,4 @@
-/// <reference path="api.d.ts" />
+import * as Api from './my-types';
 import { LDAP_BASE } from '$env/static/private';
 /**
  * General utility functions for server
@@ -42,24 +42,35 @@ export async function _search(cl: Api.LdapClient,
 				console.log(`Entry: ${entry}`);
 				resolve(entry);
 			});
+
+// @ts-ignore
 			res.on('error', err => {
 				console.log(err);
 				reject(err);
 			});
+// @ts-ignore
 			res.on('searchRequest', srq => {
 				console.log(`Sending req: ${srq}`);
 			});
+// @ts-ignore
 			res.on('searchReference', srf => {
 				console.log(`Reference: ${srf}`);
 			});
+// @ts-ignore
 			res.on('end', result => console.log(`End: ${result}`));
 		});
 	});
 }
-/** Utility to get blank object */
+/**
+ * Utility to get blank object
+ * This function employs Typescript Magic
+ * to produce a dicttionary with keys from
+ * an array defined in the .d.ts
+ * The `satisfies` in the return is important.
+ */
 export function _new_memberinfo(): Api.MemberInfo {
 	let result = Object.create(null);
-	for (let k in Api._attrs_desired) {
+	for (let k of Api._attrs_desired) {
 		result[k] = "";
 	}
 	return result satisfies Api.MemberInfo;
@@ -68,7 +79,7 @@ export function _new_memberinfo(): Api.MemberInfo {
  * @function _marshall
  * @remarks This is a utility to massage the LDAP returned data
  * into type {@link Api.MemberInfo}.
- * @todo This function uses disgusting unsafe JS.
+ * Update: Func is now type-safe (in theory)
  */
 export function _marshall(attrs: Api.LdapAttribute[]): Api.MemberInfo {
 	console.log(`** Attrs: ${JSON.stringify(attrs)}`);

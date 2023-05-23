@@ -1,4 +1,4 @@
-/// <reference path="api.d.ts" />
+import * as Api from './my-types';
 import { TOKEN, LDAP_USER, LDAP_PASS, LDAP_URL } from '$env/static/private';
 import * as jose from 'jose';
 
@@ -9,7 +9,6 @@ import * as util from './util';
 console.log('api.ts loaded!'); // Professionall Debugging
 
 // Wait I'm supposed to hate OO?
-
 /**
  * @class ldap_class
  * Functions related to Ldap read/write
@@ -68,7 +67,7 @@ class ldap_class {
 	 *
 	 * @param {string} user
 	 * @param {string} password
-	 * @return {Promise<Api.Result>}
+	 * @return {Promise<Result>}
 	 * @remarks This function should check if the username and password
 	 *          exist in the ActiveDirectory (interfaced with LDAP.js)
 	 */
@@ -133,7 +132,7 @@ class ldap_class {
 		let result = await util._search(this.client, opts);
 		console.log(`Got back ${result.attributes}`);
 
-		let attrs = result.attributes;
+		let attrs = result.attributes satisfies Api.MemberInfo;
 		let info = util._marshall(attrs);
 		return info;
 	}
