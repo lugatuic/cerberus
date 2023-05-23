@@ -12,5 +12,7 @@ EXPOSE 3000
 
 RUN npm ci --omit dev
 
-ENTRYPOINT ORIGIN=$ORIGIN node build
+ENTRYPOINT node build
+
+
 
