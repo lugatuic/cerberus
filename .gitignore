@@ -263,3 +263,4 @@ tags
 .direnv
 docs/
 scratch
+docker-compose.yml
