@@ -12,8 +12,5 @@ EXPOSE 3000
 
 RUN npm ci --omit dev
 
-ENTRYPOINT ["node", "index.js"]
+ENTRYPOINT ORIGIN=$ORIGIN node build
 
-RUN npm ci --omit dev
-
-ENTRYPOINT ORIGIN=${ORIGIN} node build
