@@ -42,23 +42,3 @@ export interface LdapAttribute extends Object {
 	"type": attrs_desired,
 	"values": string[]
 };
-// declare class ldap_class {
-// 	private client: LdapClient;
-// 	private client_user: LdapClient;
-// 	private error: boolean;
-
-// 	async validateUser(user?: string, password?: string): Promise<Result>;
-// 	change_password(string, string): Result;
-// 	async get_member_info(username: string): Promise<MemberInfo>;
-// }
-
-// declare class session_class {
-// 	private secret: Uint8Array;
-
-// 	constructor();
-// 	async create_session_string(username: string): Promise<string>;
-// 	async get_session_string(cookie?: string): Promise<string|null>;
-// }
-
-// declare const ldap: ldap_class;
-// declare const session: session_class;

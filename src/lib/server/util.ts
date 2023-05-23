@@ -1,9 +1,10 @@
 import * as Api from './my-types';
-import { LDAP_BASE } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 /**
  * General utility functions for server
  * side use.
  */
+let { LDAP_BASE } = env;
 export async function _delay(time: number) {
 	return new Promise((resolve) => setTimeout(resolve, time));
 }

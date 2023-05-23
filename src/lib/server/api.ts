@@ -1,5 +1,6 @@
 import * as Api from './my-types';
-import { TOKEN, LDAP_USER, LDAP_PASS, LDAP_URL } from '$env/static/private';
+// import { TOKEN, LDAP_USER, LDAP_PASS, LDAP_URL } from '$env/dynamic/private';
+import { env } from '$env/dynamic/private';
 import * as jose from 'jose';
 
 /** @ts-ignore */
@@ -13,6 +14,9 @@ console.log('api.ts loaded!'); // Professionall Debugging
  * @class ldap_class
  * Functions related to Ldap read/write
  */
+
+let { TOKEN, LDAP_USER, LDAP_PASS, LDAP_URL } = env;
+
 class ldap_class {
 	private client: Api.LdapClient;
 	private client_user: Api.LdapClient;
