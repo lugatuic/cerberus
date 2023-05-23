@@ -26,7 +26,7 @@ export type LdapClient = any;
 	* Note: the "as const" at the end is important.
 	*/
 export const _attrs_desired = ["cn", "description",
-	"memberOf", "badPasswordTime"] as const;
+	"memberOf", "badPasswordTime", "lastLogon"] as const;
 export type attrs_desired = typeof _attrs_desired[number];
 export type MemberInfo = Record<attrs_desired, string>;
 

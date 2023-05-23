@@ -2,9 +2,10 @@
 	export let data: any;
 </script>
 
-<p>
-CN: {data?.cn}
-Desc: {data?.desc}
-Groups: {data?.memberOf}
-Password Expiry: {data?.badPasswordtime}
-</p>
+<ul>
+	<li>CN: {data?.cn}</li>
+	<li>Desc: {data?.desc}</li>
+	<li>Groups: {data?.memberOf}</li>
+	<li>Bad Password Time: {data?.badPasswordtime}</li>
+	<li>Last Logon: {data?.lastlogon}</li>
+</ul>
