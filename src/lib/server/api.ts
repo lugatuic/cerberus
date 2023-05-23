@@ -123,19 +123,18 @@ class ldap_class {
 	 * @todo Make the filter a ENV Var.
 		*/
 	async get_member_info(username: string): Promise<Api.MemberInfo> {
-		let info = util._new_memberinfo();
 		const opts = {
 			filter: `(userPrincipalName=${username})`,
 			scope: 'sub',
-			attributes: Object.keys(info),
+			attributes: Api._attrs_desired,
 		};
 		console.log("Performing search!");
 		console.log(`Error? : ${this.error}`);
 		let result = await util._search(this.client, opts);
 		console.log(`Got back ${result.attributes}`);
 
-		let attrs = result.attributes satisfies Api.LdapAttribute[];
-		info = util._marshall(attrs);
+		let attrs = result.attributes;
+		let info = util._marshall(attrs);
 		return info;
 	}
 }

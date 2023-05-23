@@ -58,12 +58,11 @@ export async function _search(cl: Api.LdapClient,
 }
 /** Utility to get blank object */
 export function _new_memberinfo(): Api.MemberInfo {
-		return {
-			"cn": "",
-			"description": "",
-			"memberOf": "",
-			"badPasswordTime": "",
-		} satisfies Api.MemberInfo;
+	let result = Object.create(null);
+	for (let k in Api._attrs_desired) {
+		result[k] = "";
+	}
+	return result satisfies Api.MemberInfo;
 }
 /**
  * @function _marshall
@@ -79,7 +78,6 @@ export function _marshall(attrs: Api.LdapAttribute[]): Api.MemberInfo {
 		let t = a["type"];
 		let val = a["values"].join(' | ');
 
-		// @ts-ignore
 		result[t] = val; // This is disgusting.
 
 		console.log(`Assigning ${t} to ${val}`);
