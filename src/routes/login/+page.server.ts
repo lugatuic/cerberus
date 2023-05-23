@@ -19,7 +19,6 @@ export let load: PageServerLoad = async function ({ locals }) {
 export const actions = {
 	default: async (event) => {
 		const data = await event.request.formData();
-		console.log(data);
 
 		let user = data.get('username')?.toString();
 		let pass = data.get('password')?.toString();
