@@ -3,8 +3,8 @@ import * as Api from './my-types';
 import { env } from '$env/dynamic/private';
 import * as jose from 'jose';
 
-/** @ts-ignore */
-import * as ldapjs from 'ldapjs';
+// @ts-ignore
+import ldapjs from 'ldapjs';
 import * as util from './util';
 
 console.log('api.ts loaded!'); // Professionall Debugging
@@ -54,9 +54,9 @@ class ldap_class {
 
 	private _connect(): Api.LdapClient {
 		const cl = ldapjs.createClient({
-			url: [LDAP_URL],
+			url: [LDAP_URL!],
 			reconnect: true
-		});
+		} satisfies ldapjs.ClientOptions);
 		/** @todo Better Error Reporting */
 		cl.on('error', (err: any) => {
 			this.error = err !== null;
