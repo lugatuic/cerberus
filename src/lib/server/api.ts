@@ -1,4 +1,3 @@
-import * as Api from './my-types';
 // import { TOKEN, LDAP_USER, LDAP_PASS, LDAP_URL } from '$env/dynamic/private';
 import { env } from '$env/dynamic/private';
 import * as jose from 'jose';
@@ -6,6 +5,7 @@ import * as jose from 'jose';
 // @ts-ignore
 import ldapjs from 'ldapjs';
 import * as util from './util';
+import * as Api from './my-types';
 
 console.log('api.ts loaded!'); // Professionall Debugging
 
@@ -17,7 +17,7 @@ console.log('api.ts loaded!'); // Professionall Debugging
 
 let { TOKEN, LDAP_USER, LDAP_PASS, LDAP_URL } = env;
 
-class ldap_class {
+export class ldap_class {
 	private client: Api.LdapClient;
 	private client_user: Api.LdapClient;
 	private error: boolean;
@@ -124,7 +124,7 @@ class ldap_class {
 	 * Filtering on `userPrincipalName` which is in the form
 	 * <username>@acmuic.org
 	 * @todo Make the filter a ENV Var.
-		*/
+	 */
 	async get_member_info(username: string): Promise<Api.MemberInfo> {
 		const opts = {
 			filter: `(userPrincipalName=${username})`,
@@ -146,7 +146,7 @@ class ldap_class {
  * @class session_class
  * Functions related to cookies and session management
  */
-class session_class {
+export class session_class {
 	/**
 	 * @remarks
 	 * Contains the JWT signing secret

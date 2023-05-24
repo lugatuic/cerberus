@@ -25,7 +25,6 @@
 		"readme": "./README.html",
 		"plugin": "typedoc-plugin-missing-exports",
 		"categorizeByGroup": false,
-		"blockTags": ["@desc"],
 		"excludeReferences": true,
 		"excludeNotDocumented": true,
 		"skipErrorChecking": true,
