@@ -6,6 +6,7 @@ import * as jose from 'jose';
 import ldapjs from 'ldapjs';
 import * as util from './util';
 import * as Api from './my-types';
+import type { TlsOptions } from 'tls';
 
 console.log('api.ts loaded!'); // Professionall Debugging
 
@@ -21,6 +22,7 @@ export class ldap_class {
 	private client: Api.LdapClient;
 	private client_user: Api.LdapClient;
 	private error: boolean;
+	private tls: boolean;
 	/**
 	 * @method status
 	 * @returns true if no error has occured in ldap.
@@ -46,7 +48,7 @@ export class ldap_class {
 		this.error = false;
 		this.client = this._connect();
 		this.client_user = this._connect();
-
+		this.tls = false;
 		this.client.bind(LDAP_USER, LDAP_PASS, (err: any) => {
 			this.error = err !== null;
 		});
@@ -61,6 +63,19 @@ export class ldap_class {
 		cl.on('error', (err: any) => {
 			this.error = err !== null;
 		});
+		const opts = {
+			rejectUnauthorized: false
+		} satisfies TlsOptions;
+
+		cl.starttls(opts,null,(err, res) => {
+			if (err) {
+				this.tls = false;
+				console.log("StartTLS Error!");
+				console.log(err);
+			} else {
+				this.tls = true;
+			}
+		})
 		return cl;
 	}
 
