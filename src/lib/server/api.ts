@@ -55,27 +55,31 @@ export class ldap_class {
 	}
 
 	private _connect(): Api.LdapClient {
+		const opts = {
+			rejectUnauthorized: false
+		} satisfies TlsOptions;
 		const cl = ldapjs.createClient({
 			url: [LDAP_URL!],
-			reconnect: true
-		} satisfies ldapjs.ClientOptions);
+			reconnect: true,
+			tlsOptions: opts
+		});
 		/** @todo Better Error Reporting */
 		cl.on('error', (err: any) => {
 			this.error = err !== null;
 		});
-		const opts = {
-			rejectUnauthorized: false
-		} satisfies TlsOptions;
 
-		cl.starttls(opts,null,(err, res) => {
-			if (err) {
-				this.tls = false;
-				console.log("StartTLS Error!");
-				console.log(err);
-			} else {
-				this.tls = true;
-			}
-		})
+
+		// @ts-ignore
+		// cl.starttls(opts,null,(err, res) => {
+		// 	if (err) {
+		// 		this.tls = false;
+		// 		console.log("StartTLS Error!");
+		// 		console.log(err);
+		// 	} else {
+		// 		this.tls = true;
+		// 	}
+		// });
+
 		return cl;
 	}
 
@@ -123,9 +127,25 @@ export class ldap_class {
 	 * Ideally, bind when the class is created.
 	 * DO NOT ATTEMPT IF U DONT KNOW WHAT YOU ARE DOING
 	 */
-	change_password(user: string, newpass: string): Api.Result {
+	async change_password(user: string, newpass: string): Promise<Api.Result> {
 		console.log('change_password called!');
-		return { error: false, message: '' };
+		const change = new ldapjs.Change({
+			operation: 'replace',
+			modification: new ldapjs.Attribute({
+				'type': 'userPassword',
+				'values': [newpass]
+			})
+		});
+		let success: boolean;
+		let message: string = "";
+		try {
+			success = await util._modify(this.client, user, change);
+		} catch (e: any) {
+			console.log(`Error in change_password: ${e}`)
+			success = false;
+			message = e.toString();
+		}
+		return { error: !success, message };
 	}
 
 	/**

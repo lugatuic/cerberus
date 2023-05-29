@@ -25,7 +25,7 @@ export type LdapClient = any;
 	* Typescript magic will do the rest.
 	* Note: the "as const" at the end is important.
 	*/
-export const _attrs_desired = ["cn", "description",
+export const _attrs_desired = ["distinguishedName", "cn", "description",
 	"memberOf", "badPasswordTime", "lastLogon"] as const;
 export type attrs_desired = typeof _attrs_desired[number];
 export type MemberInfo = Record<attrs_desired, string>;

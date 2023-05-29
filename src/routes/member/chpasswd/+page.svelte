@@ -1,12 +1,13 @@
 <script lang="ts">
 	import type { PageData } from './$types';
+	import { enhance } from '$app/forms';
 	export let data: PageData;
+	export let form: ActionData;
 </script>
 
-<main>
 	Hello, {data?.user}!
 
-	<form action="/chpasswd">
+	<form method="POST" action="/member/chpasswd" use:enhance>
 		<label>
 			Enter current password:
 			<input id="currpass" type="password" />
@@ -24,4 +25,7 @@
 
 		<button type="submit"> Submit </button>
 	</form>
-</main>
+
+	{#if form?.success}
+		{form?.message}
+	{/if}

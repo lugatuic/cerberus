@@ -96,3 +96,29 @@ export function _marshall(attrs: Api.LdapAttribute[]): Api.MemberInfo {
 	}
 	return result;
 }
+
+export async function _modify(cl: Api.LdapClient, name: string,
+															change: object): Promise<boolean> {
+	return new Promise((resolve, reject) => {
+		cl.modify(name, change, (err: any) => {
+			if (err) {
+				reject(err);
+			} else {
+				resolve(true);
+			}
+		});
+	});
+}
+
+export function _make_dn(username: string): string {
+	let at_split = username.split('@');
+
+	if (at_split.length <= 1) {
+		throw "Bad Input to _make_dn";
+	}
+
+	let principal_name = at_split[1];
+
+	let answer = "DN="
+	
+}

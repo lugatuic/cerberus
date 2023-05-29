@@ -11,8 +11,6 @@ import { ldap, session } from '$lib/server/api';
 export const actions = {
 	default: async (event) => {
 		const data = await event.request.formData();
-		console.log(data);
-
 		let user = event.locals.user;
 		let pass = data.get('newpass');
 		let pass2 = data.get('newpass2');
@@ -20,8 +18,8 @@ export const actions = {
 		// Check if pass === pass2
 
 		// @ts-ignore
-		let { error, message } = ldap.change_password(user, pass2);
+		// let { error, message } = await ldap.change_password(user, pass2);
 
-		return { success: error, message };
+		return { success: false, message: "Not Implemented!" };
 	}
 } satisfies Actions;
