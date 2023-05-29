@@ -11,13 +11,15 @@ import type { TlsOptions } from 'tls';
 console.log('api.ts loaded!'); // Professionall Debugging
 
 // Wait I'm supposed to hate OO?
-/**
- * @class ldap_class
- * Functions related to Ldap read/write
- */
 
 let { TOKEN, LDAP_USER, LDAP_PASS, LDAP_URL } = env;
 
+/**
+ * @class ldap_class
+ * @remarks
+ * This class represents the state of the LDAP connection.
+ * Exposes functions which perform LDAP read/writes/binds.
+ */
 export class ldap_class {
 	private client: Api.LdapClient;
 	private client_user: Api.LdapClient;
@@ -31,11 +33,6 @@ export class ldap_class {
 		return !this.error;
 	}
 	/**
-	 * This file is the `"business logic"` for this app.
-	 * LDAP interfacing, Session Management etc.
-	 * The `<reference>` tag at the top of this file has been has caused
-	 * untold suffering agony pain and distress to the author.
-	 * JS was a mistake.
 	 * @remarks
 	 * It is best practice to bind as the user to
 	 * authenticate! `client` is our client for admin
