@@ -1,0 +1,28 @@
+* {
+	font-family: sans-serif;
+}
+footer {
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	padding-left: 50%;
+}
+nav {
+	padding-top: 0.5em;
+	padding-bottom: 2em;
+}
+nav > a {
+	text-decoration: none;
+	padding: auto 0.5em;
+	background-color: blanchedalmond;
+}
+nav > a:hover {
+	text-decoration: underline;
+}
+input:invalid {
+	background-color: pink;
+}
+
+body {
+	background-color: beige;
+}

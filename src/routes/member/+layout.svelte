@@ -8,8 +8,4 @@
 	<title>Welcome {data.user}!</title>
 </svelte:head>
 
-<aside>
-	You are currently {data?.user}
-</aside>
-
 <slot />

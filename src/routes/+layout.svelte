@@ -15,24 +15,24 @@
 	<!-- <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" /> -->
 </svelte:head>
 
-<main>
-	<nav>
-		{#if $page.data?.user}
-			Currently logged in as {$page.data.user}
-			<a rel="external" href="/" on:click|preventDefault={delCookie}>Logout</a>
-		{:else}
-			Not logged in!
-		{/if}
-		<!-- This <a> gaslit me for way too long --->
-	</nav>
-
-	<!-- Slot means the component/page.svelte that needs to be shown -->
-	<slot />
-
-	<footer>
-		Member Area:
-		<a href="/member">Member</a>
+<nav>
+	{#if $page.data?.user}
+		<a href="/member">User: {$page.data.user}</a>
+	  <a href="/">Home</a>
 		<a href="/member/chpasswd">Chpasswd</a>
-	</footer>
+		<a rel="external" href="/" on:click|preventDefault={delCookie}>Logout</a>
+		<!-- This <a> gaslit me for way too long --->
+	{:else}
+		Not logged in!
+		<a href="/login">Log In</a>
+	{/if}
+</nav>
+
+<!-- Slot means the component/page.svelte that needs to be shown -->
+<main>
+	<slot />
 </main>
 
+<footer>
+	Copyright LOLOL
+</footer>

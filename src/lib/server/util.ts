@@ -114,3 +114,22 @@ export async function _modify(cl: Api.LdapClient, name: string,
 		});
 	});
 }
+
+/**
+ * @remarks
+ * Convert Microsoft's special snowflake timestamp to
+ * a Javascript Date object.
+ * https://stackoverflow.com/questions/6161776/convert-windows-filetime-to-second-in-unix-linux
+ */
+export function _sane_date(filetime: string): Date {
+	const WINDOWS_TICK = 10000000;
+	const OFFSET = 11644473600;
+
+	let lastLog = parseInt(filetime);
+
+	let lastLogUnix: number = (lastLog / WINDOWS_TICK) - OFFSET;
+	// info.lastLogon = new Date(lastLogUnix).toDateString();
+	let d = new Date(0);
+	d.setUTCSeconds(lastLogUnix);
+	return d;
+}

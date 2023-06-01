@@ -16,28 +16,25 @@
 </script>
 
 <!-- TODO: Make this pretty and usable -->
-<main>
-	<h1>Login to {org}!</h1>
+<h1>Login to {org}!</h1>
 
-	<aside>
-		LDAP Connection: {data?.ldapStatus}
-	</aside>
-	<form method="POST" action="/login" on:submit={handleClick} use:enhance>
-		{#if form?.error}
-			<h1>ERROR!</h1>
-		{/if}
-		{#if form?.success}
-			<h1>Success!</h1>
-		{/if}
-		<label>
-			Username:
-			<input name="username" type="text" />
-		</label>
-
-		<label>
-			Password:
-			<input name="password" type="password" />
-		</label>
-		<button type="submit">Submit</button>
-	</form>
-</main>
+<form method="POST" action="/login" on:submit={handleClick} use:enhance>
+	{#if form?.error}
+		<h1>ERROR!</h1>
+		<p>{form?.message}</p>
+	{/if}
+	{#if form?.success}
+		<h1>Success!</h1>
+	{/if}
+	<label for="username">
+		Username:
+		<input placeholder="user@acmuic.org"id="username" name="username" type="email" required />
+	</label>
+	<br />
+	<br />
+	<label for="password">
+		Password:
+		<input id="password" name="password" type="password" required />
+	</label>
+	<button type="submit">Submit</button>
+</form>
