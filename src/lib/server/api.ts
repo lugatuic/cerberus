@@ -21,7 +21,7 @@ let { TOKEN, LDAP_USER, LDAP_PASS, LDAP_URL } = env;
  * Exposes functions which perform LDAP read/writes/binds.
  */
 export class ldap_class {
-	private client: Api.LdapClient;
+	// private client?: Api.LdapClient;
 	private error: boolean;
 	private tls: boolean;
 	/**
@@ -42,11 +42,8 @@ export class ldap_class {
 	constructor() {
 		console.log('Attempting LDAP contact...');
 		this.error = false;
-		this.client = this._connect();
+		// this.client = this._connect();
 		this.tls = false;
-		this.client.bind(LDAP_USER, LDAP_PASS, (err: any) => {
-			this.error = err !== null;
-		});
 	}
 
 	/** @todo Add acmuic.org ldaps cert here */
@@ -64,6 +61,14 @@ export class ldap_class {
 			this.error = err !== null;
 		});
 
+		return cl;
+	}
+
+	private _get_client(): Api.LdapClient {
+		let cl = this._connect();
+		cl.bind(LDAP_USER, LDAP_PASS, (err: any) => {
+			this.error = err !== null;
+		});
 		return cl;
 	}
 
@@ -120,7 +125,7 @@ export class ldap_class {
 		console.log(`change_password: oldpass: ${oldpass}`);
 		let success: boolean;
 		let message: string = "";
-		let client_user = this._connect();
+		let client = this._get_client();
 		const change = new ldapjs.Change({
 			operation: 'replace',
 			modification: new ldapjs.Attribute({
@@ -134,7 +139,7 @@ export class ldap_class {
 				throw new Error("Old password Wrong!");
 			}
 			let dn = (await this.get_member_info(user)).distinguishedName;
-			success = await util._modify(this.client, dn, change);
+			success = await util._modify(client, dn, change);
 			console.log(`Modify would have been called!`);
 			success = true;
 		} catch (e: any) {
@@ -158,6 +163,7 @@ export class ldap_class {
 	 * @todo Make the filter a ENV Var.
 	 */
 	async get_member_info(username: string): Promise<Api.MemberInfo> {
+		let client = this._get_client();
 		const opts = {
 			filter: `(userPrincipalName=${username})`,
 			scope: 'sub',
@@ -165,10 +171,10 @@ export class ldap_class {
 		};
 		console.log("Performing search!");
 		console.log(`Error? : ${this.error}`);
-		let result = await util._search(this.client, opts);
+		let result = await util._search(client, opts);
 		console.log(`Got back ${result.attributes}`);
 
-		let attrs = result.attributes satisfies Api.MemberInfo;
+		let attrs: Api.LdapAttribute[] = result.attributes;
 		let info = util._marshall(attrs);
 		return info;
 	}
