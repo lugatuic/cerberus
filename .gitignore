@@ -264,3 +264,4 @@ tags
 docs/
 scratch
 docker-compose.yml
+/ldaprc
