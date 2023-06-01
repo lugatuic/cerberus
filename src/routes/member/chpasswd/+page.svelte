@@ -10,17 +10,17 @@
 	<form method="POST" action="/member/chpasswd" use:enhance>
 		<label>
 			Enter current password:
-			<input id="currpass" type="password" />
+			<input name="currpass" type="password" />
 		</label>
 
 		<label>
 			Enter new password:
-			<input id="newpass" type="password" />
+			<input name="newpass" type="password" />
 		</label>
 
 		<label>
 			Enter new password again:
-			<input id="newpass2" type="password" />
+			<input name="newpass2" type="password" />
 		</label>
 
 		<button type="submit"> Submit </button>
