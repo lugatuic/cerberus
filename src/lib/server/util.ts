@@ -18,6 +18,9 @@ export async function _delay(time: number) {
  */
 export async function _bind(cl: Api.LdapClient, username: string,
 	password: string): Promise<boolean> {
+	if (password === null || password === "" || password.length === 0) {
+		throw new Error(`Refusing to bind with empty password for ${username}`)
+	}
 	return new Promise((resolve, reject) => {
 		cl.bind(username, password, (err: any) => {
 			if (err === null) {
@@ -27,6 +30,7 @@ export async function _bind(cl: Api.LdapClient, username: string,
 				console.log(`Failed verifiction for user ${username}`);
 				// This is not a reject as that would cause await to throw
 				resolve(false);
+				// reject(`Bind failed for ${username}`);
 			}
 		});
 	});
@@ -40,7 +44,7 @@ export async function _search(cl: Api.LdapClient,
 				reject(err);
 			}
 			res.on('searchEntry', (entry: any) => {
-				console.log(`Entry: ${entry}`);
+				// console.log(`Entry: ${entry}`);
 				resolve(entry);
 			});
 
@@ -83,22 +87,23 @@ export function _new_memberinfo(): Api.MemberInfo {
  * Update: Func is now type-safe (in theory)
  */
 export function _marshall(attrs: Api.LdapAttribute[]): Api.MemberInfo {
-	console.log(`** Attrs: ${JSON.stringify(attrs)}`);
+	// console.log(`** Attrs: ${JSON.stringify(attrs)}`);
 	let result = _new_memberinfo() satisfies Api.MemberInfo;
 	for (let a of attrs) {
-		console.log(`** A is ${JSON.stringify(a)}`);
+		// console.log(`** A is ${JSON.stringify(a)}`);
 		let t = a["type"];
 		let val = a["values"].join(' | ');
 
 		result[t] = val; // This is disgusting.
 
-		console.log(`Assigning ${t} to ${val}`);
+		// console.log(`Assigning ${t} to ${val}`);
 	}
 	return result;
 }
 
 export async function _modify(cl: Api.LdapClient, name: string,
 															change: object): Promise<boolean> {
+	console.log(`Modifying ${name}...`);
 	return new Promise((resolve, reject) => {
 		cl.modify(name, change, (err: any) => {
 			if (err) {
@@ -108,17 +113,4 @@ export async function _modify(cl: Api.LdapClient, name: string,
 			}
 		});
 	});
-}
-
-export function _make_dn(username: string): string {
-	let at_split = username.split('@');
-
-	if (at_split.length <= 1) {
-		throw "Bad Input to _make_dn";
-	}
-
-	let principal_name = at_split[1];
-
-	let answer = "DN="
-	
 }

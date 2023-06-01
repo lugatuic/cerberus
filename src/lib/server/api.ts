@@ -22,7 +22,6 @@ let { TOKEN, LDAP_USER, LDAP_PASS, LDAP_URL } = env;
  */
 export class ldap_class {
 	private client: Api.LdapClient;
-	private client_user: Api.LdapClient;
 	private error: boolean;
 	private tls: boolean;
 	/**
@@ -44,16 +43,16 @@ export class ldap_class {
 		console.log('Attempting LDAP contact...');
 		this.error = false;
 		this.client = this._connect();
-		this.client_user = this._connect();
 		this.tls = false;
 		this.client.bind(LDAP_USER, LDAP_PASS, (err: any) => {
 			this.error = err !== null;
 		});
 	}
 
+	/** @todo Add acmuic.org ldaps cert here */
 	private _connect(): Api.LdapClient {
 		const opts = {
-			rejectUnauthorized: false
+			rejectUnauthorized: false,
 		} satisfies TlsOptions;
 		const cl = ldapjs.createClient({
 			url: [LDAP_URL!],
@@ -64,18 +63,6 @@ export class ldap_class {
 		cl.on('error', (err: any) => {
 			this.error = err !== null;
 		});
-
-
-		// @ts-ignore
-		// cl.starttls(opts,null,(err, res) => {
-		// 	if (err) {
-		// 		this.tls = false;
-		// 		console.log("StartTLS Error!");
-		// 		console.log(err);
-		// 	} else {
-		// 		this.tls = true;
-		// 	}
-		// });
 
 		return cl;
 	}
@@ -94,18 +81,22 @@ export class ldap_class {
 	async validateUser(user?: string, password?: string): Promise<Api.Result> {
 		console.log('validateUser called!');
 		console.log(`Bound? ${this.error}`);
-		// if (username === 'ACM' && password === 'testing') {
-		//	return { error: 0, message: '' };
-		// } else {
-		//	return { error: 1, message: 'Error!' };
-		// }
 		console.log(`Attempting to bind as user ${user}`);
+		let client_user = this._connect();
+		let message: string = "";
+		let success: boolean = false;
 		if (!user || !password) {
 			return { error: true, message: `validateUser: no username or password given` };
 		}
-		let success = await util._bind(this.client_user, user, password);
+		try {
+			success = await util._bind(client_user, user, password);
+		} catch (e: any) {
+			message = e;
+			success = false;
+		}
+		client_user.unbind();
 		console.log(`Returning Success ${success}`);
-		return { error: !success, message: '' };
+		return { error: !success, message };
 	}
 
 	/**
@@ -124,8 +115,12 @@ export class ldap_class {
 	 * Ideally, bind when the class is created.
 	 * DO NOT ATTEMPT IF U DONT KNOW WHAT YOU ARE DOING
 	 */
-	async change_password(user: string, newpass: string): Promise<Api.Result> {
-		console.log('change_password called!');
+	async change_password(user: string, oldpass: string,
+		newpass: string): Promise<Api.Result> {
+		console.log(`change_password: oldpass: ${oldpass}`);
+		let success: boolean;
+		let message: string = "";
+		let client_user = this._connect();
 		const change = new ldapjs.Change({
 			operation: 'replace',
 			modification: new ldapjs.Attribute({
@@ -133,10 +128,15 @@ export class ldap_class {
 				'values': [newpass]
 			})
 		});
-		let success: boolean;
-		let message: string = "";
 		try {
-			success = await util._modify(this.client, user, change);
+			let bind_err = await this.validateUser(user, oldpass);
+			if (bind_err.error) {
+				throw new Error("Old password Wrong!");
+			}
+			let dn = (await this.get_member_info(user)).distinguishedName;
+			success = await util._modify(this.client, dn, change);
+			console.log(`Modify would have been called!`);
+			success = true;
 		} catch (e: any) {
 			console.log(`Error in change_password: ${e}`)
 			success = false;
@@ -239,4 +239,4 @@ export class session_class {
 // Exports
 const ldap = new ldap_class();
 const session = new session_class();
-export {ldap, session};
+export { ldap, session };
