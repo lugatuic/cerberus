@@ -39,30 +39,31 @@
 	}
 </script>
 
-<h1>Login to {org}!</h1>
-
-<form
-	method="POST"
-	action="/login"
-	on:submit={handleClick}
-	use:enhance={enhanceFunc}>
-	{#if is_processing}<h1 transition:slide>Thinking about it...</h1> {/if}
-	{#if my_error}
-		<div transition:slide>
-			<h1>Error</h1>
-			<p>{my_error_message}
-		</div>
-	{/if}
-	{#if my_success}<h1 transition:slide>Success!</h1>{/if}
-	<label for="username">
-		Username:
-		<input placeholder="user@acmuic.org"id="username" name="username" type="email" required />
-	</label>
-	<br />
-	<br />
-	<label for="password">
-		Password:
-		<input id="password" name="password" type="password" required />
-	</label>
-	<button type="submit">Submit</button>
-</form>
+<div transition:slide>
+	<h1>Login to {org}!</h1>
+	<form
+		method="POST"
+		action="/login"
+		on:submit={handleClick}
+		use:enhance={enhanceFunc}>
+		{#if is_processing}<h1 transition:slide>Thinking about it...</h1> {/if}
+		{#if my_error}
+			<div transition:slide>
+				<h1>Error</h1>
+				<p>{my_error_message}
+			</div>
+		{/if}
+		{#if my_success}<h1 transition:slide>Success!</h1>{/if}
+		<label for="username">
+			Username:
+			<input placeholder="user@acmuic.org"id="username" name="username" type="email" required />
+		</label>
+		<br />
+		<br />
+		<label for="password">
+			Password:
+			<input id="password" name="password" type="password" required />
+		</label>
+		<button type="submit">Submit</button>
+	</form>
+</div>

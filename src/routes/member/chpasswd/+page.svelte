@@ -46,6 +46,7 @@
 	}
 </script>
 
+<div transition:slide>
 <header>
 	<h1>Change Password</h1>
 	<strong>All Inputs are required!</strong>
@@ -89,3 +90,4 @@
 		{form?.message}
 	{/if}
 </form>
+</div>
