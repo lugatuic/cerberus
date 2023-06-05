@@ -38,7 +38,6 @@
 	}
 </script>
 
-<!-- TODO: Make this pretty and usable -->
 <h1>Login to {org}!</h1>
 
 <form
@@ -53,9 +52,7 @@
 			<p>{my_error_message}
 		</div>
 	{/if}
-	{#if my_success}
-		<h1 transition:slide>Success!</h1>
-	{/if}
+	{#if my_success}<h1 transition:slide>Success!</h1>{/if}
 	<label for="username">
 		Username:
 		<input placeholder="user@acmuic.org"id="username" name="username" type="email" required />

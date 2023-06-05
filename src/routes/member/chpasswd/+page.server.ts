@@ -18,12 +18,12 @@ export const actions = {
 
 		// Check if pass === pass2
 
-		if (!oldpass) {
-			return {success: false, message: 'No old password!'};
-		}
 		// @ts-ignore
 		let { error, message } = await ldap.change_password(user, oldpass, pass2);
 
-		return { success: !error, message };
+		if (error) {
+			return fail(400,  {error: true, message});
+		}
+		return { success: true, message };
 	}
 } satisfies Actions;
