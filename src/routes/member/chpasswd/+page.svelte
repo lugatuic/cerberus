@@ -47,14 +47,15 @@
 </script>
 
 <header>
-<strong>All Inputs are required!</strong>
+	<h1>Change Password</h1>
+	<strong>All Inputs are required!</strong>
 </header>
 <br />
 <form method="POST" use:enhance={enhcFunc}>
-	{#if ui_msg}<h1>{ui_msg}</h1>{/if}
-	{#if thinking}<h1>Thinking about it...</h1>{/if}
+	{#if ui_msg}<h1 transition:slide>{ui_msg}</h1>{/if}
+	{#if thinking}<h1 transition:slide>Thinking about it...</h1>{/if}
 	{#if form?.error}<h1 transition:slide>{form?.message}</h1>{/if}
-	{#if form?.success}<h1>Success!</h1>{/if}
+	{#if form?.success}<h1 transition:slide>Success!</h1>{/if}
 	<label>
 		Enter current password:
 		<input name="currpass" type="password" required autofocus />
