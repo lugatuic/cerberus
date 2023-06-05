@@ -96,7 +96,7 @@ export class ldap_class {
 		try {
 			success = await util._bind(client_user, user, password);
 		} catch (e: any) {
-			message = e;
+			message = "Invalid username or password.";
 			success = false;
 		}
 		client_user.unbind();

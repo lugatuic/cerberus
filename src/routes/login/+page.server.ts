@@ -25,17 +25,17 @@ export const actions = {
 		console.log(`Validating user ${user}`);
 
 		if (!user || !pass) {
-			return { error: true, message: 'Missing Username or Password!' };
+			return fail(400, {});
 		}
 		let { error, message } = await ldap.validateUser(user, pass);
 		if (error) {
-			return { error };
+			return fail(400, {my_error: true, my_message: "Invalid username/password."});
 		}
 
 		let session_token: string = await session.create_session_string(user);
 		event.cookies.set('cerberus', session_token, { path: '/', httpOnly: false });
 		console.log('set cookie!');
-		return { success: true, message, user };
+		return { my_success: true };
 	}
 } satisfies Actions;
 
