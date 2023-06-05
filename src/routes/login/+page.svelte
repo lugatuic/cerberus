@@ -34,6 +34,7 @@
 				my_success = true;
 			}
 			await applyAction(result);
+			update();
 		}
 	}
 </script>
