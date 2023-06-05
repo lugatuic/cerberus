@@ -2,6 +2,7 @@
 	import type { PageData } from './$types';
 	import { enhance, applyAction } from '$app/forms';
 	import {slide} from 'svelte/transition';
+	import {_password_req} from '$lib/client';
 	export let data: PageData;
 	export let form: ActionData;
 
@@ -13,12 +14,13 @@
 	let thinking = false;
 	function enhcFunc({formEl, formData, action, cancel, submitter }) {
 
-		let _lower: bool = /[a-z]+/.test(newpass);
-		let _upper = /[A-Z]+/.test(newpass);
-		let _number = /[0-9]+/.test(newpass);
-		let _special = /\W|_/.test(newpass);
+		// let _lower: bool = /[a-z]+/.test(newpass);
+		// let _upper = /[A-Z]+/.test(newpass);
+		// let _number = /[0-9]+/.test(newpass);
+		// let _special = /\W|_/.test(newpass);
 		
-		let _final = _lower && _upper && _number && _special;
+		// let _final = _lower && _upper && _number && _special;
+		let _final = _password_req(newpass);
 		if (!_final) {
 			ui_msg = "Password: 8 chars, must contain lowercase,uppercase,number,special";
 			// newpass_elt.setCustomValidity("Password: 8 chars, must contain lowercase,uppercase,number,special");
