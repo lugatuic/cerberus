@@ -2,6 +2,7 @@
 	import type { PageData } from './$types';
 	import { invalidateAll } from '$app/navigation';
 	import { enhance, applyAction, deserialize } from '$app/forms';
+	import {slide} from 'svelte/transition';
   import { page } from '$app/stores';
 	export let org;
 
@@ -45,13 +46,15 @@
 	action="/login"
 	on:submit={handleClick}
 	use:enhance={enhanceFunc}>
-	{#if is_processing}<h1>Thinking about it...</h1> {/if}
+	{#if is_processing}<h1 transition:slide>Thinking about it...</h1> {/if}
 	{#if my_error}
-		<h1>Error</h1>
-		<p>{my_error_message}
+		<div transition:slide>
+			<h1>Error</h1>
+			<p>{my_error_message}
+		</div>
 	{/if}
 	{#if my_success}
-		<h1>Success!</h1>
+		<h1 transition:slide>Success!</h1>
 	{/if}
 	<label for="username">
 		Username:
