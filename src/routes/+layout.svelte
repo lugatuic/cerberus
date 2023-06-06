@@ -25,6 +25,7 @@
 	{:else}
 		Not logged in!
 		<a href="/login">Log In</a>
+		<a href="/register">Register</a>
 	{/if}
 </nav>
 

@@ -265,3 +265,4 @@ docs/
 scratch
 docker-compose.yml
 /ldaprc
+*.ldif

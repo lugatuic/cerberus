@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { enhance, applyAction } from '$app/forms';
+	import { slide } from 'svelte/transition';
 
 	import { _password_req } from '$lib/client';
 	let ui_msg: string = undefined;
@@ -19,75 +20,56 @@
 	}
 </script>
 
-<header>
-	<h1>Register</h1>
-</header>
-<form method="POST" use:enhance={myEnhance}>
-	{#if ui_msg}<h1>{ui_msg}</h1>{/if}
-	<label>
-		NetID (new Username):
-		<input name="username" type="text" required pattern="[a-z]+[0-9]+" />
-	</label>
-	<br />
-	<label>
-		Create a new Password:
-		<input name="password" type="password" required />
-	</label>
-	<br />
-	<label>
-		Re-enter new Password:
-		<input name="password2" type="password" required />
-	</label>
-	<br />
-	<label>
-		UIN:
-		<input name="uin" type="tel" pattern="[0-9]+" required />
-	</label>
-	<br />
-	<label>
-		Email:
-		<input name="email" type="email" required />
-	</label>
-	<br />
-	<label>
-		Given Name:
-		<input name="gname" type="text" required />
-	</label>
-	<br />
-	<label>
-		Last Name:
-		<input name="lname" type="text" />
-	</label>
-	<br />
-	<label>
-		Major:
-		<input name="major" type="text" />
-	</label>
-	<br />
-	<label>
-		College:
-		<input name="college" type="text" />
-	</label>
-	<br />
-	<label>
-		Phone:
-		<input name="phone" type="tel" />
-	</label>
-	<button type="submit">Submit the form</button>
-</form>
-
-<!-- New-ADUser  -->
-<!-- -SamAccountName $user.username  -->
-<!-- -EmployeeID $user.uin  -->
-<!-- -Department $user.major  -->
-<!-- -Company $user.college  -->
-<!-- -EmailAddress $user.email  -->
-<!-- -MobilePhone $user.phone  -->
-<!-- -GivenName $user.fn  -->
-<!-- -Surname $user.ln  -->
-<!-- -EmployeeNumber $user.receipt  -->
-<!-- -Name $someName  -->
-<!-- -Organization $user.netid  -->
-<!-- -Enable $true  -->
-<!-- -AccountPassword $newPassword  -->
-<!-- -Path "ou=november,ou=2019,ou=acmusers,dc=acm,dc=cs" -->
+<!-- TODO: Add placeholders and title attributes -->
+<div transition:slide>
+	<header>
+		<h1>Register</h1>
+	</header>
+	<form id="regform" method="POST" use:enhance={myEnhance}>
+		{#if ui_msg}<h1>{ui_msg}</h1>{/if}
+	</form>
+	<table role="presentation">
+		<tr>
+			<td>NetID (new Username):</td>
+			<td><input form="regform" name="username" type="text" required
+								 pattern="[a-z]+[0-9]+" /></td>
+		</tr>
+		<tr>
+			<td>Create a new Password:</td>
+			<td><input form="regform" name="password" type="password" required /></td>
+		</tr>
+		<tr>
+			<td>Re-enter new Password:</td>
+			<td><input form="regform" name="password2" type="password" required /></td>
+		</tr>
+		<tr>
+			<td>UIN:</td>
+			<td><input form="regform" name="uin" type="tel" pattern="[0-9]+" required /></td>
+		</tr>
+		<tr>
+			<td>Email:</td>
+			<td><input form="regform" name="email" type="email" required /></td>
+		</tr>
+		<tr>
+			<td>Given Name:</td>
+			<td><input form="regform" name="gname" type="text" required /></td>
+		</tr>
+		<tr>
+			<td>Last Name:</td>
+			<td><input form="regform" name="lname" type="text" /></td>
+		</tr>
+		<tr>
+			<td>Major:</td>
+			<td><input form="regform" name="major" type="text" /></td>
+		</tr>
+		<tr>
+			<td>College:</td>
+			<td><input form="regform" name="college" type="text" /></td>
+		</tr>
+		<tr>
+			<td>Phone:</td>
+			<td><input form="regform" name="phone" type="tel" /></td>
+		</tr>
+	</table>
+	<button form="regform" type="submit">Submit the form</button>
+</div>

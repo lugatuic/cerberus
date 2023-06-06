@@ -64,11 +64,12 @@ export class ldap_class {
 		return cl;
 	}
 
-	private _get_client(): Api.LdapClient {
+	private async _get_client(): Promise<Api.LdapClient> {
 		let cl = this._connect();
-		cl.bind(LDAP_USER, LDAP_PASS, (err: any) => {
-			this.error = err !== null;
-		});
+		// cl.bind(LDAP_USER, LDAP_PASS, (err: any) => {
+		// 	this.error = err !== null;
+		// });
+		await util._bind(cl, LDAP_USER, LDAP_PASS);
 		return cl;
 	}
 
@@ -124,7 +125,7 @@ export class ldap_class {
 		console.log(`change_password: oldpass: ${oldpass}`);
 		let success: boolean;
 		let message: string = '';
-		let client = this._get_client();
+		let client = await this._get_client();
 		const change = new ldapjs.Change({
 			operation: 'replace',
 			modification: new ldapjs.Attribute({
@@ -162,7 +163,7 @@ export class ldap_class {
 	 * @todo Make the filter a ENV Var.
 	 */
 	async get_member_info(username: string): Promise<Api.MemberInfo> {
-		let client = this._get_client();
+		let client = await this._get_client();
 		const opts = {
 			filter: `(userPrincipalName=${username})`,
 			scope: 'sub',
@@ -176,6 +177,71 @@ export class ldap_class {
 		let attrs: Api.LdapAttribute[] = result.attributes;
 		let info = util._marshall(attrs);
 		return info;
+	}
+
+	/**
+	 * @remarks This function receives a new user registration
+	 * request from /register. This function simply performs
+	 * the add operation without any other verification.
+	 * Verify userinfo prior to calling this function.
+
+// -SamAccountName $user.username
+// -EmployeeID $user.uin
+// -Department $user.major
+// -Company $user.college
+// -EmailAddress $user.email
+// -MobilePhone $user.phone
+// -GivenName $user.fn
+// -Surname $user.ln
+// -EmployeeNumber $user.receipt
+// -Name $someName
+// -Organization $user.netid
+// -Enable $true
+// -AccountPassword $newPassword
+// -Path "ou=november,ou=2019,ou=acmusers,dc=acm,dc=cs"
+	 */
+	async add_user(userinfo: any): Promise<Api.Result> {
+		const _entry: any= {
+			"objectClass": ["top","person","organizationalPerson","user"],
+			"instanceType": "4",
+			"objectCategory": "CN=Person,CN=Schema,CN=Configuration,DC=acmuic,DC=org",
+			"cn": `${userinfo.gname}`,
+			"employeeID": `${userinfo.uin}`,
+			"department": `${userinfo.major}`,
+			"company": `${userinfo.college}`,
+			"mail": `${userinfo.email}`,
+			"mobile": `${userinfo.phone}`,
+			// "givenName": `userinfo.gname`,
+			"sn": `${userinfo.sname}`,
+			"sAMAccountname": `${userinfo.username}`,
+			"ou": "cerberususers",
+			"userPassword": `${userinfo.password}`,
+		};
+
+		let entry = _entry;
+
+		// Object.keys(_entry).forEach((k) => {
+		// 	console.log(`Making Attr ${k} with ${_entry[k]}`)
+		// 	let attr = new ldapjs.Attribute({ type: k});
+		// 	attr.addValue(_entry[k]);
+		// 	entry.push(attr);
+		// });
+
+		console.log(`Adding ${entry}\n\nLen:${entry.length}`);
+		let client = await this._get_client();
+
+		let dn = `cn=${userinfo.gname},OU=CerberusUsers,DC=acmuic,DC=org`;
+		let success: boolean = false;
+		let message: string;
+		try {
+			success = await util._add(client, dn, entry);
+		} catch (e: any) {
+			success = false;
+			message=e;
+			console.log(e);
+		}
+		console.log(`Registration: ${success}`);
+		return { error: !success, message: ''};
 	}
 }
 

@@ -134,3 +134,16 @@ export function _sane_date(filetime: string): Date {
 	d.setUTCSeconds(lastLogUnix);
 	return d;
 }
+
+export async function _add(cl:Api.LdapClient,
+													 dn: string, entry: any): Promise<boolean> {
+	return new Promise((resolve, reject) => {
+		cl.add(dn, entry, (err) => {
+			if (err) {
+				reject(err);
+			} else {
+				resolve(true);
+			}
+		});
+	});
+}

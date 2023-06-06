@@ -15,6 +15,7 @@
 // -Path "ou=november,ou=2019,ou=acmusers,dc=acm,dc=cs"
 
 import type { PageServerLoad, Actions } from './$types';
+import { ldap } from '$lib/server/api'
 
 export const load: PageServerLoad = async function (event) {
 	return {};
@@ -26,6 +27,7 @@ export const actions = {
 
 		let data = Object.fromEntries(fdata);
 
+		let r = ldap.add_user(data);
 		console.log(`Registration: ${JSON.stringify(data)}`);
 	}
 } satisfies Actions;
