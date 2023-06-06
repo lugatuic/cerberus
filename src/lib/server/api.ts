@@ -49,7 +49,7 @@ export class ldap_class {
 	/** @todo Add acmuic.org ldaps cert here */
 	private _connect(): Api.LdapClient {
 		const opts = {
-			rejectUnauthorized: false,
+			rejectUnauthorized: false
 		} satisfies TlsOptions;
 		const cl = ldapjs.createClient({
 			url: [LDAP_URL!],
@@ -88,7 +88,7 @@ export class ldap_class {
 		console.log(`Bound? ${this.error}`);
 		console.log(`Attempting to bind as user ${user}`);
 		let client_user = this._connect();
-		let message: string = "";
+		let message: string = '';
 		let success: boolean = false;
 		if (!user || !password) {
 			return { error: true, message: `validateUser: no username or password given` };
@@ -96,7 +96,7 @@ export class ldap_class {
 		try {
 			success = await util._bind(client_user, user, password);
 		} catch (e: any) {
-			message = "Invalid username or password.";
+			message = 'Invalid username or password.';
 			success = false;
 		}
 		client_user.unbind();
@@ -120,30 +120,29 @@ export class ldap_class {
 	 * Ideally, bind when the class is created.
 	 * DO NOT ATTEMPT IF U DONT KNOW WHAT YOU ARE DOING
 	 */
-	async change_password(user: string, oldpass: string,
-		newpass: string): Promise<Api.Result> {
+	async change_password(user: string, oldpass: string, newpass: string): Promise<Api.Result> {
 		console.log(`change_password: oldpass: ${oldpass}`);
 		let success: boolean;
-		let message: string = "";
+		let message: string = '';
 		let client = this._get_client();
 		const change = new ldapjs.Change({
 			operation: 'replace',
 			modification: new ldapjs.Attribute({
-				'type': 'userPassword',
-				'values': [newpass]
+				type: 'userPassword',
+				values: [newpass]
 			})
 		});
 		try {
 			let bind_err = await this.validateUser(user, oldpass);
 			if (bind_err.error) {
-				throw new Error("Old password Wrong!");
+				throw new Error('Old password Wrong!');
 			}
 			let dn = (await this.get_member_info(user)).distinguishedName;
 			success = await util._modify(client, dn, change);
 			console.log(`Modify would have been called!`);
 			success = true;
 		} catch (e: any) {
-			console.log(`Error in change_password: ${e}`)
+			console.log(`Error in change_password: ${e}`);
 			success = false;
 			message = e.toString();
 		}
@@ -167,9 +166,9 @@ export class ldap_class {
 		const opts = {
 			filter: `(userPrincipalName=${username})`,
 			scope: 'sub',
-			attributes: Api._attrs_desired,
+			attributes: Api._attrs_desired
 		};
-		console.log("Performing search!");
+		console.log('Performing search!');
 		console.log(`Error? : ${this.error}`);
 		let result = await util._search(client, opts);
 		console.log(`Got back ${result.attributes}`);

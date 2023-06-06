@@ -18,7 +18,7 @@
 <nav>
 	{#if $page.data?.user}
 		<a href="/member">User: {$page.data.user}</a>
-	  <a href="/">Home</a>
+		<a href="/">Home</a>
 		<a href="/member/chpasswd">Chpasswd</a>
 		<a rel="external" href="/" on:click|preventDefault={delCookie}>Logout</a>
 		<!-- This <a> gaslit me for way too long --->
@@ -33,6 +33,4 @@
 	<slot />
 </main>
 
-<footer>
-	Copyright LOLOL
-</footer>
+<footer>Copyright LOLOL</footer>
