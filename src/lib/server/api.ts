@@ -19,6 +19,7 @@ let { TOKEN, LDAP_USER, LDAP_PASS, LDAP_URL } = env;
  * @remarks
  * This class represents the state of the LDAP connection.
  * Exposes functions which perform LDAP read/writes/binds.
+ * @todo Maybe make this class static?
  */
 export class ldap_class {
 	// private client?: Api.LdapClient;
@@ -62,6 +63,7 @@ export class ldap_class {
 		});
 
 		return cl;
+
 	}
 
 	private async _get_client(): Promise<Api.LdapClient> {
@@ -120,6 +122,7 @@ export class ldap_class {
 	 * Use instance variables in this class.
 	 * Ideally, bind when the class is created.
 	 * DO NOT ATTEMPT IF U DONT KNOW WHAT YOU ARE DOING
+	 * Update June 7th: Function is complete.
 	 */
 	async change_password(user: string, oldpass: string, newpass: string): Promise<Api.Result> {
 		console.log(`change_password: oldpass: ${oldpass}`);
@@ -154,10 +157,10 @@ export class ldap_class {
 	 * This function should fetch information from LDAP for the current user.
 	 * List of information fetched (subject to change):
 	 * 1. cn
-	 * 2. badPasswordTime [password expiry]
+	 * 2. badPasswordTime [last time password was rejected]
 	 * 3. description
 	 * 4. memberOf
-	 *
+	 * 5. DN
 	 * Filtering on `userPrincipalName` which is in the form
 	 * <username>@acmuic.org
 	 * @todo Make the filter a ENV Var.
@@ -184,38 +187,29 @@ export class ldap_class {
 	 * request from /register. This function simply performs
 	 * the add operation without any other verification.
 	 * Verify userinfo prior to calling this function.
-
-// -SamAccountName $user.username
-// -EmployeeID $user.uin
-// -Department $user.major
-// -Company $user.college
-// -EmailAddress $user.email
-// -MobilePhone $user.phone
-// -GivenName $user.fn
-// -Surname $user.ln
-// -EmployeeNumber $user.receipt
-// -Name $someName
-// -Organization $user.netid
-// -Enable $true
-// -AccountPassword $newPassword
-// -Path "ou=november,ou=2019,ou=acmusers,dc=acm,dc=cs"
+	 * @todo Make a type for userinfo
 	 */
 	async add_user(userinfo: any): Promise<Api.Result> {
+		// The shape of this object has to be string->string
+		// otherwise the library shits itself.
 		const _entry: any= {
+			// Mandatory Attrs (do not change)
 			"objectClass": ["top","person","organizationalPerson","user"],
 			"instanceType": "4",
 			"objectCategory": "CN=Person,CN=Schema,CN=Configuration,DC=acmuic,DC=org",
+			"ou": "cerberususers",
+			// User Info:
 			"cn": `${userinfo.gname}`,
 			"employeeID": `${userinfo.uin}`,
 			"department": `${userinfo.major}`,
 			"company": `${userinfo.college}`,
 			"mail": `${userinfo.email}`,
 			"mobile": `${userinfo.phone}`,
-			// "givenName": `userinfo.gname`,
+			"givenName": `userinfo.gname`,
 			"sn": `${userinfo.sname}`,
 			"sAMAccountname": `${userinfo.username}`,
-			"ou": "cerberususers",
 			"userPassword": `${userinfo.password}`,
+			"displayName": `${userinfo.gname + userinfo.sname}`
 		};
 
 		let entry = _entry;
@@ -230,9 +224,10 @@ export class ldap_class {
 		console.log(`Adding ${entry}\n\nLen:${entry.length}`);
 		let client = await this._get_client();
 
-		let dn = `cn=${userinfo.gname},OU=CerberusUsers,DC=acmuic,DC=org`;
+		/** @todo make this a ENV Var */
+		let dn = `CN=${userinfo.gname},OU=CerberusUsers,DC=acmuic,DC=org`;
 		let success: boolean = false;
-		let message: string;
+		let message: string = '';
 		try {
 			success = await util._add(client, dn, entry);
 		} catch (e: any) {
@@ -241,7 +236,7 @@ export class ldap_class {
 			console.log(e);
 		}
 		console.log(`Registration: ${success}`);
-		return { error: !success, message: ''};
+		return { error: !success, message};
 	}
 }
 
