@@ -5,6 +5,7 @@ declare global {
 		// interface Error {}
 		interface Locals {
 			user: string | null;
+			discord_token?: string
 		}
 		// interface PageData {}
 		// interface Platform {}
