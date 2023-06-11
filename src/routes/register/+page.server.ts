@@ -20,26 +20,24 @@
 	
 	*/
 import type { PageServerLoad, Actions } from './$types';
-import {fail} from '@sveltejs/kit';
-import { ldap } from '$lib/server/api'
-import type {URL} from 'node:url';
+import { fail } from '@sveltejs/kit';
+import { ldap } from '$lib/server/api';
+import type { URL } from 'node:url';
+import { env } from '$env/dynamic/private';
+import * as crypto from 'node:crypto';
 
-export const load: PageServerLoad = async function (event) {
-	let search_params = event.url.searchParams;
-	let code = search_params.get("code");
+// export const load: PageServerLoad = async function (event) {
+// };
 
-	event.locals.discord_token = code ?? undefined;
-	return { discord_code: code };
-};
-
+const { CLIENT_SECRET, HMAC_KEY } = env;
 export const actions = {
-	default: async (event) => {
+	discord: async (event) => {
 		let fdata: FormData = await event.request.formData();
 
 		let data = Object.fromEntries(fdata);
 
-		if (!fdata.get("discord_code")) {
-			throw fail(400, {message: "Missing discord info!"});
+		if (!fdata.get('discord_code')) {
+			throw fail(400, { message: 'Missing discord info!' });
 		}
 		// let discordRE = /^#token_type=(\w+)&access_token=(\w+)&expires_in=(\d+).*$/g;
 		// let discord_tokens = fdata.get("discord")?.toString();
@@ -48,21 +46,23 @@ export const actions = {
 		// 0th pos is the whole string, 1st is 1st match group, etc.
 		// let api_token = matches.next().value[2];
 
-		const code = data["discord_code"]!;
-		const token_url = "https://discord.com/api/oauth2/token";
-		const revoke_url = "https://discord.com/api/oauth2/token/revoke";
-		const client_id = "1115994148206542909";
+		const code = data['discord_code']!;
+		const token_url = 'https://discord.com/api/oauth2/token';
+		const revoke_url = 'https://discord.com/api/oauth2/token/revoke';
+		const client_id = '1115994148206542909';
 		// ############## CHANGE THIS #########################
-		const client_secret = "";
+		const client_secret = CLIENT_SECRET;
 		// ############## CHANGE THIS #########################
 
+		let redirect_uri = import.meta.env.DEV ? "http://localhost:5173" : "https://cerberus.acmuic.org/register"
 		const _token_body = {
-			'client_id': client_id,
-			'client_secret': client_secret,
-			'grant_type': 'authorization_code',
-			'code': code,
-			'redirect_uri': `http://localhost:5173/register`
-		}
+			client_id: client_id,
+			client_secret: client_secret,
+			grant_type: 'authorization_code',
+			code: code,
+			redirect_uri
+		};
+		// Thanks Stackoverflow!
 		let token_body = new URLSearchParams();
 		for (const key in _token_body) {
 			// @ts-ignore
@@ -79,48 +79,78 @@ export const actions = {
 
 		let token_json = await token.json();
 		console.log(token_json);
-		let api_token = token_json["access_token"];
+		let api_token = token_json['access_token'];
 		let guilds_resp = await fetch(`https://discord.com/api/v10/users/@me/guilds`, {
-			method: "GET",
-			headers: {
-				"Authorization": `Bearer ${api_token}`,
-			},
-		});
-
-		let user_info = await fetch(`https://discord.com/api/v10/users/@me`,{
 			method: 'GET',
 			headers: {
-				'Authorization': `Bearer ${api_token}`
+				Authorization: `Bearer ${api_token}`
 			}
-		})
+		});
+
+		let user_info = await fetch(`https://discord.com/api/v10/users/@me`, {
+			method: 'GET',
+			headers: {
+				Authorization: `Bearer ${api_token}`
+			}
+		});
 		let user_info_json = await user_info.json();
 
-		let user_email = user_info_json["email"] ?? undefined;
-		let user_email_verified: boolean = user_info_json["verified"] ?? false;
-		let mfa = user_info_json["mfa_enabled"] ?? false;
+		let user_email = user_info_json['email'] ?? undefined;
+		let user_email_verified: boolean = user_info_json['verified'] ?? false;
+		let mfa = user_info_json['mfa_enabled'] ?? false;
 		let guilds = await guilds_resp.json();
 
-		console.log("#### logging guilds!");
-		let acm_guildid = "652006495675875359";
+		console.log('#### logging guilds!');
+		let acm_guildid = '652006495675875359';
 		let in_acm = false;
 		for (let g of guilds) {
-			let gid = g["id"];
+			let gid = g['id'];
 			if (gid === acm_guildid) {
 				in_acm = true;
 			}
 		}
 		if (!in_acm) {
-			throw fail(400, {message: "Not in ACM!"});
+			throw fail(400, { message: 'Not in ACM!' });
 		} else {
-			console.log("##### USER IN ACM!");
+			console.log('##### USER IN ACM!');
 		}
 		console.log(user_info_json);
 		if (in_acm && user_email_verified && user_email && mfa) {
 			let r = await ldap.add_user(data);
-			return {success: !r.error, message: r.message}
+			console.log(`Allowing user ${data['username']}`);
+			return { success: !r.error, message: r.message };
 		} else {
-			throw fail(400, {message: `Discord account must be in ACM discord, verfied email and 2FA`});
+			throw fail(400, { message: `Discord account must be in ACM discord, verfied email and 2FA` });
 		}
 		// console.log(`Registration: ${JSON.stringify(data)}`);
+	},
+	manual: async (event) => {
+		let fdata: FormData = await event.request.formData();
+		let data: Record<string, any> = Object.fromEntries(fdata);
+
+		let buf_username = Buffer.from(data["username"]!);
+		let buf_received = Buffer.from(data["verification"], 'hex');
+
+		console.log(`Hashing: ${data["username"]}`);
+
+		const key = Buffer.from(HMAC_KEY,'hex')
+		let our_hmac = crypto.createHmac('sha1', key, {encoding: 'hex'});
+		our_hmac.update(buf_username);
+		let our_hmac_dgst = our_hmac.digest();
+
+		console.log(our_hmac_dgst);
+		console.log(`Received HMAC:` + buf_received);
+
+		let is_equal = crypto.timingSafeEqual(buf_received, our_hmac_dgst);
+
+		if (is_equal) {
+			console.log(`** User ${data["username"]} passed verification!`);
+			let r = await ldap.add_user(data);
+			console.log(`Allowing user ${data['username']}`);
+			return { success: !r.error, message: r.message };
+		} else {
+			throw fail(400, {message: "Verification code incorrect!"});
+		}
+
 	}
 } satisfies Actions;

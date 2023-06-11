@@ -63,7 +63,6 @@ export class ldap_class {
 		});
 
 		return cl;
-
 	}
 
 	private async _get_client(): Promise<Api.LdapClient> {
@@ -232,11 +231,11 @@ export class ldap_class {
 			success = await util._add(client, dn, entry);
 		} catch (e: any) {
 			success = false;
-			message=e;
+			message = e;
 			console.log(e);
 		}
 		console.log(`Registration: ${success}`);
-		return { error: !success, message};
+		return { error: !success, message };
 	}
 }
 
