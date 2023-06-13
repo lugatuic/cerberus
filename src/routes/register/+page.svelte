@@ -8,6 +8,7 @@
 	let { page } = getStores();
 	let data;
 	let form;
+	let form_msg;
 	import { _password_req } from '$lib/client';
 	let ui_msg: string = undefined;
 	function myEnhance({ data, cancel }) {
@@ -19,11 +20,17 @@
 			ui_msg = 'Password must contain lower,upper,digit,special';
 			cancel();
 		}
+		ui_msg = "Thinking about it...";
 		// if (!cl_discord_code) {
 		// 	ui_msg = 'Make sure the discord code is in the URL!';
 		// 	cancel();
 		// }
 		return async ({ result, update }) => {
+			if (result.type === 'failure') {
+				ui_msg = result.data.message;
+			} else {
+				ui_msg = "Success!"
+			}
 			await applyAction(result);
 			update();
 		};
@@ -45,21 +52,39 @@
 	let manual = false;
 </script>
 
+<aside transition:slide>
+<strong> Instructions </strong>
+<p> Verification with Discord </p>
+<ul>
+<li> Click the discord button, sign in to discord</li>
+<li> You will end up on the same page but with a code in the URL</li>
+<li> Fill out the rest of the information and click submit</li>
+<li>Your discord account must have 2FA, a verified email address and be in the ACM discord </li>
+</ul>
+<hr />
+<p>Manual Verification</p>
+<ul>
+	<li>Contact an admin, give them your netID and receive a special code from them</li>
+	<li>Choose the manual verification option and fill out the form</li>
+	<li>Use the same NetID as what you told the admin</li>
+	<li><strong>DO NOT share your special code with anyone!</li>
+</ul>
+</aside>
 <!-- TODO: Add placeholders and title attributes -->
-<div transition:slide>
+<div id="form" transition:slide>
 	<header>
 		<h1>Register</h1>
 		<!-- <h1>Fragments: {fragments}</h1> -->
 		<h1>Code: {cl_discord_code ?? 'Please click the discord link'}</h1>
-		{#if form?.message}<h2 transition:slide>{form?.message}</h2>{/if}
 	</header>
 	<section>
 		<h1>Step 1: Choose Verification Method</h1>
+		{#if form?.message}<h2 transition:slide>{form?.message}</h2>{/if}
 		<button type="button"><a class="btn" href={discord_url} rel="external">Discord</a></button>
-		<input type="button" on:click={() => (manual = !manual)} value="Manual Verification" />
-		{#if ui_msg}<h2>{ui_msg}</h2>{/if}
+		<input class="ibutton" type="button" on:click={() => (manual = !manual)} value="Manual Verification" />
+		{#if ui_msg}<h2 transition:slide>{ui_msg}</h2>{/if}
 	</section>
-	<form id="regform" action="?/discord" method="POST" use:enhance={myEnhance} />
+	<form id="regform" method="POST" use:enhance={myEnhance} />
 	<input
 		bind:this={discordInput2}
 		bind:value={cl_discord_code}
@@ -71,26 +96,27 @@
 		<section>
 			<hr />
 			<h1>Step 2: Fill New User Details</h1>
+			{#if form?.message}<h2>{form?.message}</h2>{/if}
 			<table role="presentation" transition:slide>
 				<tr>
 					<td>NetID (new Username):</td>
-					<td><input form="regform" name="username" type="text" pattern="[a-z]+[0-9]+" /></td>
+					<td><input form="regform" name="username" type="text" pattern="[a-z]+[0-9]+" required /></td>
 				</tr>
 				<tr>
 					<td>Create a new Password:</td>
-					<td><input form="regform" name="password" type="password" /></td>
+					<td><input form="regform" name="password" type="password" required /></td>
 				</tr>
 				<tr>
 					<td>Re-enter new Password:</td>
-					<td><input form="regform" name="password2" type="password" /></td>
+					<td><input form="regform" name="password2" type="password" required /></td>
 				</tr>
 				<tr>
 					<td>UIN:</td>
-					<td><input form="regform" name="uin" type="tel" pattern="[0-9]+" /></td>
+					<td><input form="regform" name="uin" type="tel" pattern="[0-9]+" required /></td>
 				</tr>
 				<tr>
 					<td>Email:</td>
-					<td><input form="regform" name="email" type="email" /></td>
+					<td><input form="regform" name="email" type="email" required /></td>
 				</tr>
 				<tr>
 					<td>Given Name:</td>
@@ -115,23 +141,48 @@
 				{#if manual}
 					<tr>
 						<td> Verification Code:</td>
-						<td><input form="regform" name="verification" type="text" /></td>
+						<td><input form="regform" name="verification" type="text" required /></td>
 					</tr>
 				{/if}
 			</table>
 		</section>
 	{/if}
-	{#if cl_discord_code}
-		<button form="regform" type="submit">Submit with Discord</button>
+	{#if cl_discord_code && !manual}
+		<button form="regform" formaction="?/discord" type="submit">Submit with Discord</button>
 	{:else if manual}
 		<button form="regform" formaction="?/manual">Submit with manual verification</button>
 	{/if}
+
 </div>
 
+
+
 <style>
+	aside {
+		position: fixed;
+		padding: 1em;
+		border-style: solid;
+		margin-left: 1em;
+		top: 1em;
+		left: 50%;
+		max-width: 45%;
+	}
+	#form {
+		top: 2em;
+		max-width: 50%;
+	}
 	a.btn {
 		appearance: button;
 		text-decoration: none;
 		color: initial;
+	}
+	.ibutton, button {
+		background-color: var(--primary-button);
+		text: var(--text);
+		border-style: solid;
+		border-color: var(--accent);
+	}
+	.ibutton:hover, button:hover, .ibutton:focus, button:focus {
+		border-style: groove;
 	}
 </style>

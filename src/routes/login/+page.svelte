@@ -63,3 +63,15 @@
 		<button type="submit">Submit</button>
 	</form>
 </div>
+
+<style>
+	button {
+		background-color: var(--primary-button);
+		text: var(--text);
+		border-style: solid;
+		border-color: var(--accent);
+	}
+	button:hover, button:focus {
+		border-style: groove;
+	}
+</style>
