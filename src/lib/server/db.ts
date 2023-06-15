@@ -1,11 +1,12 @@
 import { env } from '$env/dynamic/private';
 import knex, {Knex} from 'knex';
+import path from 'node:path';
 const { DB_PATH_PREFIX } = env;
 
 const knx: Knex = knex({
 	client: 'sqlite3',
 	connection: {
-		filename: `${DB_PATH_PREFIX ?? "."}/discordusers.db`,
+		filename: path.resolve(DB_PATH_PREFIX ?? ".", "discordusers.db"),
 	},
 	useNullAsDefault: true
 });
