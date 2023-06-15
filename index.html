@@ -13,337 +13,367 @@
 <div class="tsd-page-title">
 <h2>cerberus - v0.0.1</h2></div>
 <div class="tsd-panel tsd-typography"><?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<head>
-<!-- 2023-05-22 Mon 14:57 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Cerberus: The LDAP Guardian</title>
-<meta name="author" content="Soham S Gumaste" />
-<meta name="generator" content="Org Mode" />
-<style>
-  #content { max-width: 60em; margin: auto; }
-  .title  { text-align: center;
-             margin-bottom: .2em; }
-  .subtitle { text-align: center;
-              font-size: medium;
-              font-weight: bold;
-              margin-top:0; }
-  .todo   { font-family: monospace; color: red; }
-  .done   { font-family: monospace; color: green; }
-  .priority { font-family: monospace; color: orange; }
-  .tag    { background-color: #eee; font-family: monospace;
-            padding: 2px; font-size: 80%; font-weight: normal; }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
-  .underline { text-decoration: underline; }
-  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
-  p.verse { margin-left: 3%; }
-  pre {
-    border: 1px solid #e6e6e6;
-    border-radius: 3px;
-    background-color: #f2f2f2;
-    padding: 8pt;
-    font-family: monospace;
-    overflow: auto;
-    margin: 1.2em;
-  }
-  pre.src {
-    position: relative;
-    overflow: auto;
-  }
-  pre.src:before {
-    display: none;
-    position: absolute;
-    top: -8px;
-    right: 12px;
-    padding: 3px;
-    color: #555;
-    background-color: #f2f2f299;
-  }
-  pre.src:hover:before { display: inline; margin-top: 14px;}
-  /* Languages per Org manual */
-  pre.src-asymptote:before { content: 'Asymptote'; }
-  pre.src-awk:before { content: 'Awk'; }
-  pre.src-authinfo::before { content: 'Authinfo'; }
-  pre.src-C:before { content: 'C'; }
-  /* pre.src-C++ doesn't work in CSS */
-  pre.src-clojure:before { content: 'Clojure'; }
-  pre.src-css:before { content: 'CSS'; }
-  pre.src-D:before { content: 'D'; }
-  pre.src-ditaa:before { content: 'ditaa'; }
-  pre.src-dot:before { content: 'Graphviz'; }
-  pre.src-calc:before { content: 'Emacs Calc'; }
-  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-fortran:before { content: 'Fortran'; }
-  pre.src-gnuplot:before { content: 'gnuplot'; }
-  pre.src-haskell:before { content: 'Haskell'; }
-  pre.src-hledger:before { content: 'hledger'; }
-  pre.src-java:before { content: 'Java'; }
-  pre.src-js:before { content: 'Javascript'; }
-  pre.src-latex:before { content: 'LaTeX'; }
-  pre.src-ledger:before { content: 'Ledger'; }
-  pre.src-lisp:before { content: 'Lisp'; }
-  pre.src-lilypond:before { content: 'Lilypond'; }
-  pre.src-lua:before { content: 'Lua'; }
-  pre.src-matlab:before { content: 'MATLAB'; }
-  pre.src-mscgen:before { content: 'Mscgen'; }
-  pre.src-ocaml:before { content: 'Objective Caml'; }
-  pre.src-octave:before { content: 'Octave'; }
-  pre.src-org:before { content: 'Org mode'; }
-  pre.src-oz:before { content: 'OZ'; }
-  pre.src-plantuml:before { content: 'Plantuml'; }
-  pre.src-processing:before { content: 'Processing.js'; }
-  pre.src-python:before { content: 'Python'; }
-  pre.src-R:before { content: 'R'; }
-  pre.src-ruby:before { content: 'Ruby'; }
-  pre.src-sass:before { content: 'Sass'; }
-  pre.src-scheme:before { content: 'Scheme'; }
-  pre.src-screen:before { content: 'Gnu Screen'; }
-  pre.src-sed:before { content: 'Sed'; }
-  pre.src-sh:before { content: 'shell'; }
-  pre.src-sql:before { content: 'SQL'; }
-  pre.src-sqlite:before { content: 'SQLite'; }
-  /* additional languages in org.el's org-babel-load-languages alist */
-  pre.src-forth:before { content: 'Forth'; }
-  pre.src-io:before { content: 'IO'; }
-  pre.src-J:before { content: 'J'; }
-  pre.src-makefile:before { content: 'Makefile'; }
-  pre.src-maxima:before { content: 'Maxima'; }
-  pre.src-perl:before { content: 'Perl'; }
-  pre.src-picolisp:before { content: 'Pico Lisp'; }
-  pre.src-scala:before { content: 'Scala'; }
-  pre.src-shell:before { content: 'Shell Script'; }
-  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
-  /* additional language identifiers per "defun org-babel-execute"
+    <head>
+        <!-- 2023-05-22 Mon 14:57 -->
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Cerberus: The LDAP Guardian</title>
+        <meta name="author" content="Soham S Gumaste" />
+        <meta name="generator" content="Org Mode" />
+        <style>
+            #content {
+                max-width: 60em;
+                margin: auto;
+            }
+            .title {
+                text-align: center;
+                margin-bottom: 0.2em;
+            }
+            .subtitle {
+                text-align: center;
+                font-size: medium;
+                font-weight: bold;
+                margin-top: 0;
+            }
+            .todo {
+                font-family: monospace;
+                color: red;
+            }
+            .done {
+                font-family: monospace;
+                color: green;
+            }
+            .priority {
+                font-family: monospace;
+                color: orange;
+            }
+            .tag {
+                background-color: #eee;
+                font-family: monospace;
+                padding: 2px;
+                font-size: 80%;
+                font-weight: normal;
+            }
+            .timestamp {
+                color: #bebebe;
+            }
+            .timestamp-kwd {
+                color: #5f9ea0;
+            }
+            .org-right {
+                margin-left: auto;
+                margin-right: 0px;
+                text-align: right;
+            }
+            .org-left {
+                margin-left: 0px;
+                margin-right: auto;
+                text-align: left;
+            }
+            .org-center {
+                margin-left: auto;
+                margin-right: auto;
+                text-align: center;
+            }
+            .underline {
+                text-decoration: underline;
+            }
+            #postamble p,
+            #preamble p {
+                font-size: 90%;
+                margin: 0.2em;
+            }
+            p.verse {
+                margin-left: 3%;
+            }
+            pre {
+                border: 1px solid #e6e6e6;
+                border-radius: 3px;
+                background-color: #f2f2f2;
+                padding: 8pt;
+                font-family: monospace;
+                overflow: auto;
+                margin: 1.2em;
+            }
+            pre.src {
+                position: relative;
+                overflow: auto;
+            }
+            pre.src:before {
+                display: none;
+                position: absolute;
+                top: -8px;
+                right: 12px;
+                padding: 3px;
+                color: #555;
+                background-color: #f2f2f299;
+            }
+            pre.src:hover:before {
+                display: inline;
+                margin-top: 14px;
+            }
+            /* Languages per Org manual */
+            pre.src-asymptote:before {
+                content: 'Asymptote';
+            }
+            pre.src-awk:before {
+                content: 'Awk';
+            }
+            pre.src-authinfo::before {
+                content: 'Authinfo';
+            }
+            pre.src-C:before {
+                content: 'C';
+            }
+            /* pre.src-C++ doesn't work in CSS */
+            pre.src-clojure:before {
+                content: 'Clojure';
+            }
+            pre.src-css:before {
+                content: 'CSS';
+            }
+            pre.src-D:before {
+                content: 'D';
+            }
+            pre.src-ditaa:before {
+                content: 'ditaa';
+            }
+            pre.src-dot:before {
+                content: 'Graphviz';
+            }
+            pre.src-calc:before {
+                content: 'Emacs Calc';
+            }
+            pre.src-emacs-lisp:before {
+                content: 'Emacs Lisp';
+            }
+            pre.src-fortran:before {
+                content: 'Fortran';
+            }
+            pre.src-gnuplot:before {
+                content: 'gnuplot';
+            }
+            pre.src-haskell:before {
+                content: 'Haskell';
+            }
+            pre.src-hledger:before {
+                content: 'hledger';
+            }
+            pre.src-java:before {
+                content: 'Java';
+            }
+            pre.src-js:before {
+                content: 'Javascript';
+            }
+            pre.src-latex:before {
+                content: 'LaTeX';
+            }
+            pre.src-ledger:before {
+                content: 'Ledger';
+            }
+            pre.src-lisp:before {
+                content: 'Lisp';
+            }
+            pre.src-lilypond:before {
+                content: 'Lilypond';
+            }
+            pre.src-lua:before {
+                content: 'Lua';
+            }
+            pre.src-matlab:before {
+                content: 'MATLAB';
+            }
+            pre.src-mscgen:before {
+                content: 'Mscgen';
+            }
+            pre.src-ocaml:before {
+                content: 'Objective Caml';
+            }
+            pre.src-octave:before {
+                content: 'Octave';
+            }
+            pre.src-org:before {
+                content: 'Org mode';
+            }
+            pre.src-oz:before {
+                content: 'OZ';
+            }
+            pre.src-plantuml:before {
+                content: 'Plantuml';
+            }
+            pre.src-processing:before {
+                content: 'Processing.js';
+            }
+            pre.src-python:before {
+                content: 'Python';
+            }
+            pre.src-R:before {
+                content: 'R';
+            }
+            pre.src-ruby:before {
+                content: 'Ruby';
+            }
+            pre.src-sass:before {
+                content: 'Sass';
+            }
+            pre.src-scheme:before {
+                content: 'Scheme';
+            }
+            pre.src-screen:before {
+                content: 'Gnu Screen';
+            }
+            pre.src-sed:before {
+                content: 'Sed';
+            }
+            pre.src-sh:before {
+                content: 'shell';
+            }
+            pre.src-sql:before {
+                content: 'SQL';
+            }
+            pre.src-sqlite:before {
+                content: 'SQLite';
+            }
+            /* additional languages in org.el's org-babel-load-languages alist */
+            pre.src-forth:before {
+                content: 'Forth';
+            }
+            pre.src-io:before {
+                content: 'IO';
+            }
+            pre.src-J:before {
+                content: 'J';
+            }
+            pre.src-makefile:before {
+                content: 'Makefile';
+            }
+            pre.src-maxima:before {
+                content: 'Maxima';
+            }
+            pre.src-perl:before {
+                content: 'Perl';
+            }
+            pre.src-picolisp:before {
+                content: 'Pico Lisp';
+            }
+            pre.src-scala:before {
+                content: 'Scala';
+            }
+            pre.src-shell:before {
+                content: 'Shell Script';
+            }
+            pre.src-ebnf2ps:before {
+                content: 'ebfn2ps';
+            }
+            /* additional language identifiers per "defun org-babel-execute"
        in ob-*.el */
-  pre.src-cpp:before  { content: 'C++'; }
-  pre.src-abc:before  { content: 'ABC'; }
-  pre.src-coq:before  { content: 'Coq'; }
-  pre.src-groovy:before  { content: 'Groovy'; }
-  /* additional language identifiers from org-babel-shell-names in
+            pre.src-cpp:before {
+                content: 'C++';
+            }
+            pre.src-abc:before {
+                content: 'ABC';
+            }
+            pre.src-coq:before {
+                content: 'Coq';
+            }
+            pre.src-groovy:before {
+                content: 'Groovy';
+            }
+            /* additional language identifiers from org-babel-shell-names in
      ob-shell.el: ob-shell is the only babel language using a lambda to put
      the execution function name together. */
-  pre.src-bash:before  { content: 'bash'; }
-  pre.src-csh:before  { content: 'csh'; }
-  pre.src-ash:before  { content: 'ash'; }
-  pre.src-dash:before  { content: 'dash'; }
-  pre.src-ksh:before  { content: 'ksh'; }
-  pre.src-mksh:before  { content: 'mksh'; }
-  pre.src-posh:before  { content: 'posh'; }
-  /* Additional Emacs modes also supported by the LaTeX listings package */
-  pre.src-ada:before { content: 'Ada'; }
-  pre.src-asm:before { content: 'Assembler'; }
-  pre.src-caml:before { content: 'Caml'; }
-  pre.src-delphi:before { content: 'Delphi'; }
-  pre.src-html:before { content: 'HTML'; }
-  pre.src-idl:before { content: 'IDL'; }
-  pre.src-mercury:before { content: 'Mercury'; }
-  pre.src-metapost:before { content: 'MetaPost'; }
-  pre.src-modula-2:before { content: 'Modula-2'; }
-  pre.src-pascal:before { content: 'Pascal'; }
-  pre.src-ps:before { content: 'PostScript'; }
-  pre.src-prolog:before { content: 'Prolog'; }
-  pre.src-simula:before { content: 'Simula'; }
-  pre.src-tcl:before { content: 'tcl'; }
-  pre.src-tex:before { content: 'TeX'; }
-  pre.src-plain-tex:before { content: 'Plain TeX'; }
-  pre.src-verilog:before { content: 'Verilog'; }
-  pre.src-vhdl:before { content: 'VHDL'; }
-  pre.src-xml:before { content: 'XML'; }
-  pre.src-nxml:before { content: 'XML'; }
-  /* add a generic configuration mode; LaTeX export needs an additional
+            pre.src-bash:before {
+                content: 'bash';
+            }
+            pre.src-csh:before {
+                content: 'csh';
+            }
+            pre.src-ash:before {
+                content: 'ash';
+            }
+            pre.src-dash:before {
+                content: 'dash';
+            }
+            pre.src-ksh:before {
+                content: 'ksh';
+            }
+            pre.src-mksh:before {
+                content: 'mksh';
+            }
+            pre.src-posh:before {
+                content: 'posh';
+            }
+            /* Additional Emacs modes also supported by the LaTeX listings package */
+            pre.src-ada:before {
+                content: 'Ada';
+            }
+            pre.src-asm:before {
+                content: 'Assembler';
+            }
+            pre.src-caml:before {
+                content: 'Caml';
+            }
+            pre.src-delphi:before {
+                content: 'Delphi';
+            }
+            pre.src-html:before {
+                content: 'HTML';
+            }
+            pre.src-idl:before {
+                content: 'IDL';
+            }
+            pre.src-mercury:before {
+                content: 'Mercury';
+            }
+            pre.src-metapost:before {
+                content: 'MetaPost';
+            }
+            pre.src-modula-2:before {
+                content: 'Modula-2';
+            }
+            pre.src-pascal:before {
+                content: 'Pascal';
+            }
+            pre.src-ps:before {
+                content: 'PostScript';
+            }
+            pre.src-prolog:before {
+                content: 'Prolog';
+            }
+            pre.src-simula:before {
+                content: 'Simula';
+            }
+            pre.src-tcl:before {
+                content: 'tcl';
+            }
+            pre.src-tex:before {
+                content: 'TeX';
+            }
+            pre.src-plain-tex:before {
+                content: 'Plain TeX';
+            }
+            pre.src-verilog:before {
+                content: 'Verilog';
+            }
+            pre.src-vhdl:before {
+                content: 'VHDL';
+            }
+            pre.src-xml:before {
+                content: 'XML';
+            }
+            pre.src-nxml:before {
+                content: 'XML';
+            }
+            /* add a generic configuration mode; LaTeX export needs an additional
      (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
-  pre.src-conf:before { content: 'Configuration File'; }
+            pre.src-conf:before {
+                content: 'Configuration File';
+            }
 
-<p>  table { border-collapse:collapse; }
-  caption.t-above { caption-side: top; }
-  caption.t-bottom { caption-side: bottom; }
-  td, th { vertical-align:top;  }
-  th.org-right  { text-align: center;  }
-  th.org-left   { text-align: center;   }
-  th.org-center { text-align: center; }
-  td.org-right  { text-align: right;  }
-  td.org-left   { text-align: left;   }
-  td.org-center { text-align: center; }
-  dt { font-weight: bold; }
-  .footpara { display: inline; }
-  .footdef  { margin-bottom: 1em; }
-  .figure { padding: 1em; }
-  .figure p { text-align: center; }
-  .equation-container {
-    display: table;
-    text-align: center;
-    width: 100%;
-  }
-  .equation {
-    vertical-align: middle;
-  }
-  .equation-label {
-    display: table-cell;
-    text-align: right;
-    vertical-align: middle;
-  }
-  .inlinetask {
-    padding: 10px;
-    border: 2px solid gray;
-    margin: 10px;
-    background: #ffffcc;
-  }
-  #org-div-home-and-up
-   { text-align: right; font-size: 70%; white-space: nowrap; }
-  textarea { overflow-x: auto; }
-  .linenr { font-size: smaller }
-  .code-highlighted { background-color: #ffff00; }
-  .org-info-js_info-navigation { border-style: none; }
-  #org-info-js_console-label
-    { font-size: 10px; font-weight: bold; white-space: nowrap; }
-  .org-info-js_search-highlight
-    { background-color: #ffff00; color: #000000; font-weight: bold; }
-  .org-svg { }
-</style></p>
-</head>
-<body>
-<div id="content" class="content">
-<h1 class="title">Cerberus: The LDAP Guardian</h1>
-<div id="table-of-contents" role="doc-toc">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents" role="doc-toc">
-<ul>
-<li><a href="#org2e0ca3b">1. Goals</a></li>
-<li><a href="#org2912157">2. Stack</a></li>
-<li><a href="#org76e7a05">3. Development Stages</a>
-<ul>
-<li><a href="#org6cf2bba">3.1. <span class="todo TODO">TODO</span> Build UI with dummy data <code>[3/3]</code></a></li>
-<li><a href="#org8b10b12">3.2. <span class="todo IN_PROG">IN-PROG</span> Connect to LDAP <code>[1/3]</code></a></li>
-<li><a href="#org1bbc51a">3.3. <span class="todo TODO">TODO</span> Add CSS/decorations <code>[0/1]</code></a></li>
-</ul>
-</li>
-<li><a href="#org917afa7">4. Contributing</a>
-<ul>
-<li><a href="#org0d6cf51">4.1. Optional</a></li>
-</ul>
-</li>
-<li><a href="#org665096a">5. License</a></li>
-</ul>
-</div>
-</div>
-<p>
-Cerberus is everyone's favorite multi-headed watchdog guarding the doors of
-<del>hell</del> LDAP!
-</p>
-
-<div id="outline-container-org2e0ca3b" class="outline-2">
-<h2 id="org2e0ca3b"><span class="section-number-2">1.</span> Goals</h2>
-<div class="outline-text-2" id="text-1">
-<ul class="org-ul">
-<li>Create new users</li>
-
-<li>View Users</li>
-
-<li>User password management
-(with Admin intervention)</li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-org2912157" class="outline-2">
-<h2 id="org2912157"><span class="section-number-2">2.</span> Stack</h2>
-<div class="outline-text-2" id="text-2">
-<p>
-SvelteKit, Typescript, Ldap.js, JOSE (For JWT)
-</p>
-</div>
-</div>
-
-<div id="outline-container-org76e7a05" class="outline-2">
-<h2 id="org76e7a05"><span class="section-number-2">3.</span> Development Stages</h2>
-<div class="outline-text-2" id="text-3">
-</div>
-<div id="outline-container-org6cf2bba" class="outline-3">
-<h3 id="org6cf2bba"><span class="section-number-3">3.1.</span> <span class="todo TODO">TODO</span> Build UI with dummy data <code>[3/3]</code></h3>
-<div class="outline-text-3" id="text-3-1">
-<ul class="org-ul">
-<li class="on"><code>[X]</code> Login Page</li>
-<li class="on"><code>[X]</code> Registration</li>
-<li class="on"><code>[X]</code> Change Password</li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-org8b10b12" class="outline-3">
-<h3 id="org8b10b12"><span class="section-number-3">3.2.</span> <span class="todo IN_PROG">IN-PROG</span> Connect to LDAP <code>[1/3]</code></h3>
-<div class="outline-text-3" id="text-3-2">
-<ul class="org-ul">
-<li class="on"><code>[X]</code> Member Area information
-What information to show?
-<ul class="org-ul">
-<li>Currently showing CN, Groups, Password Expiry and Description</li>
-<li>Trivial to add more</li>
-</ul></li>
-
-<li class="off"><code>[&#xa0;]</code> Club Membership verification for Registration
-Proposal: Discord Integration</li>
-
-<li class="off"><code>[&#xa0;]</code> Allow users to change their password
-<ul class="org-ul">
-<li>Maybe add some verification?</li>
-</ul></li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-org1bbc51a" class="outline-3">
-<h3 id="org1bbc51a"><span class="section-number-3">3.3.</span> <span class="todo TODO">TODO</span> Add CSS/decorations <code>[0/1]</code></h3>
-<div class="outline-text-3" id="text-3-3">
-<ul class="org-ul">
-<li class="off"><code>[&#xa0;]</code> Make Pretty</li>
-</ul>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org917afa7" class="outline-2">
-<h2 id="org917afa7"><span class="section-number-2">4.</span> Contributing</h2>
-<div class="outline-text-2" id="text-4">
-<ol class="org-ol">
-<li>Make sure your text editor uses <a href="https://editorconfig.org">editorconfig</a>.</li>
-<li>Read comments above unimplemented functions.</li>
-<li><del>Run <code>npm run format</code> before committing!</del>
-prettier is broken (for me atleast)</li>
-</ol>
-</div>
-
-<div id="outline-container-org0d6cf51" class="outline-3">
-<h3 id="org0d6cf51"><span class="section-number-3">4.1.</span> Optional</h3>
-<div class="outline-text-3" id="text-4-1">
-<p>
-To ensure Node.js version consistency, consider using <a href="https://zero-to-nix.com/start/install">Nix</a>: <code>nix develop</code>
-</p>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org665096a" class="outline-2">
-<h2 id="org665096a"><span class="section-number-2">5.</span> License</h2>
-<div class="outline-text-2" id="text-5">
-<p>
-<a href="https://www.gnu.org/licenses/agpl-3.0.txt">AGPL-3.0-only</a>
-</p>
-</div>
-</div>
-</div>
-<div id="postamble" class="status">
-<p class="author">Author: Soham S Gumaste</p>
-<p class="date">Created: 2023-05-22 Mon 14:57</p>
-<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
-</div>
-</body>
+<pre><code><span class="hl-0">        </span><span class="hl-1">table</span><span class="hl-0"> {</span><br/><span class="hl-0">            </span><span class="hl-1">border</span><span class="hl-0">-</span><span class="hl-2">collapse</span><span class="hl-0">: </span><span class="hl-1">collapse</span><span class="hl-0">;</span><br/><span class="hl-0">        }</span><br/><span class="hl-0">        </span><span class="hl-1">caption</span><span class="hl-0">.</span><span class="hl-1">t</span><span class="hl-0">-</span><span class="hl-1">above</span><span class="hl-0"> {</span><br/><span class="hl-0">            </span><span class="hl-1">caption</span><span class="hl-0">-</span><span class="hl-2">side</span><span class="hl-0">: </span><span class="hl-1">top</span><span class="hl-0">;</span><br/><span class="hl-0">        }</span><br/><span class="hl-0">        </span><span class="hl-1">caption</span><span class="hl-0">.</span><span class="hl-1">t</span><span class="hl-0">-</span><span class="hl-1">bottom</span><span class="hl-0"> {</span><br/><span class="hl-0">            </span><span class="hl-1">caption</span><span class="hl-0">-</span><span class="hl-2">side</span><span class="hl-0">: </span><span class="hl-1">bottom</span><span class="hl-0">;</span><br/><span class="hl-0">        }</span><br/><span class="hl-0">        </span><span class="hl-1">td</span><span class="hl-0">,</span><br/><span class="hl-0">        </span><span class="hl-1">th</span><span class="hl-0"> {</span><br/><span class="hl-0">            </span><span class="hl-1">vertical</span><span class="hl-0">-</span><span class="hl-2">align</span><span class="hl-0">: </span><span class="hl-1">top</span><span class="hl-0">;</span><br/><span class="hl-0">        }</span><br/><span class="hl-0">        </span><span class="hl-1">th</span><span class="hl-0">.</span><span class="hl-1">org</span><span class="hl-0">-</span><span class="hl-1">right</span><span class="hl-0"> {</span><br/><span class="hl-0">            </span><span class="hl-1">text</span><span class="hl-0">-</span><span class="hl-2">align</span><span class="hl-0">: </span><span class="hl-1">center</span><span class="hl-0">;</span><br/><span class="hl-0">        }</span><br/><span class="hl-0">        </span><span class="hl-1">th</span><span class="hl-0">.</span><span class="hl-1">org</span><span class="hl-0">-</span><span class="hl-1">left</span><span class="hl-0"> {</span><br/><span class="hl-0">            </span><span class="hl-1">text</span><span class="hl-0">-</span><span class="hl-2">align</span><span class="hl-0">: </span><span class="hl-1">center</span><span class="hl-0">;</span><br/><span class="hl-0">        }</span><br/><span class="hl-0">        </span><span class="hl-1">th</span><span class="hl-0">.</span><span class="hl-1">org</span><span class="hl-0">-</span><span class="hl-1">center</span><span class="hl-0"> {</span><br/><span class="hl-0">            </span><span class="hl-1">text</span><span class="hl-0">-</span><span class="hl-2">align</span><span class="hl-0">: </span><span class="hl-1">center</span><span class="hl-0">;</span><br/><span class="hl-0">        }</span><br/><span class="hl-0">        </span><span class="hl-1">td</span><span class="hl-0">.</span><span class="hl-1">org</span><span class="hl-0">-</span><span class="hl-1">right</span><span class="hl-0"> {</span><br/><span class="hl-0">            </span><span class="hl-1">text</span><span class="hl-0">-</span><span class="hl-2">align</span><span class="hl-0">: </span><span class="hl-1">right</span><span class="hl-0">;</span><br/><span class="hl-0">        }</span><br/><span class="hl-0">        </span><span class="hl-1">td</span><span class="hl-0">.</span><span class="hl-1">org</span><span class="hl-0">-</span><span class="hl-1">left</span><span class="hl-0"> {</span><br/><span class="hl-0">            </span><span class="hl-1">text</span><span class="hl-0">-</span><span class="hl-2">align</span><span class="hl-0">: </span><span class="hl-1">left</span><span class="hl-0">;</span><br/><span class="hl-0">        }</span><br/><span class="hl-0">        </span><span class="hl-1">td</span><span class="hl-0">.</span><span class="hl-1">org</span><span class="hl-0">-</span><span class="hl-1">center</span><span class="hl-0"> {</span><br/><span class="hl-0">            </span><span class="hl-1">text</span><span class="hl-0">-</span><span class="hl-2">align</span><span class="hl-0">: </span><span class="hl-1">center</span><span class="hl-0">;</span><br/><span class="hl-0">        }</span><br/><span class="hl-0">        </span><span class="hl-1">dt</span><span class="hl-0"> {</span><br/><span class="hl-0">            </span><span class="hl-1">font</span><span class="hl-0">-</span><span class="hl-2">weight</span><span class="hl-0">: </span><span class="hl-1">bold</span><span class="hl-0">;</span><br/><span class="hl-0">        }</span><br/><span class="hl-0">        .</span><span class="hl-1">footpara</span><span class="hl-0"> {</span><br/><span class="hl-0">            </span><span class="hl-2">display</span><span class="hl-0">: </span><span class="hl-1">inline</span><span class="hl-0">;</span><br/><span class="hl-0">        }</span><br/><span class="hl-0">        .</span><span class="hl-1">footdef</span><span class="hl-0"> {</span><br/><span class="hl-0">            </span><span class="hl-1">margin</span><span class="hl-0">-</span><span class="hl-2">bottom</span><span class="hl-0">: 1</span><span class="hl-1">em</span><span class="hl-0">;</span><br/><span class="hl-0">        }</span><br/><span class="hl-0">        .</span><span class="hl-1">figure</span><span class="hl-0"> {</span><br/><span class="hl-0">            </span><span class="hl-2">padding</span><span class="hl-0">: 1</span><span class="hl-1">em</span><span class="hl-0">;</span><br/><span class="hl-0">        }</span><br/><span class="hl-0">        .</span><span class="hl-1">figure</span><span class="hl-0"> </span><span class="hl-1">p</span><span class="hl-0"> {</span><br/><span class="hl-0">            </span><span class="hl-1">text</span><span class="hl-0">-</span><span class="hl-2">align</span><span class="hl-0">: </span><span class="hl-1">center</span><span class="hl-0">;</span><br/><span class="hl-0">        }</span><br/><span class="hl-0">        .</span><span class="hl-1">equation</span><span class="hl-0">-</span><span class="hl-1">container</span><span class="hl-0"> {</span><br/><span class="hl-0">            </span><span class="hl-2">display</span><span class="hl-0">: </span><span class="hl-1">table</span><span class="hl-0">;</span><br/><span class="hl-0">            </span><span class="hl-1">text</span><span class="hl-0">-</span><span class="hl-2">align</span><span class="hl-0">: </span><span class="hl-1">center</span><span class="hl-0">;</span><br/><span class="hl-0">            </span><span class="hl-2">width</span><span class="hl-0">: </span><span class="hl-3">100</span><span class="hl-0">%;</span><br/><span class="hl-0">        }</span><br/><span class="hl-0">        .</span><span class="hl-1">equation</span><span class="hl-0"> {</span><br/><span class="hl-0">            </span><span class="hl-1">vertical</span><span class="hl-0">-</span><span class="hl-2">align</span><span class="hl-0">: </span><span class="hl-1">middle</span><span class="hl-0">;</span><br/><span class="hl-0">        }</span><br/><span class="hl-0">        .</span><span class="hl-1">equation</span><span class="hl-0">-</span><span class="hl-1">label</span><span class="hl-0"> {</span><br/><span class="hl-0">            </span><span class="hl-2">display</span><span class="hl-0">: </span><span class="hl-1">table</span><span class="hl-0">-</span><span class="hl-1">cell</span><span class="hl-0">;</span><br/><span class="hl-0">            </span><span class="hl-1">text</span><span class="hl-0">-</span><span class="hl-2">align</span><span class="hl-0">: </span><span class="hl-1">right</span><span class="hl-0">;</span><br/><span class="hl-0">            </span><span class="hl-1">vertical</span><span class="hl-0">-</span><span class="hl-2">align</span><span class="hl-0">: </span><span class="hl-1">middle</span><span class="hl-0">;</span><br/><span class="hl-0">        }</span><br/><span class="hl-0">        .</span><span class="hl-1">inlinetask</span><span class="hl-0"> {</span><br/><span class="hl-0">            </span><span class="hl-2">padding</span><span class="hl-0">: 10</span><span class="hl-1">px</span><span class="hl-0">;</span><br/><span class="hl-0">            </span><span class="hl-2">border</span><span class="hl-0">: 2</span><span class="hl-1">px</span><span class="hl-0"> </span><span class="hl-1">solid</span><span class="hl-0"> </span><span class="hl-1">gray</span><span class="hl-0">;</span><br/><span class="hl-0">            </span><span class="hl-2">margin</span><span class="hl-0">: 10</span><span class="hl-1">px</span><span class="hl-0">;</span><br/><span class="hl-0">            </span><span class="hl-2">background</span><span class="hl-0">: #</span><span class="hl-1">ffffcc</span><span class="hl-0">;</span><br/><span class="hl-0">        }</span><br/><span class="hl-0">        #</span><span class="hl-1">org</span><span class="hl-0">-</span><span class="hl-1">div</span><span class="hl-0">-</span><span class="hl-1">home</span><span class="hl-0">-</span><span class="hl-1">and</span><span class="hl-0">-</span><span class="hl-1">up</span><span class="hl-0"> {</span><br/><span class="hl-0">            </span><span class="hl-1">text</span><span class="hl-0">-</span><span class="hl-2">align</span><span class="hl-0">: </span><span class="hl-1">right</span><span class="hl-0">;</span><br/><span class="hl-0">            </span><span class="hl-1">font</span><span class="hl-0">-</span><span class="hl-2">size</span><span class="hl-0">: </span><span class="hl-3">70</span><span class="hl-0">%;</span><br/><span class="hl-0">            </span><span class="hl-1">white</span><span class="hl-0">-</span><span class="hl-2">space</span><span class="hl-0">: </span><span class="hl-1">nowrap</span><span class="hl-0">;</span><br/><span class="hl-0">        }</span><br/><span class="hl-0">        </span><span class="hl-1">textarea</span><span class="hl-0"> {</span><br/><span class="hl-0">            </span><span class="hl-1">overflow</span><span class="hl-0">-</span><span class="hl-2">x</span><span class="hl-0">: </span><span class="hl-1">auto</span><span class="hl-0">;</span><br/><span class="hl-0">        }</span><br/><span class="hl-0">        .</span><span class="hl-1">linenr</span><span class="hl-0"> {</span><br/><span class="hl-0">            </span><span class="hl-1">font</span><span class="hl-0">-</span><span class="hl-2">size</span><span class="hl-0">: </span><span class="hl-1">smaller</span><span class="hl-0">;</span><br/><span class="hl-0">        }</span><br/><span class="hl-0">        .</span><span class="hl-1">code</span><span class="hl-0">-</span><span class="hl-1">highlighted</span><span class="hl-0"> {</span><br/><span class="hl-0">            </span><span class="hl-1">background</span><span class="hl-0">-</span><span class="hl-2">color</span><span class="hl-0">: #</span><span class="hl-1">ffff00</span><span class="hl-0">;</span><br/><span class="hl-0">        }</span><br/><span class="hl-0">        .</span><span class="hl-1">org</span><span class="hl-0">-</span><span class="hl-1">info</span><span class="hl-0">-</span><span class="hl-1">js_info</span><span class="hl-0">-</span><span class="hl-1">navigation</span><span class="hl-0"> {</span><br/><span class="hl-0">            </span><span class="hl-1">border</span><span class="hl-0">-</span><span class="hl-2">style</span><span class="hl-0">: </span><span class="hl-1">none</span><span class="hl-0">;</span><br/><span class="hl-0">        }</span><br/><span class="hl-0">        #</span><span class="hl-1">org</span><span class="hl-0">-</span><span class="hl-1">info</span><span class="hl-0">-</span><span class="hl-1">js_console</span><span class="hl-0">-</span><span class="hl-1">label</span><span class="hl-0"> {</span><br/><span class="hl-0">            </span><span class="hl-1">font</span><span class="hl-0">-</span><span class="hl-2">size</span><span class="hl-0">: 10</span><span class="hl-1">px</span><span class="hl-0">;</span><br/><span class="hl-0">            </span><span class="hl-1">font</span><span class="hl-0">-</span><span class="hl-2">weight</span><span class="hl-0">: </span><span class="hl-1">bold</span><span class="hl-0">;</span><br/><span class="hl-0">            </span><span class="hl-1">white</span><span class="hl-0">-</span><span class="hl-2">space</span><span class="hl-0">: </span><span class="hl-1">nowrap</span><span class="hl-0">;</span><br/><span class="hl-0">        }</span><br/><span class="hl-0">        .</span><span class="hl-1">org</span><span class="hl-0">-</span><span class="hl-1">info</span><span class="hl-0">-</span><span class="hl-1">js_search</span><span class="hl-0">-</span><span class="hl-1">highlight</span><span class="hl-0"> {</span><br/><span class="hl-0">            </span><span class="hl-1">background</span><span class="hl-0">-</span><span class="hl-2">color</span><span class="hl-0">: #</span><span class="hl-1">ffff00</span><span class="hl-0">;</span><br/><span class="hl-0">            </span><span class="hl-2">color</span><span class="hl-0">: #</span><span class="hl-3">000000</span><span class="hl-0">;</span><br/><span class="hl-0">            </span><span class="hl-1">font</span><span class="hl-0">-</span><span class="hl-2">weight</span><span class="hl-0">: </span><span class="hl-1">bold</span><span class="hl-0">;</span><br/><span class="hl-0">        }</span><br/><span class="hl-0">        .</span><span class="hl-1">org</span><span class="hl-0">-</span><span class="hl-1">svg</span><span class="hl-0"> {</span><br/><span class="hl-0">        }</span><br/><span class="hl-0">    &lt;/</span><span class="hl-1">style</span><span class="hl-0">&gt;</span><br/><span class="hl-0">&lt;/</span><span class="hl-1">head</span><span class="hl-0">&gt;</span><br/><span class="hl-0">&lt;</span><span class="hl-4">body</span><span class="hl-0">&gt;</span><br/><span class="hl-0">    &lt;</span><span class="hl-1">div</span><span class="hl-0"> </span><span class="hl-1">id</span><span class="hl-0">=</span><span class="hl-5">&quot;content&quot;</span><span class="hl-0"> </span><span class="hl-1">class</span><span class="hl-0">=</span><span class="hl-5">&quot;content&quot;</span><span class="hl-0">&gt;</span><br/><span class="hl-0">        &lt;</span><span class="hl-1">h1</span><span class="hl-0"> </span><span class="hl-1">class</span><span class="hl-0">=</span><span class="hl-5">&quot;title&quot;</span><span class="hl-0">&gt;</span><span class="hl-2">Cerberus</span><span class="hl-0">: </span><span class="hl-1">The</span><span class="hl-0"> </span><span class="hl-6">LDAP</span><span class="hl-0"> </span><span class="hl-1">Guardian</span><span class="hl-0">&lt;/</span><span class="hl-1">h1</span><span class="hl-0">&gt;</span><br/><span class="hl-0">        &lt;</span><span class="hl-1">div</span><span class="hl-0"> </span><span class="hl-1">id</span><span class="hl-0">=</span><span class="hl-5">&quot;table-of-contents&quot;</span><span class="hl-0"> </span><span class="hl-1">role</span><span class="hl-0">=</span><span class="hl-5">&quot;doc-toc&quot;</span><span class="hl-0">&gt;</span><br/><span class="hl-0">            &lt;</span><span class="hl-4">h2</span><span class="hl-0">&gt;</span><span class="hl-1">Table</span><span class="hl-0"> </span><span class="hl-7">of</span><span class="hl-0"> </span><span class="hl-1">Contents</span><span class="hl-0">&lt;/</span><span class="hl-1">h2</span><span class="hl-0">&gt;</span><br/><span class="hl-0">            &lt;</span><span class="hl-1">div</span><span class="hl-0"> </span><span class="hl-1">id</span><span class="hl-0">=</span><span class="hl-5">&quot;text-table-of-contents&quot;</span><span class="hl-0"> </span><span class="hl-1">role</span><span class="hl-0">=</span><span class="hl-5">&quot;doc-toc&quot;</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                &lt;</span><span class="hl-4">ul</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                    &lt;</span><span class="hl-4">li</span><span class="hl-0">&gt;&lt;</span><span class="hl-4">a</span><span class="hl-0"> </span><span class="hl-4">href</span><span class="hl-0">=</span><span class="hl-5">&quot;#org2e0ca3b&quot;</span><span class="hl-0">&gt;</span><span class="hl-3">1.</span><span class="hl-0"> </span><span class="hl-1">Goals</span><span class="hl-0">&lt;/</span><span class="hl-1">a</span><span class="hl-0">&gt;&lt;/</span><span class="hl-4">li</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                    &lt;</span><span class="hl-4">li</span><span class="hl-0">&gt;&lt;</span><span class="hl-4">a</span><span class="hl-0"> </span><span class="hl-4">href</span><span class="hl-0">=</span><span class="hl-5">&quot;#org2912157&quot;</span><span class="hl-0">&gt;</span><span class="hl-3">2.</span><span class="hl-0"> </span><span class="hl-1">Stack</span><span class="hl-0">&lt;/</span><span class="hl-1">a</span><span class="hl-0">&gt;&lt;/</span><span class="hl-4">li</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                    &lt;</span><span class="hl-4">li</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                        &lt;</span><span class="hl-1">a</span><span class="hl-0"> </span><span class="hl-1">href</span><span class="hl-0">=</span><span class="hl-5">&quot;#org76e7a05&quot;</span><span class="hl-0">&gt;</span><span class="hl-3">3.</span><span class="hl-0"> </span><span class="hl-1">Development</span><span class="hl-0"> </span><span class="hl-1">Stages</span><span class="hl-0">&lt;/</span><span class="hl-1">a</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                        &lt;</span><span class="hl-4">ul</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                            &lt;</span><span class="hl-4">li</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                                &lt;</span><span class="hl-1">a</span><span class="hl-0"> </span><span class="hl-1">href</span><span class="hl-0">=</span><span class="hl-5">&quot;#org6cf2bba&quot;</span><br/><span class="hl-0">                                    &gt;</span><span class="hl-3">3.1</span><span class="hl-0">. &lt;</span><span class="hl-1">span</span><span class="hl-0"> </span><span class="hl-1">class</span><span class="hl-0">=</span><span class="hl-5">&quot;todo TODO&quot;</span><span class="hl-0">&gt;</span><span class="hl-6">TODO</span><span class="hl-0">&lt;/</span><span class="hl-1">span</span><span class="hl-0">&gt; </span><span class="hl-1">Build</span><span class="hl-0"> </span><span class="hl-6">UI</span><span class="hl-0"> </span><span class="hl-8">with</span><span class="hl-0"> </span><span class="hl-1">dummy</span><span class="hl-0"> </span><span class="hl-1">data</span><br/><span class="hl-0">                                    &lt;</span><span class="hl-4">code</span><span class="hl-0">&gt;[</span><span class="hl-3">3</span><span class="hl-0">/</span><span class="hl-3">3</span><span class="hl-0">]&lt;/</span><span class="hl-1">code</span><span class="hl-0">&gt;&lt;/</span><span class="hl-4">a</span><br/><span class="hl-0">                                &gt;</span><br/><span class="hl-0">                            &lt;/</span><span class="hl-1">li</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                            &lt;</span><span class="hl-4">li</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                                &lt;</span><span class="hl-1">a</span><span class="hl-0"> </span><span class="hl-1">href</span><span class="hl-0">=</span><span class="hl-5">&quot;#org8b10b12&quot;</span><br/><span class="hl-0">                                    &gt;</span><span class="hl-3">3.2</span><span class="hl-0">. &lt;</span><span class="hl-1">span</span><span class="hl-0"> </span><span class="hl-1">class</span><span class="hl-0">=</span><span class="hl-5">&quot;todo IN_PROG&quot;</span><span class="hl-0">&gt;</span><span class="hl-6">IN</span><span class="hl-0">-</span><span class="hl-6">PROG</span><span class="hl-0">&lt;/</span><span class="hl-1">span</span><span class="hl-0">&gt; </span><span class="hl-1">Connect</span><span class="hl-0"> </span><span class="hl-1">to</span><span class="hl-0"> </span><span class="hl-6">LDAP</span><br/><span class="hl-0">                                    &lt;</span><span class="hl-4">code</span><span class="hl-0">&gt;[</span><span class="hl-3">1</span><span class="hl-0">/</span><span class="hl-3">3</span><span class="hl-0">]&lt;/</span><span class="hl-1">code</span><span class="hl-0">&gt;&lt;/</span><span class="hl-4">a</span><br/><span class="hl-0">                                &gt;</span><br/><span class="hl-0">                            &lt;/</span><span class="hl-1">li</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                            &lt;</span><span class="hl-4">li</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                                &lt;</span><span class="hl-1">a</span><span class="hl-0"> </span><span class="hl-1">href</span><span class="hl-0">=</span><span class="hl-5">&quot;#org1bbc51a&quot;</span><br/><span class="hl-0">                                    &gt;</span><span class="hl-3">3.3</span><span class="hl-0">. &lt;</span><span class="hl-1">span</span><span class="hl-0"> </span><span class="hl-1">class</span><span class="hl-0">=</span><span class="hl-5">&quot;todo TODO&quot;</span><span class="hl-0">&gt;</span><span class="hl-6">TODO</span><span class="hl-0">&lt;/</span><span class="hl-1">span</span><span class="hl-0">&gt; </span><span class="hl-1">Add</span><span class="hl-0"> </span><span class="hl-6">CSS</span><span class="hl-0">/</span><span class="hl-1">decorations</span><br/><span class="hl-0">                                    &lt;</span><span class="hl-4">code</span><span class="hl-0">&gt;[</span><span class="hl-3">0</span><span class="hl-0">/</span><span class="hl-3">1</span><span class="hl-0">]&lt;/</span><span class="hl-1">code</span><span class="hl-0">&gt;&lt;/</span><span class="hl-4">a</span><br/><span class="hl-0">                                &gt;</span><br/><span class="hl-0">                            &lt;/</span><span class="hl-1">li</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                        &lt;/</span><span class="hl-1">ul</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                    &lt;/</span><span class="hl-1">li</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                    &lt;</span><span class="hl-4">li</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                        &lt;</span><span class="hl-1">a</span><span class="hl-0"> </span><span class="hl-1">href</span><span class="hl-0">=</span><span class="hl-5">&quot;#org917afa7&quot;</span><span class="hl-0">&gt;</span><span class="hl-3">4.</span><span class="hl-0"> </span><span class="hl-1">Contributing</span><span class="hl-0">&lt;/</span><span class="hl-1">a</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                        &lt;</span><span class="hl-4">ul</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                            &lt;</span><span class="hl-4">li</span><span class="hl-0">&gt;&lt;</span><span class="hl-4">a</span><span class="hl-0"> </span><span class="hl-4">href</span><span class="hl-0">=</span><span class="hl-5">&quot;#org0d6cf51&quot;</span><span class="hl-0">&gt;</span><span class="hl-3">4.1</span><span class="hl-0">. </span><span class="hl-1">Optional</span><span class="hl-0">&lt;/</span><span class="hl-1">a</span><span class="hl-0">&gt;&lt;/</span><span class="hl-4">li</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                        &lt;/</span><span class="hl-1">ul</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                    &lt;/</span><span class="hl-1">li</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                    &lt;</span><span class="hl-4">li</span><span class="hl-0">&gt;&lt;</span><span class="hl-4">a</span><span class="hl-0"> </span><span class="hl-4">href</span><span class="hl-0">=</span><span class="hl-5">&quot;#org665096a&quot;</span><span class="hl-0">&gt;</span><span class="hl-3">5.</span><span class="hl-0"> </span><span class="hl-1">License</span><span class="hl-0">&lt;/</span><span class="hl-1">a</span><span class="hl-0">&gt;&lt;/</span><span class="hl-4">li</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                &lt;/</span><span class="hl-1">ul</span><span class="hl-0">&gt;</span><br/><span class="hl-0">            &lt;/</span><span class="hl-1">div</span><span class="hl-0">&gt;</span><br/><span class="hl-0">        &lt;/</span><span class="hl-1">div</span><span class="hl-0">&gt;</span><br/><span class="hl-0">        &lt;</span><span class="hl-4">p</span><span class="hl-0">&gt;</span><br/><span class="hl-0">            </span><span class="hl-1">Cerberus</span><span class="hl-0"> </span><span class="hl-1">is</span><span class="hl-0"> </span><span class="hl-1">everyone</span><span class="hl-5">&#39;s favorite multi-headed watchdog guarding the doors o</span><span class="hl-9">f</span><br/><span class="hl-0">            &lt;</span><span class="hl-4">del</span><span class="hl-0">&gt;</span><span class="hl-1">hell</span><span class="hl-0">&lt;/</span><span class="hl-1">del</span><span class="hl-0">&gt; </span><span class="hl-6">LDAP</span><span class="hl-0">!</span><br/><span class="hl-0">        &lt;/</span><span class="hl-1">p</span><span class="hl-0">&gt;</span><br/><br/><span class="hl-0">        &lt;</span><span class="hl-1">div</span><span class="hl-0"> </span><span class="hl-1">id</span><span class="hl-0">=</span><span class="hl-5">&quot;outline-container-org2e0ca3b&quot;</span><span class="hl-0"> </span><span class="hl-1">class</span><span class="hl-0">=</span><span class="hl-5">&quot;outline-2&quot;</span><span class="hl-0">&gt;</span><br/><span class="hl-0">            &lt;</span><span class="hl-1">h2</span><span class="hl-0"> </span><span class="hl-1">id</span><span class="hl-0">=</span><span class="hl-5">&quot;org2e0ca3b&quot;</span><span class="hl-0">&gt;&lt;</span><span class="hl-4">span</span><span class="hl-0"> </span><span class="hl-4">class</span><span class="hl-0">=</span><span class="hl-5">&quot;section-number-2&quot;</span><span class="hl-0">&gt;</span><span class="hl-3">1.</span><span class="hl-0">&lt;/</span><span class="hl-1">span</span><span class="hl-0">&gt; </span><span class="hl-1">Goals</span><span class="hl-0">&lt;/</span><span class="hl-1">h2</span><span class="hl-0">&gt;</span><br/><span class="hl-0">            &lt;</span><span class="hl-1">div</span><span class="hl-0"> </span><span class="hl-1">class</span><span class="hl-0">=</span><span class="hl-5">&quot;outline-text-2&quot;</span><span class="hl-0"> </span><span class="hl-1">id</span><span class="hl-0">=</span><span class="hl-5">&quot;text-1&quot;</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                &lt;</span><span class="hl-1">ul</span><span class="hl-0"> </span><span class="hl-1">class</span><span class="hl-0">=</span><span class="hl-5">&quot;org-ul&quot;</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                    &lt;</span><span class="hl-4">li</span><span class="hl-0">&gt;</span><span class="hl-1">Create</span><span class="hl-0"> </span><span class="hl-7">new</span><span class="hl-0"> </span><span class="hl-1">users</span><span class="hl-0">&lt;/</span><span class="hl-1">li</span><span class="hl-0">&gt;</span><br/><br/><span class="hl-0">                    &lt;</span><span class="hl-4">li</span><span class="hl-0">&gt;</span><span class="hl-1">View</span><span class="hl-0"> </span><span class="hl-1">Users</span><span class="hl-0">&lt;/</span><span class="hl-1">li</span><span class="hl-0">&gt;</span><br/><br/><span class="hl-0">                    &lt;</span><span class="hl-4">li</span><span class="hl-0">&gt;</span><span class="hl-1">User</span><span class="hl-0"> </span><span class="hl-1">password</span><span class="hl-0"> </span><span class="hl-10">management</span><span class="hl-0"> (</span><span class="hl-1">with</span><span class="hl-0"> </span><span class="hl-1">Admin</span><span class="hl-0"> </span><span class="hl-1">intervention</span><span class="hl-0">)&lt;/</span><span class="hl-1">li</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                &lt;/</span><span class="hl-1">ul</span><span class="hl-0">&gt;</span><br/><span class="hl-0">            &lt;/</span><span class="hl-1">div</span><span class="hl-0">&gt;</span><br/><span class="hl-0">        &lt;/</span><span class="hl-1">div</span><span class="hl-0">&gt;</span><br/><br/><span class="hl-0">        &lt;</span><span class="hl-1">div</span><span class="hl-0"> </span><span class="hl-1">id</span><span class="hl-0">=</span><span class="hl-5">&quot;outline-container-org2912157&quot;</span><span class="hl-0"> </span><span class="hl-1">class</span><span class="hl-0">=</span><span class="hl-5">&quot;outline-2&quot;</span><span class="hl-0">&gt;</span><br/><span class="hl-0">            &lt;</span><span class="hl-1">h2</span><span class="hl-0"> </span><span class="hl-1">id</span><span class="hl-0">=</span><span class="hl-5">&quot;org2912157&quot;</span><span class="hl-0">&gt;&lt;</span><span class="hl-4">span</span><span class="hl-0"> </span><span class="hl-4">class</span><span class="hl-0">=</span><span class="hl-5">&quot;section-number-2&quot;</span><span class="hl-0">&gt;</span><span class="hl-3">2.</span><span class="hl-0">&lt;/</span><span class="hl-1">span</span><span class="hl-0">&gt; </span><span class="hl-1">Stack</span><span class="hl-0">&lt;/</span><span class="hl-1">h2</span><span class="hl-0">&gt;</span><br/><span class="hl-0">            &lt;</span><span class="hl-1">div</span><span class="hl-0"> </span><span class="hl-1">class</span><span class="hl-0">=</span><span class="hl-5">&quot;outline-text-2&quot;</span><span class="hl-0"> </span><span class="hl-1">id</span><span class="hl-0">=</span><span class="hl-5">&quot;text-2&quot;</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                &lt;</span><span class="hl-4">p</span><span class="hl-0">&gt;</span><span class="hl-1">SvelteKit</span><span class="hl-0">, </span><span class="hl-1">Typescript</span><span class="hl-0">, </span><span class="hl-1">Ldap</span><span class="hl-0">.</span><span class="hl-1">js</span><span class="hl-0">, </span><span class="hl-10">JOSE</span><span class="hl-0"> (</span><span class="hl-1">For</span><span class="hl-0"> </span><span class="hl-6">JWT</span><span class="hl-0">)&lt;/</span><span class="hl-1">p</span><span class="hl-0">&gt;</span><br/><span class="hl-0">            &lt;/</span><span class="hl-1">div</span><span class="hl-0">&gt;</span><br/><span class="hl-0">        &lt;/</span><span class="hl-1">div</span><span class="hl-0">&gt;</span><br/><br/><span class="hl-0">        &lt;</span><span class="hl-1">div</span><span class="hl-0"> </span><span class="hl-1">id</span><span class="hl-0">=</span><span class="hl-5">&quot;outline-container-org76e7a05&quot;</span><span class="hl-0"> </span><span class="hl-1">class</span><span class="hl-0">=</span><span class="hl-5">&quot;outline-2&quot;</span><span class="hl-0">&gt;</span><br/><span class="hl-0">            &lt;</span><span class="hl-1">h2</span><span class="hl-0"> </span><span class="hl-1">id</span><span class="hl-0">=</span><span class="hl-5">&quot;org76e7a05&quot;</span><span class="hl-0">&gt;&lt;</span><span class="hl-4">span</span><span class="hl-0"> </span><span class="hl-4">class</span><span class="hl-0">=</span><span class="hl-5">&quot;section-number-2&quot;</span><span class="hl-0">&gt;</span><span class="hl-3">3.</span><span class="hl-0">&lt;/</span><span class="hl-1">span</span><span class="hl-0">&gt; </span><span class="hl-1">Development</span><span class="hl-0"> </span><span class="hl-1">Stages</span><span class="hl-0">&lt;/</span><span class="hl-1">h2</span><span class="hl-0">&gt;</span><br/><span class="hl-0">            &lt;</span><span class="hl-1">div</span><span class="hl-0"> </span><span class="hl-1">class</span><span class="hl-0">=</span><span class="hl-5">&quot;outline-text-2&quot;</span><span class="hl-0"> </span><span class="hl-1">id</span><span class="hl-0">=</span><span class="hl-5">&quot;text-3&quot;</span><span class="hl-0">&gt;&lt;/</span><span class="hl-4">div</span><span class="hl-0">&gt;</span><br/><span class="hl-0">            &lt;</span><span class="hl-1">div</span><span class="hl-0"> </span><span class="hl-1">id</span><span class="hl-0">=</span><span class="hl-5">&quot;outline-container-org6cf2bba&quot;</span><span class="hl-0"> </span><span class="hl-1">class</span><span class="hl-0">=</span><span class="hl-5">&quot;outline-3&quot;</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                &lt;</span><span class="hl-1">h3</span><span class="hl-0"> </span><span class="hl-1">id</span><span class="hl-0">=</span><span class="hl-5">&quot;org6cf2bba&quot;</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                    &lt;</span><span class="hl-1">span</span><span class="hl-0"> </span><span class="hl-1">class</span><span class="hl-0">=</span><span class="hl-5">&quot;section-number-3&quot;</span><span class="hl-0">&gt;</span><span class="hl-3">3.1</span><span class="hl-0">.&lt;/</span><span class="hl-1">span</span><span class="hl-0">&gt; &lt;</span><span class="hl-4">span</span><span class="hl-0"> </span><span class="hl-4">class</span><span class="hl-0">=</span><span class="hl-5">&quot;todo TODO&quot;</span><span class="hl-0">&gt;</span><span class="hl-6">TODO</span><span class="hl-0">&lt;/</span><span class="hl-1">span</span><span class="hl-0">&gt; </span><span class="hl-1">Build</span><span class="hl-0"> </span><span class="hl-6">UI</span><br/><span class="hl-0">                    </span><span class="hl-8">with</span><span class="hl-0"> </span><span class="hl-1">dummy</span><span class="hl-0"> </span><span class="hl-1">data</span><span class="hl-0"> &lt;</span><span class="hl-1">code</span><span class="hl-0">&gt;[</span><span class="hl-3">3</span><span class="hl-0">/</span><span class="hl-3">3</span><span class="hl-0">]&lt;/</span><span class="hl-1">code</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                &lt;/</span><span class="hl-1">h3</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                &lt;</span><span class="hl-1">div</span><span class="hl-0"> </span><span class="hl-1">class</span><span class="hl-0">=</span><span class="hl-5">&quot;outline-text-3&quot;</span><span class="hl-0"> </span><span class="hl-1">id</span><span class="hl-0">=</span><span class="hl-5">&quot;text-3-1&quot;</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                    &lt;</span><span class="hl-1">ul</span><span class="hl-0"> </span><span class="hl-1">class</span><span class="hl-0">=</span><span class="hl-5">&quot;org-ul&quot;</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                        &lt;</span><span class="hl-1">li</span><span class="hl-0"> </span><span class="hl-1">class</span><span class="hl-0">=</span><span class="hl-5">&quot;on&quot;</span><span class="hl-0">&gt;&lt;</span><span class="hl-4">code</span><span class="hl-0">&gt;[</span><span class="hl-6">X</span><span class="hl-0">]&lt;/</span><span class="hl-1">code</span><span class="hl-0">&gt; </span><span class="hl-1">Login</span><span class="hl-0"> </span><span class="hl-1">Page</span><span class="hl-0">&lt;/</span><span class="hl-1">li</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                        &lt;</span><span class="hl-1">li</span><span class="hl-0"> </span><span class="hl-1">class</span><span class="hl-0">=</span><span class="hl-5">&quot;on&quot;</span><span class="hl-0">&gt;&lt;</span><span class="hl-4">code</span><span class="hl-0">&gt;[</span><span class="hl-6">X</span><span class="hl-0">]&lt;/</span><span class="hl-1">code</span><span class="hl-0">&gt; </span><span class="hl-1">Registration</span><span class="hl-0">&lt;/</span><span class="hl-1">li</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                        &lt;</span><span class="hl-1">li</span><span class="hl-0"> </span><span class="hl-1">class</span><span class="hl-0">=</span><span class="hl-5">&quot;on&quot;</span><span class="hl-0">&gt;&lt;</span><span class="hl-4">code</span><span class="hl-0">&gt;[</span><span class="hl-6">X</span><span class="hl-0">]&lt;/</span><span class="hl-1">code</span><span class="hl-0">&gt; </span><span class="hl-1">Change</span><span class="hl-0"> </span><span class="hl-1">Password</span><span class="hl-0">&lt;/</span><span class="hl-1">li</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                    &lt;/</span><span class="hl-1">ul</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                &lt;/</span><span class="hl-1">div</span><span class="hl-0">&gt;</span><br/><span class="hl-0">            &lt;/</span><span class="hl-1">div</span><span class="hl-0">&gt;</span><br/><br/><span class="hl-0">            &lt;</span><span class="hl-1">div</span><span class="hl-0"> </span><span class="hl-1">id</span><span class="hl-0">=</span><span class="hl-5">&quot;outline-container-org8b10b12&quot;</span><span class="hl-0"> </span><span class="hl-1">class</span><span class="hl-0">=</span><span class="hl-5">&quot;outline-3&quot;</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                &lt;</span><span class="hl-1">h3</span><span class="hl-0"> </span><span class="hl-1">id</span><span class="hl-0">=</span><span class="hl-5">&quot;org8b10b12&quot;</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                    &lt;</span><span class="hl-1">span</span><span class="hl-0"> </span><span class="hl-1">class</span><span class="hl-0">=</span><span class="hl-5">&quot;section-number-3&quot;</span><span class="hl-0">&gt;</span><span class="hl-3">3.2</span><span class="hl-0">.&lt;/</span><span class="hl-1">span</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                    &lt;</span><span class="hl-1">span</span><span class="hl-0"> </span><span class="hl-1">class</span><span class="hl-0">=</span><span class="hl-5">&quot;todo IN_PROG&quot;</span><span class="hl-0">&gt;</span><span class="hl-6">IN</span><span class="hl-0">-</span><span class="hl-6">PROG</span><span class="hl-0">&lt;/</span><span class="hl-1">span</span><span class="hl-0">&gt; </span><span class="hl-1">Connect</span><span class="hl-0"> </span><span class="hl-1">to</span><span class="hl-0"> </span><span class="hl-6">LDAP</span><span class="hl-0"> &lt;</span><span class="hl-1">code</span><span class="hl-0">&gt;[</span><span class="hl-3">1</span><span class="hl-0">/</span><span class="hl-3">3</span><span class="hl-0">]&lt;/</span><span class="hl-1">code</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                &lt;/</span><span class="hl-1">h3</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                &lt;</span><span class="hl-1">div</span><span class="hl-0"> </span><span class="hl-1">class</span><span class="hl-0">=</span><span class="hl-5">&quot;outline-text-3&quot;</span><span class="hl-0"> </span><span class="hl-1">id</span><span class="hl-0">=</span><span class="hl-5">&quot;text-3-2&quot;</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                    &lt;</span><span class="hl-1">ul</span><span class="hl-0"> </span><span class="hl-1">class</span><span class="hl-0">=</span><span class="hl-5">&quot;org-ul&quot;</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                        &lt;</span><span class="hl-1">li</span><span class="hl-0"> </span><span class="hl-1">class</span><span class="hl-0">=</span><span class="hl-5">&quot;on&quot;</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                            &lt;</span><span class="hl-4">code</span><span class="hl-0">&gt;[</span><span class="hl-6">X</span><span class="hl-0">]&lt;/</span><span class="hl-1">code</span><span class="hl-0">&gt; </span><span class="hl-1">Member</span><span class="hl-0"> </span><span class="hl-1">Area</span><span class="hl-0"> </span><span class="hl-1">information</span><span class="hl-0"> </span><span class="hl-1">What</span><span class="hl-0"> </span><span class="hl-1">information</span><span class="hl-0"> </span><span class="hl-1">to</span><span class="hl-0"> </span><span class="hl-1">show</span><span class="hl-0">?</span><br/><span class="hl-0">                            &lt;</span><span class="hl-1">ul</span><span class="hl-0"> </span><span class="hl-1">class</span><span class="hl-0">=</span><span class="hl-5">&quot;org-ul&quot;</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                                &lt;</span><span class="hl-4">li</span><span class="hl-0">&gt;</span><span class="hl-1">Currently</span><span class="hl-0"> </span><span class="hl-1">showing</span><span class="hl-0"> </span><span class="hl-6">CN</span><span class="hl-0">, </span><span class="hl-1">Groups</span><span class="hl-0">, </span><span class="hl-1">Password</span><span class="hl-0"> </span><span class="hl-1">Expiry</span><span class="hl-0"> </span><span class="hl-1">and</span><span class="hl-0"> </span><span class="hl-1">Description</span><span class="hl-0">&lt;/</span><span class="hl-1">li</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                                &lt;</span><span class="hl-4">li</span><span class="hl-0">&gt;</span><span class="hl-1">Trivial</span><span class="hl-0"> </span><span class="hl-1">to</span><span class="hl-0"> </span><span class="hl-1">add</span><span class="hl-0"> </span><span class="hl-1">more</span><span class="hl-0">&lt;/</span><span class="hl-1">li</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                            &lt;/</span><span class="hl-1">ul</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                        &lt;/</span><span class="hl-1">li</span><span class="hl-0">&gt;</span><br/><br/><span class="hl-0">                        &lt;</span><span class="hl-1">li</span><span class="hl-0"> </span><span class="hl-1">class</span><span class="hl-0">=</span><span class="hl-5">&quot;off&quot;</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                            &lt;</span><span class="hl-4">code</span><span class="hl-0">&gt;[&amp;#</span><span class="hl-1">xa0</span><span class="hl-0">;]&lt;/</span><span class="hl-1">code</span><span class="hl-0">&gt; </span><span class="hl-1">Club</span><span class="hl-0"> </span><span class="hl-1">Membership</span><span class="hl-0"> </span><span class="hl-1">verification</span><span class="hl-0"> </span><span class="hl-1">for</span><span class="hl-0"> </span><span class="hl-1">Registration</span><span class="hl-0"> </span><span class="hl-1">Proposal</span><span class="hl-0">:</span><br/><span class="hl-0">                            </span><span class="hl-1">Discord</span><span class="hl-0"> </span><span class="hl-1">Integration</span><br/><span class="hl-0">                        &lt;/</span><span class="hl-1">li</span><span class="hl-0">&gt;</span><br/><br/><span class="hl-0">                        &lt;</span><span class="hl-1">li</span><span class="hl-0"> </span><span class="hl-1">class</span><span class="hl-0">=</span><span class="hl-5">&quot;off&quot;</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                            &lt;</span><span class="hl-4">code</span><span class="hl-0">&gt;[&amp;#</span><span class="hl-1">xa0</span><span class="hl-0">;]&lt;/</span><span class="hl-1">code</span><span class="hl-0">&gt; </span><span class="hl-1">Allow</span><span class="hl-0"> </span><span class="hl-1">users</span><span class="hl-0"> </span><span class="hl-1">to</span><span class="hl-0"> </span><span class="hl-1">change</span><span class="hl-0"> </span><span class="hl-1">their</span><span class="hl-0"> </span><span class="hl-1">password</span><br/><span class="hl-0">                            &lt;</span><span class="hl-1">ul</span><span class="hl-0"> </span><span class="hl-1">class</span><span class="hl-0">=</span><span class="hl-5">&quot;org-ul&quot;</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                                &lt;</span><span class="hl-4">li</span><span class="hl-0">&gt;</span><span class="hl-1">Maybe</span><span class="hl-0"> </span><span class="hl-1">add</span><span class="hl-0"> </span><span class="hl-1">some</span><span class="hl-0"> </span><span class="hl-1">verification</span><span class="hl-0">?&lt;/</span><span class="hl-4">li</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                            &lt;/</span><span class="hl-1">ul</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                        &lt;/</span><span class="hl-1">li</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                    &lt;/</span><span class="hl-1">ul</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                &lt;/</span><span class="hl-1">div</span><span class="hl-0">&gt;</span><br/><span class="hl-0">            &lt;/</span><span class="hl-1">div</span><span class="hl-0">&gt;</span><br/><br/><span class="hl-0">            &lt;</span><span class="hl-1">div</span><span class="hl-0"> </span><span class="hl-1">id</span><span class="hl-0">=</span><span class="hl-5">&quot;outline-container-org1bbc51a&quot;</span><span class="hl-0"> </span><span class="hl-1">class</span><span class="hl-0">=</span><span class="hl-5">&quot;outline-3&quot;</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                &lt;</span><span class="hl-1">h3</span><span class="hl-0"> </span><span class="hl-1">id</span><span class="hl-0">=</span><span class="hl-5">&quot;org1bbc51a&quot;</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                    &lt;</span><span class="hl-1">span</span><span class="hl-0"> </span><span class="hl-1">class</span><span class="hl-0">=</span><span class="hl-5">&quot;section-number-3&quot;</span><span class="hl-0">&gt;</span><span class="hl-3">3.3</span><span class="hl-0">.&lt;/</span><span class="hl-1">span</span><span class="hl-0">&gt; &lt;</span><span class="hl-4">span</span><span class="hl-0"> </span><span class="hl-4">class</span><span class="hl-0">=</span><span class="hl-5">&quot;todo TODO&quot;</span><span class="hl-0">&gt;</span><span class="hl-6">TODO</span><span class="hl-0">&lt;/</span><span class="hl-1">span</span><span class="hl-0">&gt; </span><span class="hl-1">Add</span><br/><span class="hl-0">                    </span><span class="hl-6">CSS</span><span class="hl-0">/</span><span class="hl-1">decorations</span><span class="hl-0"> &lt;</span><span class="hl-1">code</span><span class="hl-0">&gt;[</span><span class="hl-3">0</span><span class="hl-0">/</span><span class="hl-3">1</span><span class="hl-0">]&lt;/</span><span class="hl-1">code</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                &lt;/</span><span class="hl-1">h3</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                &lt;</span><span class="hl-1">div</span><span class="hl-0"> </span><span class="hl-1">class</span><span class="hl-0">=</span><span class="hl-5">&quot;outline-text-3&quot;</span><span class="hl-0"> </span><span class="hl-1">id</span><span class="hl-0">=</span><span class="hl-5">&quot;text-3-3&quot;</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                    &lt;</span><span class="hl-1">ul</span><span class="hl-0"> </span><span class="hl-1">class</span><span class="hl-0">=</span><span class="hl-5">&quot;org-ul&quot;</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                        &lt;</span><span class="hl-1">li</span><span class="hl-0"> </span><span class="hl-1">class</span><span class="hl-0">=</span><span class="hl-5">&quot;off&quot;</span><span class="hl-0">&gt;&lt;</span><span class="hl-4">code</span><span class="hl-0">&gt;[&amp;#</span><span class="hl-1">xa0</span><span class="hl-0">;]&lt;/</span><span class="hl-1">code</span><span class="hl-0">&gt; </span><span class="hl-1">Make</span><span class="hl-0"> </span><span class="hl-1">Pretty</span><span class="hl-0">&lt;/</span><span class="hl-1">li</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                    &lt;/</span><span class="hl-1">ul</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                &lt;/</span><span class="hl-1">div</span><span class="hl-0">&gt;</span><br/><span class="hl-0">            &lt;/</span><span class="hl-1">div</span><span class="hl-0">&gt;</span><br/><span class="hl-0">        &lt;/</span><span class="hl-1">div</span><span class="hl-0">&gt;</span><br/><br/><span class="hl-0">        &lt;</span><span class="hl-1">div</span><span class="hl-0"> </span><span class="hl-1">id</span><span class="hl-0">=</span><span class="hl-5">&quot;outline-container-org917afa7&quot;</span><span class="hl-0"> </span><span class="hl-1">class</span><span class="hl-0">=</span><span class="hl-5">&quot;outline-2&quot;</span><span class="hl-0">&gt;</span><br/><span class="hl-0">            &lt;</span><span class="hl-1">h2</span><span class="hl-0"> </span><span class="hl-1">id</span><span class="hl-0">=</span><span class="hl-5">&quot;org917afa7&quot;</span><span class="hl-0">&gt;&lt;</span><span class="hl-4">span</span><span class="hl-0"> </span><span class="hl-4">class</span><span class="hl-0">=</span><span class="hl-5">&quot;section-number-2&quot;</span><span class="hl-0">&gt;</span><span class="hl-3">4.</span><span class="hl-0">&lt;/</span><span class="hl-1">span</span><span class="hl-0">&gt; </span><span class="hl-1">Contributing</span><span class="hl-0">&lt;/</span><span class="hl-1">h2</span><span class="hl-0">&gt;</span><br/><span class="hl-0">            &lt;</span><span class="hl-1">div</span><span class="hl-0"> </span><span class="hl-1">class</span><span class="hl-0">=</span><span class="hl-5">&quot;outline-text-2&quot;</span><span class="hl-0"> </span><span class="hl-1">id</span><span class="hl-0">=</span><span class="hl-5">&quot;text-4&quot;</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                &lt;</span><span class="hl-1">ol</span><span class="hl-0"> </span><span class="hl-1">class</span><span class="hl-0">=</span><span class="hl-5">&quot;org-ol&quot;</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                    &lt;</span><span class="hl-4">li</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                        </span><span class="hl-1">Make</span><span class="hl-0"> </span><span class="hl-1">sure</span><span class="hl-0"> </span><span class="hl-1">your</span><span class="hl-0"> </span><span class="hl-1">text</span><span class="hl-0"> </span><span class="hl-1">editor</span><span class="hl-0"> </span><span class="hl-1">uses</span><span class="hl-0"> &lt;</span><span class="hl-1">a</span><span class="hl-0"> </span><span class="hl-1">href</span><span class="hl-0">=</span><span class="hl-5">&quot;https://editorconfig.org&quot;</span><span class="hl-0">&gt;</span><span class="hl-1">editorconfig</span><span class="hl-0">&lt;/</span><span class="hl-1">a</span><span class="hl-0">&gt;.</span><br/><span class="hl-0">                    &lt;/</span><span class="hl-1">li</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                    &lt;</span><span class="hl-4">li</span><span class="hl-0">&gt;</span><span class="hl-1">Read</span><span class="hl-0"> </span><span class="hl-1">comments</span><span class="hl-0"> </span><span class="hl-1">above</span><span class="hl-0"> </span><span class="hl-1">unimplemented</span><span class="hl-0"> </span><span class="hl-1">functions</span><span class="hl-0">.&lt;/</span><span class="hl-1">li</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                    &lt;</span><span class="hl-4">li</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                        &lt;</span><span class="hl-4">del</span><span class="hl-0">&gt;</span><span class="hl-1">Run</span><span class="hl-0"> &lt;</span><span class="hl-1">code</span><span class="hl-0">&gt;</span><span class="hl-1">npm</span><span class="hl-0"> </span><span class="hl-1">run</span><span class="hl-0"> </span><span class="hl-1">format</span><span class="hl-0">&lt;/</span><span class="hl-1">code</span><span class="hl-0">&gt; </span><span class="hl-1">before</span><span class="hl-0"> </span><span class="hl-1">committing</span><span class="hl-0">!&lt;/</span><span class="hl-1">del</span><span class="hl-0">&gt; </span><span class="hl-1">prettier</span><span class="hl-0"> </span><span class="hl-1">is</span><span class="hl-0"> </span><span class="hl-10">broken</span><span class="hl-0"> (</span><span class="hl-1">for</span><br/><span class="hl-0">                        </span><span class="hl-1">me</span><span class="hl-0"> </span><span class="hl-1">atleast</span><span class="hl-0">)</span><br/><span class="hl-0">                    &lt;/</span><span class="hl-1">li</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                &lt;/</span><span class="hl-1">ol</span><span class="hl-0">&gt;</span><br/><span class="hl-0">            &lt;/</span><span class="hl-1">div</span><span class="hl-0">&gt;</span><br/><br/><span class="hl-0">            &lt;</span><span class="hl-1">div</span><span class="hl-0"> </span><span class="hl-1">id</span><span class="hl-0">=</span><span class="hl-5">&quot;outline-container-org0d6cf51&quot;</span><span class="hl-0"> </span><span class="hl-1">class</span><span class="hl-0">=</span><span class="hl-5">&quot;outline-3&quot;</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                &lt;</span><span class="hl-1">h3</span><span class="hl-0"> </span><span class="hl-1">id</span><span class="hl-0">=</span><span class="hl-5">&quot;org0d6cf51&quot;</span><span class="hl-0">&gt;&lt;</span><span class="hl-4">span</span><span class="hl-0"> </span><span class="hl-4">class</span><span class="hl-0">=</span><span class="hl-5">&quot;section-number-3&quot;</span><span class="hl-0">&gt;</span><span class="hl-3">4.1</span><span class="hl-0">.&lt;/</span><span class="hl-1">span</span><span class="hl-0">&gt; </span><span class="hl-1">Optional</span><span class="hl-0">&lt;/</span><span class="hl-1">h3</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                &lt;</span><span class="hl-1">div</span><span class="hl-0"> </span><span class="hl-1">class</span><span class="hl-0">=</span><span class="hl-5">&quot;outline-text-3&quot;</span><span class="hl-0"> </span><span class="hl-1">id</span><span class="hl-0">=</span><span class="hl-5">&quot;text-4-1&quot;</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                    &lt;</span><span class="hl-4">p</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                        </span><span class="hl-1">To</span><span class="hl-0"> </span><span class="hl-1">ensure</span><span class="hl-0"> </span><span class="hl-1">Node</span><span class="hl-0">.</span><span class="hl-1">js</span><span class="hl-0"> </span><span class="hl-1">version</span><span class="hl-0"> </span><span class="hl-1">consistency</span><span class="hl-0">, </span><span class="hl-1">consider</span><span class="hl-0"> </span><span class="hl-1">using</span><br/><span class="hl-0">                        &lt;</span><span class="hl-1">a</span><span class="hl-0"> </span><span class="hl-1">href</span><span class="hl-0">=</span><span class="hl-5">&quot;https://zero-to-nix.com/start/install&quot;</span><span class="hl-0">&gt;</span><span class="hl-1">Nix</span><span class="hl-0">&lt;/</span><span class="hl-1">a</span><span class="hl-0">&gt;: &lt;</span><span class="hl-4">code</span><span class="hl-0">&gt;</span><span class="hl-1">nix</span><span class="hl-0"> </span><span class="hl-1">develop</span><span class="hl-0">&lt;/</span><span class="hl-1">code</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                    &lt;/</span><span class="hl-1">p</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                &lt;/</span><span class="hl-1">div</span><span class="hl-0">&gt;</span><br/><span class="hl-0">            &lt;/</span><span class="hl-1">div</span><span class="hl-0">&gt;</span><br/><span class="hl-0">        &lt;/</span><span class="hl-1">div</span><span class="hl-0">&gt;</span><br/><br/><span class="hl-0">        &lt;</span><span class="hl-1">div</span><span class="hl-0"> </span><span class="hl-1">id</span><span class="hl-0">=</span><span class="hl-5">&quot;outline-container-org665096a&quot;</span><span class="hl-0"> </span><span class="hl-1">class</span><span class="hl-0">=</span><span class="hl-5">&quot;outline-2&quot;</span><span class="hl-0">&gt;</span><br/><span class="hl-0">            &lt;</span><span class="hl-1">h2</span><span class="hl-0"> </span><span class="hl-1">id</span><span class="hl-0">=</span><span class="hl-5">&quot;org665096a&quot;</span><span class="hl-0">&gt;&lt;</span><span class="hl-4">span</span><span class="hl-0"> </span><span class="hl-4">class</span><span class="hl-0">=</span><span class="hl-5">&quot;section-number-2&quot;</span><span class="hl-0">&gt;</span><span class="hl-3">5.</span><span class="hl-0">&lt;/</span><span class="hl-1">span</span><span class="hl-0">&gt; </span><span class="hl-1">License</span><span class="hl-0">&lt;/</span><span class="hl-1">h2</span><span class="hl-0">&gt;</span><br/><span class="hl-0">            &lt;</span><span class="hl-1">div</span><span class="hl-0"> </span><span class="hl-1">class</span><span class="hl-0">=</span><span class="hl-5">&quot;outline-text-2&quot;</span><span class="hl-0"> </span><span class="hl-1">id</span><span class="hl-0">=</span><span class="hl-5">&quot;text-5&quot;</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                &lt;</span><span class="hl-4">p</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                    &lt;</span><span class="hl-1">a</span><span class="hl-0"> </span><span class="hl-1">href</span><span class="hl-0">=</span><span class="hl-5">&quot;https://www.gnu.org/licenses/agpl-3.0.txt&quot;</span><span class="hl-0">&gt;</span><span class="hl-6">AGPL</span><span class="hl-0">-</span><span class="hl-3">3.0</span><span class="hl-0">-</span><span class="hl-1">only</span><span class="hl-0">&lt;/</span><span class="hl-1">a</span><span class="hl-0">&gt;</span><br/><span class="hl-0">                &lt;/</span><span class="hl-1">p</span><span class="hl-0">&gt;</span><br/><span class="hl-0">            &lt;/</span><span class="hl-1">div</span><span class="hl-0">&gt;</span><br/><span class="hl-0">        &lt;/</span><span class="hl-1">div</span><span class="hl-0">&gt;</span><br/><span class="hl-0">    &lt;/</span><span class="hl-1">div</span><span class="hl-0">&gt;</span><br/><span class="hl-0">    &lt;</span><span class="hl-1">div</span><span class="hl-0"> </span><span class="hl-1">id</span><span class="hl-0">=</span><span class="hl-5">&quot;postamble&quot;</span><span class="hl-0"> </span><span class="hl-1">class</span><span class="hl-0">=</span><span class="hl-5">&quot;status&quot;</span><span class="hl-0">&gt;</span><br/><span class="hl-0">        &lt;</span><span class="hl-1">p</span><span class="hl-0"> </span><span class="hl-1">class</span><span class="hl-0">=</span><span class="hl-5">&quot;author&quot;</span><span class="hl-0">&gt;</span><span class="hl-2">Author</span><span class="hl-0">: </span><span class="hl-1">Soham</span><span class="hl-0"> </span><span class="hl-6">S</span><span class="hl-0"> </span><span class="hl-1">Gumaste</span><span class="hl-0">&lt;/</span><span class="hl-1">p</span><span class="hl-0">&gt;</span><br/><span class="hl-0">        &lt;</span><span class="hl-1">p</span><span class="hl-0"> </span><span class="hl-1">class</span><span class="hl-0">=</span><span class="hl-5">&quot;date&quot;</span><span class="hl-0">&gt;</span><span class="hl-2">Created</span><span class="hl-0">: </span><span class="hl-3">2023</span><span class="hl-0">-</span><span class="hl-3">05</span><span class="hl-0">-</span><span class="hl-3">22</span><span class="hl-0"> </span><span class="hl-1">Mon</span><span class="hl-0"> </span><span class="hl-3">14</span><span class="hl-0">:</span><span class="hl-3">57</span><span class="hl-0">&lt;/</span><span class="hl-1">p</span><span class="hl-0">&gt;</span><br/><span class="hl-0">        &lt;</span><span class="hl-1">p</span><span class="hl-0"> </span><span class="hl-1">class</span><span class="hl-0">=</span><span class="hl-5">&quot;validation&quot;</span><span class="hl-0">&gt;&lt;</span><span class="hl-4">a</span><span class="hl-0"> </span><span class="hl-4">href</span><span class="hl-0">=</span><span class="hl-5">&quot;https://validator.w3.org/check?uri=referer&quot;</span><span class="hl-0">&gt;</span><span class="hl-1">Validate</span><span class="hl-0">&lt;/</span><span class="hl-1">a</span><span class="hl-0">&gt;&lt;/</span><span class="hl-4">p</span><span class="hl-0">&gt;</span><br/><span class="hl-0">    &lt;/</span><span class="hl-1">div</span><span class="hl-0">&gt;</span><br/><span class="hl-0">&lt;/</span><span class="hl-1">body</span><span class="hl-0">&gt;</span>
+</code><button>Copy</button></pre>
 </html></div></div>
 <div class="col-sidebar">
 <div class="page-menu">
@@ -455,12 +485,16 @@ To ensure Node.js version consistency, consider using <a href="https://zero-to-n
 <details class="tsd-index-accordion" data-key="routes/member/chpasswd/+page.server"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4.93896 8.531L12 15.591L19.061 8.531L16.939 6.409L12 11.349L7.06098 6.409L4.93896 8.531Z" fill="var(--color-text)"></path></svg><a href="modules/routes_member_chpasswd__page_server.html"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-4-path"></use><use href="#icon-4-text"></use></svg><span>routes/member/chpasswd/+page.server</span></a></summary>
 <div class="tsd-accordion-details">
 <ul class="tsd-nested-navigation">
+<li><a href="variables/routes_member_chpasswd__page_server.actions.html"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-32-path"></use><use href="#icon-32-text"></use></svg><span>actions</span></a></li></ul></div></details></li>
 <li>
-<details class="tsd-index-accordion" data-key="routes/member/chpasswd/+page.server.<internal>"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4.93896 8.531L12 15.591L19.061 8.531L16.939 6.409L12 11.349L7.06098 6.409L4.93896 8.531Z" fill="var(--color-text)"></path></svg><a href="modules/routes_member_chpasswd__page_server._internal_.html"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-4-path"></use><use href="#icon-4-text"></use></svg><span>&lt;internal&gt;</span></a></summary>
+<details class="tsd-index-accordion" data-key="routes/register/+page.server"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4.93896 8.531L12 15.591L19.061 8.531L16.939 6.409L12 11.349L7.06098 6.409L4.93896 8.531Z" fill="var(--color-text)"></path></svg><a href="modules/routes_register__page_server.html"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-4-path"></use><use href="#icon-4-text"></use></svg><span>routes/register/+page.server</span></a></summary>
 <div class="tsd-accordion-details">
 <ul class="tsd-nested-navigation">
-<li><a href="interfaces/routes_member_chpasswd__page_server._internal_.ActionFailure.html" class="tsd-is-external"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-256-path"></use><use href="#icon-256-text"></use></svg><span>Action<wbr/>Failure</span></a></li></ul></div></details></li>
-<li><a href="variables/routes_member_chpasswd__page_server.actions.html"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-32-path"></use><use href="#icon-32-text"></use></svg><span>actions</span></a></li></ul></div></details></li></ul></nav></div></div></div>
+<li>
+<details class="tsd-index-accordion" data-key="routes/register/+page.server.<internal>"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4.93896 8.531L12 15.591L19.061 8.531L16.939 6.409L12 11.349L7.06098 6.409L4.93896 8.531Z" fill="var(--color-text)"></path></svg><a href="modules/routes_register__page_server._internal_.html"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-4-path"></use><use href="#icon-4-text"></use></svg><span>&lt;internal&gt;</span></a></summary>
+<div class="tsd-accordion-details">
+<ul class="tsd-nested-navigation">
+<li><a href="interfaces/routes_register__page_server._internal_.ActionFailure.html" class="tsd-is-external"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-256-path"></use><use href="#icon-256-text"></use></svg><span>Action<wbr/>Failure</span></a></li></ul></div></details></li></ul></div></details></li></ul></nav></div></div></div>
 <div class="tsd-generator">
 <p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div>
 <div class="overlay"></div></body></html>
