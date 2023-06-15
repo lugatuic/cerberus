@@ -29,7 +29,7 @@
 			if (result.type === 'failure') {
 				ui_msg = result.data.message;
 			} else {
-				ui_msg = "Success!"
+				ui_msg = "Form executed.";
 			}
 			await applyAction(result);
 			update();
