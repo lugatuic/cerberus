@@ -1,29 +1,8 @@
-// New-ADUser
-// -SamAccountName $user.username
-// -EmployeeID $user.uin
-// -Department $user.major
-// -Company $user.college
-// -EmailAddress $user.email
-// -MobilePhone $user.phone
-// -GivenName $user.fn
-// -Surname $user.ln
-// -EmployeeNumber $user.receipt
-// -Name $someName
-// -Organization $user.netid
-// -Enable $true
-// -AccountPassword $newPassword
-// -Path "ou=november,ou=2019,ou=acmusers,dc=acm,dc=cs"
-
-/*
-	#token_type=Bearer&access_token=KluaxcfjPPVvjWplHbrjJUnJPJ7ebj&expires_in=604800&scope=guilds+identify
-	API: GET /users/@me/guilds
-	
-	*/
 import type { PageServerLoad, Actions } from './$types';
 import { fail } from '@sveltejs/kit';
 import { ldap } from '$lib/server/api';
-import type { URL } from 'node:url';
 import { env } from '$env/dynamic/private';
+import * as db from '$lib/server/db';
 import * as crypto from 'node:crypto';
 
 // export const load: PageServerLoad = async function (event) {
@@ -37,15 +16,14 @@ export const actions = {
 		let data = Object.fromEntries(fdata);
 
 		if (!fdata.get('discord_code')) {
-			throw fail(400, { message: 'Missing discord info!' });
+			return fail(400, { message: 'Missing discord info!' });
 		}
-		// let discordRE = /^#token_type=(\w+)&access_token=(\w+)&expires_in=(\d+).*$/g;
-		// let discord_tokens = fdata.get("discord")?.toString();
-		// let matches = discord_tokens!.matchAll(discordRE);
-		// Iterator containing ONE iterable with a VALUE property
-		// 0th pos is the whole string, 1st is 1st match group, etc.
-		// let api_token = matches.next().value[2];
 
+		for (const k in data) {
+			if (!data[k]) {
+				delete data[k];
+			}
+		}
 		const code = data['discord_code']!;
 		const token_url = 'https://discord.com/api/oauth2/token';
 		const revoke_url = 'https://discord.com/api/oauth2/token/revoke';
@@ -54,13 +32,16 @@ export const actions = {
 		const client_secret = CLIENT_SECRET;
 		// ############## CHANGE THIS #########################
 
-		let redirect_uri = import.meta.env.DEV ? "http://localhost:5173" : "https://cerberus.acmuic.org/register"
+		let redirect_uri = "http://localhost:5173/register";
+		if (import.meta.env.PROD) {
+			redirect_uri = "https://cerberus.acmuic.org/register";
+		}
 		const _token_body = {
 			client_id: client_id,
 			client_secret: client_secret,
 			grant_type: 'authorization_code',
 			code: code,
-			redirect_uri
+			redirect_uri: `${redirect_uri}`
 		};
 		// Thanks Stackoverflow!
 		let token_body = new URLSearchParams();
@@ -102,25 +83,29 @@ export const actions = {
 
 		console.log('#### logging guilds!');
 		let acm_guildid = '652006495675875359';
+		let lug_guildid = '833734451866763285';
 		let in_acm = false;
 		for (let g of guilds) {
 			let gid = g['id'];
-			if (gid === acm_guildid) {
+			if (gid === acm_guildid || gid === lug_guildid) {
 				in_acm = true;
 			}
 		}
 		if (!in_acm) {
-			throw fail(400, { message: 'Not in ACM!' });
+			return fail(400, { message: 'Not in ACM or LUG Discord!' });
 		} else {
 			console.log('##### USER IN ACM!');
 		}
 		console.log(user_info_json);
 		if (in_acm && user_email_verified && user_email && mfa) {
-			let r = await ldap.add_user(data);
 			console.log(`Allowing user ${data['username']}`);
-			return { success: !r.error, message: r.message };
+			let r = await final_add_user(data, user_info_json["id"]);
+			if (!r.success) {
+				return fail (400, {message: r.message});
+			}
+			return { success: r.success, message: r.message.toString() };
 		} else {
-			throw fail(400, { message: `Discord account must be in ACM discord, verfied email and 2FA` });
+			throw fail(400, { message: `Discord account must be in ACM/LUG discord, verfied email and 2FA` });
 		}
 		// console.log(`Registration: ${JSON.stringify(data)}`);
 	},
@@ -145,12 +130,34 @@ export const actions = {
 
 		if (is_equal) {
 			console.log(`** User ${data["username"]} passed verification!`);
-			let r = await ldap.add_user(data);
 			console.log(`Allowing user ${data['username']}`);
-			return { success: !r.error, message: r.message };
+			try {
+				let {success, message}= await final_add_user(data, undefined);
+				if (!success) {
+					return fail (400, {message});
+				}
+				return {success, message};
+			} catch (e: any) {
+				return fail(400, {message: e.toString()});
+			}
 		} else {
-			throw fail(400, {message: "Verification code incorrect!"});
+			return fail(400, {message: "Verification code incorrect!"});
 		}
 
 	}
 } satisfies Actions;
+
+async function final_add_user(data: object, did: string|undefined) {
+	if (did) {
+		console.log(`Checking discord ID: ${did}`);
+		let exists = await db.exists(did);
+		if (exists) {
+			console.log("Discord already exists!");
+			return {success: false, message: "Discord user already signed up!"};
+		}
+	}
+	let r = await ldap.add_user(data);
+	//@ts-ignore
+	db.add(did, data["username"]);
+	return { success: !r.error, message: r.message.toString() };
+}

@@ -69,13 +69,21 @@
 	<li>Use the same NetID as what you told the admin</li>
 	<li><strong>DO NOT share your special code with anyone!</li>
 </ul>
+<hr />
+<p>
+Boxes with a <em>solid</em> border are <u>REQUIRED</u>. <br />
+Boxes with a <em>dashed</em> border are <u>OPTIONAL</u>. <br />
+Boxes will loose their border once they have an acceptable value.<br />
+Passwords <strong>MUST</strong>
+contain <u>Uppercase</u>, <u>Lowercase</u>, <u>Digit</u>
+and <u>Special Char</u>.
+</p>
 </aside>
 <!-- TODO: Add placeholders and title attributes -->
 <div id="form" transition:slide>
 	<header>
-		<h1>Register</h1>
+		<h1>Register: Read Instructions --></h1>
 		<!-- <h1>Fragments: {fragments}</h1> -->
-		<h1>Code: {cl_discord_code ?? 'Please click the discord link'}</h1>
 	</header>
 	<section>
 		<h1>Step 1: Choose Verification Method</h1>
@@ -85,13 +93,6 @@
 		{#if ui_msg}<h2 transition:slide>{ui_msg}</h2>{/if}
 	</section>
 	<form id="regform" method="POST" use:enhance={myEnhance} />
-	<input
-		bind:this={discordInput2}
-		bind:value={cl_discord_code}
-		type="hidden"
-		name="discord_code"
-		form="regform"
-	/>
 	{#if cl_discord_code || manual}
 		<section>
 			<hr />
@@ -141,8 +142,21 @@
 				{#if manual}
 					<tr>
 						<td> Verification Code:</td>
-						<td><input form="regform" name="verification" type="text" required /></td>
+						<td><input minlength="40" maxlength="40" form="regform" name="verification" type="text" required /></td>
 					</tr>
+				{:else}
+						<tr>
+							<td>Discord Code:</td>
+							<td><input
+										id = 'rdonly'
+										bind:this={discordInput2}
+										bind:value={cl_discord_code}
+										type="text"
+										readonly
+										name="discord_code"
+										form="regform"
+										/></td>
+						</tr>
 				{/if}
 			</table>
 		</section>
@@ -166,10 +180,15 @@
 		top: 1em;
 		left: 50%;
 		max-width: 45%;
+		min-width:30%;
 	}
 	#form {
 		top: 2em;
 		max-width: 50%;
+	}
+	#rdonly {
+		border-style: none;
+		background-color: #ccc;
 	}
 	a.btn {
 		appearance: button;

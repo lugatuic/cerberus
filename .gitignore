@@ -267,3 +267,4 @@ docker-compose.yml
 /ldaprc
 *.ldif
 verify.sh
+*.db

@@ -188,7 +188,7 @@ export class ldap_class {
 	 * Verify userinfo prior to calling this function.
 	 * @todo Make a type for userinfo
 	 */
-	async add_user(userinfo: any): Promise<Api.Result> {
+	async add_user(userinfo: Record<string,any>): Promise<Api.Result> {
 		// The shape of this object has to be string->string
 		// otherwise the library shits itself.
 		const _entry: any= {
@@ -196,19 +196,21 @@ export class ldap_class {
 			"objectClass": ["top","person","organizationalPerson","user"],
 			"instanceType": "4",
 			"objectCategory": "CN=Person,CN=Schema,CN=Configuration,DC=acmuic,DC=org",
-			"ou": "cerberususers",
+			// "ou": "cerberususers",
 			// User Info:
-			"cn": `${userinfo.gname}`,
-			"employeeID": `${userinfo.uin}`,
-			"department": `${userinfo.major}`,
-			"company": `${userinfo.college}`,
-			"mail": `${userinfo.email}`,
-			"mobile": `${userinfo.phone}`,
-			"givenName": `userinfo.gname`,
-			"sn": `${userinfo.sname}`,
-			"sAMAccountname": `${userinfo.username}`,
-			"userPassword": `${userinfo.password}`,
-			"displayName": `${userinfo.gname + userinfo.sname}`
+			"cn": `${userinfo["username"]}`, //req
+			"employeeID": `${userinfo["uin"]}`,//req
+			"department": `${userinfo["major"] ?? "undefined"}`,
+			"company": `${userinfo["college"] ?? "undefined"}`,
+			"mail": `${userinfo["email"]}`,//req
+			"mobile": `${userinfo["phone"] ?? "0000000000"}`,
+			"displayName": `${userinfo["gname"]} ${userinfo.sname ?? ""}`,//req
+			"sn": `${userinfo["lname"] ?? "undefined"}`,
+			"sAMAccountname": `${userinfo["username"]}`,//req
+			// "dn": `${userinfo.username}`,//req
+			"userPassword": `${userinfo["password"]}`,//req
+			"userPrincipalName": `${userinfo["username"]}@acmuic.org`,
+			"userAccountControl": "544",
 		};
 
 		let entry = _entry;
@@ -224,14 +226,14 @@ export class ldap_class {
 		let client = await this._get_client();
 
 		/** @todo make this a ENV Var */
-		let dn = `CN=${userinfo.gname},OU=CerberusUsers,DC=acmuic,DC=org`;
+		let dn = `CN=${userinfo.username},OU=CerberusUsers,DC=acmuic,DC=org`;
 		let success: boolean = false;
 		let message: string = '';
 		try {
 			success = await util._add(client, dn, entry);
 		} catch (e: any) {
 			success = false;
-			message = e;
+			message = e.toString();
 			console.log(e);
 		}
 		console.log(`Registration: ${success}`);

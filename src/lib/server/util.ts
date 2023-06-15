@@ -27,7 +27,7 @@ export async function _bind(
 	return new Promise((resolve, reject) => {
 		cl.bind(username, password, (err: any) => {
 			if (err === null) {
-				console.log(`Verified user ${username}`);
+				console.log(`Verified/Bound user ${username}`);
 				resolve(true);
 			} else {
 				console.log(`Failed verifiction for user ${username}`);
@@ -139,6 +139,7 @@ export async function _add(cl: Api.LdapClient, dn: string, entry: any): Promise<
 	return new Promise((resolve, reject) => {
 		cl.add(dn, entry, (err) => {
 			if (err) {
+				// throw new Error(err.toString());
 				reject(err);
 			} else {
 				resolve(true);
