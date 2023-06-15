@@ -15,11 +15,11 @@
 	</thead>
 	<hrule />
 	<tbody>
-	<tr>
-		{#each values as value}
-			<td>{value}</td>
-		{/each}
-	</tr>
+		<tr>
+			{#each values as value}
+				<td>{value}</td>
+			{/each}
+		</tr>
 	</tbody>
 </table>
 

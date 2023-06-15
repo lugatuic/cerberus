@@ -13,16 +13,16 @@ jobs:
     steps:
       - name: Check out
         uses: actions/checkout@v1
-        
+
       - name: Install dependencies
         run: npm ci
-        
+
       - name: Build the docs
         run: npm run docs
-        
+
       - name: Configure git to trust the workspace despite the different owner
-        run: git config --global --add safe.directory "$GITHUB_WORKSPACE" 
-        
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
       - name: Install deps
         run: apt-get update && apt-get install -y rsync
 
@@ -31,5 +31,5 @@ jobs:
         with:
           branch: gh-pages
           folder: docs
-          git-config-name: "gh-runner"
-          git-config-email: "gh@example.com"
+          git-config-name: 'gh-runner'
+          git-config-email: 'gh@example.com'

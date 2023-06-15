@@ -29,7 +29,7 @@ export const actions = {
 		}
 		let { error, message } = await ldap.validateUser(user, pass);
 		if (error) {
-			return fail(400, {my_error: true, my_message: "Invalid username/password."});
+			return fail(400, { my_error: true, my_message: 'Invalid username/password.' });
 		}
 
 		let session_token: string = await session.create_session_string(user);
@@ -38,4 +38,3 @@ export const actions = {
 		return { my_success: true };
 	}
 } satisfies Actions;
-

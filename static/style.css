@@ -1,28 +1,44 @@
-* {
-	font-family: sans-serif;
+:root {
+	/* --text: #def3d8; */
+	/* --background: #091306; */
+	/* --primary-button: #5fc346; */
+	/* --secondary-button: #020401; */
+	/* --accent: #70c959; */
+--text: #232900;
+--background: #fcffe6;
+--primary-button: #01dcfe;
+--secondary-button: #f9ffd1;
+--accent: #fe01dc;
 }
-footer {
-	position: fixed;
-	left: 0;
-	bottom: 0;
-	padding-left: 50%;
+@font-face {
+	font-family: "Comic Mono";
+	src: url("/ComicMono.ttf") format("truetype");
 }
-nav {
-	padding-top: 0.5em;
-	padding-bottom: 2em;
-}
-nav > a {
-	text-decoration: none;
-	padding: auto 0.5em;
-	background-color: blanchedalmond;
-}
-nav > a:hover {
-	text-decoration: underline;
-}
-input:invalid {
-	background-color: pink;
-}
+/* * { */
+/* 	font-family: sans-serif; */
+/* } */
+/* footer { */
+/* 	position: fixed; */
+/* 	left: 0; */
+/* 	bottom: 0; */
+/* 	padding-left: 50%; */
+/* } */
+/* nav { */
+/* 	padding-top: 0.5em; */
+/* 	padding-bottom: 2em; */
+/* } */
+/* nav > a { */
+/* 	text-decoration: none; */
+/* 	padding: auto 0.5em; */
+/* 	background-color: blanchedalmond; */
+/* } */
+/* nav > a:hover { */
+/* 	text-decoration: underline; */
+/* } */
+/* input:invalid { */
+/* 	background-color: pink; */
+/* } */
 
-body {
-	background-color: beige;
-}
+/* body { */
+/* 	background-color: beige; */
+/* } */

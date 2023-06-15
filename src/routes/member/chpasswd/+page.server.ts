@@ -3,7 +3,7 @@ import { fail, redirect } from '@sveltejs/kit';
 
 import { ldap, session } from '$lib/server/api';
 
-/** 
+/**
  * @alpha
  * This page should let the user change their password.
  * [WIP]
@@ -22,7 +22,7 @@ export const actions = {
 		let { error, message } = await ldap.change_password(user, oldpass, pass2);
 
 		if (error) {
-			return fail(400,  {error: true, message});
+			return fail(400, { error: true, message });
 		}
 		return { success: true, message };
 	}

@@ -2,8 +2,8 @@
 	import type { PageData } from './$types';
 	import { invalidateAll } from '$app/navigation';
 	import { enhance, applyAction, deserialize } from '$app/forms';
-	import {slide} from 'svelte/transition';
-  import { page } from '$app/stores';
+	import { slide } from 'svelte/transition';
+	import { page } from '$app/stores';
 	export let org;
 
 	org = 'ACM';
@@ -21,11 +21,11 @@
 		console.log('Invalidating!');
 		invalidateAll();
 	}
-	function enhanceFunc (my_form) {
+	function enhanceFunc(my_form) {
 		my_error = false;
 		my_success = false;
 		is_processing = true;
-		return async ({result, update}) => {
+		return async ({ result, update }) => {
 			is_processing = false;
 			if (result.type === 'failure') {
 				my_error = true;
@@ -35,28 +35,24 @@
 			}
 			await applyAction(result);
 			update();
-		}
+		};
 	}
 </script>
 
 <div transition:slide>
 	<h1>Login to {org}!</h1>
-	<form
-		method="POST"
-		action="/login"
-		on:submit={handleClick}
-		use:enhance={enhanceFunc}>
+	<form method="POST" action="/login" on:submit={handleClick} use:enhance={enhanceFunc}>
 		{#if is_processing}<h1 transition:slide>Thinking about it...</h1> {/if}
 		{#if my_error}
 			<div transition:slide>
 				<h1>Error</h1>
-				<p>{my_error_message}
+				<p>{my_error_message}</p>
 			</div>
 		{/if}
 		{#if my_success}<h1 transition:slide>Success!</h1>{/if}
 		<label for="username">
 			Username:
-			<input placeholder="user@acmuic.org"id="username" name="username" type="email" required />
+			<input placeholder="user@acmuic.org" id="username" name="username" type="email" required />
 		</label>
 		<br />
 		<br />
@@ -67,3 +63,15 @@
 		<button type="submit">Submit</button>
 	</form>
 </div>
+
+<style>
+	button {
+		background-color: var(--primary-button);
+		text: var(--text);
+		border-style: solid;
+		border-color: var(--accent);
+	}
+	button:hover, button:focus {
+		border-style: groove;
+	}
+</style>

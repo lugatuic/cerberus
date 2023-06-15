@@ -19,6 +19,7 @@ let { TOKEN, LDAP_USER, LDAP_PASS, LDAP_URL } = env;
  * @remarks
  * This class represents the state of the LDAP connection.
  * Exposes functions which perform LDAP read/writes/binds.
+ * @todo Maybe make this class static?
  */
 export class ldap_class {
 	// private client?: Api.LdapClient;
@@ -49,7 +50,7 @@ export class ldap_class {
 	/** @todo Add acmuic.org ldaps cert here */
 	private _connect(): Api.LdapClient {
 		const opts = {
-			rejectUnauthorized: false,
+			rejectUnauthorized: false
 		} satisfies TlsOptions;
 		const cl = ldapjs.createClient({
 			url: [LDAP_URL!],
@@ -64,11 +65,12 @@ export class ldap_class {
 		return cl;
 	}
 
-	private _get_client(): Api.LdapClient {
+	private async _get_client(): Promise<Api.LdapClient> {
 		let cl = this._connect();
-		cl.bind(LDAP_USER, LDAP_PASS, (err: any) => {
-			this.error = err !== null;
-		});
+		// cl.bind(LDAP_USER, LDAP_PASS, (err: any) => {
+		// 	this.error = err !== null;
+		// });
+		await util._bind(cl, LDAP_USER, LDAP_PASS);
 		return cl;
 	}
 
@@ -88,7 +90,7 @@ export class ldap_class {
 		console.log(`Bound? ${this.error}`);
 		console.log(`Attempting to bind as user ${user}`);
 		let client_user = this._connect();
-		let message: string = "";
+		let message: string = '';
 		let success: boolean = false;
 		if (!user || !password) {
 			return { error: true, message: `validateUser: no username or password given` };
@@ -96,7 +98,7 @@ export class ldap_class {
 		try {
 			success = await util._bind(client_user, user, password);
 		} catch (e: any) {
-			message = "Invalid username or password.";
+			message = 'Invalid username or password.';
 			success = false;
 		}
 		client_user.unbind();
@@ -119,31 +121,31 @@ export class ldap_class {
 	 * Use instance variables in this class.
 	 * Ideally, bind when the class is created.
 	 * DO NOT ATTEMPT IF U DONT KNOW WHAT YOU ARE DOING
+	 * Update June 7th: Function is complete.
 	 */
-	async change_password(user: string, oldpass: string,
-		newpass: string): Promise<Api.Result> {
+	async change_password(user: string, oldpass: string, newpass: string): Promise<Api.Result> {
 		console.log(`change_password: oldpass: ${oldpass}`);
 		let success: boolean;
-		let message: string = "";
-		let client = this._get_client();
+		let message: string = '';
+		let client = await this._get_client();
 		const change = new ldapjs.Change({
 			operation: 'replace',
 			modification: new ldapjs.Attribute({
-				'type': 'userPassword',
-				'values': [newpass]
+				type: 'userPassword',
+				values: [newpass]
 			})
 		});
 		try {
 			let bind_err = await this.validateUser(user, oldpass);
 			if (bind_err.error) {
-				throw new Error("Old password Wrong!");
+				throw new Error('Old password Wrong!');
 			}
 			let dn = (await this.get_member_info(user)).distinguishedName;
 			success = await util._modify(client, dn, change);
 			console.log(`Modify would have been called!`);
 			success = true;
 		} catch (e: any) {
-			console.log(`Error in change_password: ${e}`)
+			console.log(`Error in change_password: ${e}`);
 			success = false;
 			message = e.toString();
 		}
@@ -154,22 +156,22 @@ export class ldap_class {
 	 * This function should fetch information from LDAP for the current user.
 	 * List of information fetched (subject to change):
 	 * 1. cn
-	 * 2. badPasswordTime [password expiry]
+	 * 2. badPasswordTime [last time password was rejected]
 	 * 3. description
 	 * 4. memberOf
-	 *
+	 * 5. DN
 	 * Filtering on `userPrincipalName` which is in the form
 	 * <username>@acmuic.org
 	 * @todo Make the filter a ENV Var.
 	 */
 	async get_member_info(username: string): Promise<Api.MemberInfo> {
-		let client = this._get_client();
+		let client = await this._get_client();
 		const opts = {
 			filter: `(userPrincipalName=${username})`,
 			scope: 'sub',
-			attributes: Api._attrs_desired,
+			attributes: Api._attrs_desired
 		};
-		console.log("Performing search!");
+		console.log('Performing search!');
 		console.log(`Error? : ${this.error}`);
 		let result = await util._search(client, opts);
 		console.log(`Got back ${result.attributes}`);
@@ -177,6 +179,65 @@ export class ldap_class {
 		let attrs: Api.LdapAttribute[] = result.attributes;
 		let info = util._marshall(attrs);
 		return info;
+	}
+
+	/**
+	 * @remarks This function receives a new user registration
+	 * request from /register. This function simply performs
+	 * the add operation without any other verification.
+	 * Verify userinfo prior to calling this function.
+	 * @todo Make a type for userinfo
+	 */
+	async add_user(userinfo: Record<string,any>): Promise<Api.Result> {
+		// The shape of this object has to be string->string
+		// otherwise the library shits itself.
+		const _entry: any= {
+			// Mandatory Attrs (do not change)
+			"objectClass": ["top","person","organizationalPerson","user"],
+			"instanceType": "4",
+			"objectCategory": "CN=Person,CN=Schema,CN=Configuration,DC=acmuic,DC=org",
+			// "ou": "cerberususers",
+			// User Info:
+			"cn": `${userinfo["username"]}`, //req
+			"employeeID": `${userinfo["uin"]}`,//req
+			"department": `${userinfo["major"] ?? "undefined"}`,
+			"company": `${userinfo["college"] ?? "undefined"}`,
+			"mail": `${userinfo["email"]}`,//req
+			"mobile": `${userinfo["phone"] ?? "0000000000"}`,
+			"displayName": `${userinfo["gname"]} ${userinfo.sname ?? ""}`,//req
+			"sn": `${userinfo["lname"] ?? "undefined"}`,
+			"sAMAccountname": `${userinfo["username"]}`,//req
+			// "dn": `${userinfo.username}`,//req
+			"userPassword": `${userinfo["password"]}`,//req
+			"userPrincipalName": `${userinfo["username"]}@acmuic.org`,
+			"userAccountControl": "544",
+		};
+
+		let entry = _entry;
+
+		// Object.keys(_entry).forEach((k) => {
+		// 	console.log(`Making Attr ${k} with ${_entry[k]}`)
+		// 	let attr = new ldapjs.Attribute({ type: k});
+		// 	attr.addValue(_entry[k]);
+		// 	entry.push(attr);
+		// });
+
+		console.log(`Adding ${entry}\n\nLen:${entry.length}`);
+		let client = await this._get_client();
+
+		/** @todo make this a ENV Var */
+		let dn = `CN=${userinfo.username},OU=CerberusUsers,DC=acmuic,DC=org`;
+		let success: boolean = false;
+		let message: string = '';
+		try {
+			success = await util._add(client, dn, entry);
+		} catch (e: any) {
+			success = false;
+			message = e.toString();
+			console.log(e);
+		}
+		console.log(`Registration: ${success}`);
+		return { error: !success, message };
 	}
 }
 

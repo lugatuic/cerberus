@@ -28,6 +28,6 @@
 		"excludeReferences": true,
 		"excludeNotDocumented": true,
 		"skipErrorChecking": true,
-		"includeVersion": true,
+		"includeVersion": true
 	}
 }
