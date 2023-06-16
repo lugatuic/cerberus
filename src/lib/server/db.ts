@@ -6,7 +6,7 @@ const { DB_PATH_PREFIX } = env;
 const knx: Knex = knex({
 	client: 'sqlite3',
 	connection: {
-		filename: path.resolve(DB_PATH_PREFIX ?? ".", "discordusers.db"),
+		filename: path.resolve(DB_PATH_PREFIX ?? ".", "cerberus-users.db"),
 	},
 	useNullAsDefault: true
 });

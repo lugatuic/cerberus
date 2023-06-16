@@ -2,6 +2,8 @@ FROM node:latest
 
 ADD ./build /app
 
+VOLUME /data
+
 COPY ./package-lock.json /app
 COPY ./package.json /app
 
