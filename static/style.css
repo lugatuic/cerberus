@@ -4,15 +4,15 @@
 	/* --primary-button: #5fc346; */
 	/* --secondary-button: #020401; */
 	/* --accent: #70c959; */
---text: #232900;
---background: #fcffe6;
---primary-button: #01dcfe;
---secondary-button: #f9ffd1;
---accent: #fe01dc;
+	--text: #232900;
+	--background: #fcffe6;
+	--primary-button: #01dcfe;
+	--secondary-button: #f9ffd1;
+	--accent: #fe01dc;
 }
 @font-face {
-	font-family: "Comic Mono";
-	src: url("/ComicMono.ttf") format("truetype");
+	font-family: 'Comic Mono';
+	src: url('/ComicMono.ttf') format('truetype');
 }
 /* * { */
 /* 	font-family: sans-serif; */

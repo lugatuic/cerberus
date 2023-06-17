@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { invalidateAll } from '$app/navigation';
-	import {fade} from 'svelte/transition';
+	import { fade } from 'svelte/transition';
 
 	function delCookie(e) {
 		// Thanks Stackoverflow!
@@ -42,45 +42,45 @@
 <footer>Copyright LOLOL</footer>
 
 <style>
-footer {
-	position: fixed;
-	left: 0;
-	bottom: 0;
-	padding-left: 50%;
-}
+	footer {
+		left: 0;
+		bottom: 0;
+		margin-top: 2em;
+	}
 
-nav {
-	padding-top: 0.5em;
-	padding-bottom: 2em;
-}
-a {
-	text-decoration: none;
-	padding: auto 0.5em;
-	/* background-color: blanchedalmond; */
-	background-color: var(--primary-button);
-}
-a:hover, a:focus {
-	text-decoration: underline;
-	background-color: var(--secondary-button);
-}
+	nav {
+		padding-top: 0.5em;
+		padding-bottom: 2em;
+	}
+	a {
+		text-decoration: none;
+		padding: auto 0.5em;
+		/* background-color: blanchedalmond; */
+		background-color: var(--primary-button);
+	}
+	a:hover,
+	a:focus {
+		text-decoration: underline;
+		background-color: var(--secondary-button);
+	}
 
-:global(input) {
-	border-style: solid;
-}
-:global(input:valid) {
-	border-color: var(--background);
-}
+	:global(input) {
+		border-style: solid;
+	}
+	:global(input:valid) {
+		border-color: var(--background);
+	}
 
-:global(input:invalid) {
-	border-color: var(--accent);
-}
+	:global(input:invalid) {
+		border-color: var(--accent);
+	}
 
-:global(input:optional) {
-	border: 2px dashed var(--accent);
-}
-:global(body) {
-	background-color: var(--background);
-	color: var(--text);
-	font-family: "Comic Mono";
-}
+	:global(input:optional) {
+		border: 2px dashed var(--accent);
+	}
+	:global(body) {
+		background-color: var(--background);
+		color: var(--text);
+		font-family: 'Comic Mono';
+	}
 </style>

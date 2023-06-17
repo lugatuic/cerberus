@@ -32,9 +32,9 @@ export const actions = {
 		const client_secret = CLIENT_SECRET;
 		// ############## CHANGE THIS #########################
 
-		let redirect_uri = "http://localhost:5173/register";
+		let redirect_uri = 'http://localhost:5173/register';
 		if (import.meta.env.PROD) {
-			redirect_uri = "https://cerberus.acmuic.org/register";
+			redirect_uri = 'https://cerberus.acmuic.org/register';
 		}
 		const _token_body = {
 			client_id: client_id,
@@ -99,13 +99,15 @@ export const actions = {
 		console.log(user_info_json);
 		if (in_acm && user_email_verified && user_email && mfa) {
 			console.log(`Allowing user ${data['username']}`);
-			let r = await final_add_user(data, user_info_json["id"]);
+			let r = await final_add_user(data, user_info_json['id']);
 			if (!r.success) {
-				return fail (400, {message: r.message});
+				return fail(400, { message: r.message });
 			}
 			return { success: r.success, message: r.message.toString() };
 		} else {
-			throw fail(400, { message: `Discord account must be in ACM/LUG discord, verfied email and 2FA` });
+			throw fail(400, {
+				message: `Discord account must be in ACM/LUG discord, verfied email and 2FA`
+			});
 		}
 		// console.log(`Registration: ${JSON.stringify(data)}`);
 	},
@@ -113,13 +115,13 @@ export const actions = {
 		let fdata: FormData = await event.request.formData();
 		let data: Record<string, any> = Object.fromEntries(fdata);
 
-		let buf_username = Buffer.from(data["username"]!);
-		let buf_received = Buffer.from(data["verification"], 'hex');
+		let buf_username = Buffer.from(data['username']!);
+		let buf_received = Buffer.from(data['verification'], 'hex');
 
-		console.log(`Hashing: ${data["username"]}`);
+		console.log(`Hashing: ${data['username']}`);
 
-		const key = Buffer.from(HMAC_KEY,'hex')
-		let our_hmac = crypto.createHmac('sha1', key, {encoding: 'hex'});
+		const key = Buffer.from(HMAC_KEY, 'hex');
+		let our_hmac = crypto.createHmac('sha1', key, { encoding: 'hex' });
 		our_hmac.update(buf_username);
 		let our_hmac_dgst = our_hmac.digest();
 
@@ -129,35 +131,34 @@ export const actions = {
 		let is_equal = crypto.timingSafeEqual(buf_received, our_hmac_dgst);
 
 		if (is_equal) {
-			console.log(`** User ${data["username"]} passed verification!`);
+			console.log(`** User ${data['username']} passed verification!`);
 			console.log(`Allowing user ${data['username']}`);
 			try {
-				let {success, message}= await final_add_user(data, undefined);
+				let { success, message } = await final_add_user(data, undefined);
 				if (!success) {
-					return fail (400, {message});
+					return fail(400, { message });
 				}
-				return {success, message};
+				return { success, message };
 			} catch (e: any) {
-				return fail(400, {message: e.toString()});
+				return fail(400, { message: e.toString() });
 			}
 		} else {
-			return fail(400, {message: "Verification code incorrect!"});
+			return fail(400, { message: 'Verification code incorrect!' });
 		}
-
 	}
 } satisfies Actions;
 
-async function final_add_user(data: object, did: string|undefined) {
+async function final_add_user(data: object, did: string | undefined) {
 	if (did) {
 		console.log(`Checking discord ID: ${did}`);
 		let exists = await db.exists(did);
 		if (exists) {
-			console.log("Discord already exists!");
-			return {success: false, message: "Discord user already signed up!"};
+			console.log('Discord already exists!');
+			return { success: false, message: 'Discord user already signed up!' };
 		}
 	}
 	let r = await ldap.add_user(data);
 	//@ts-ignore
-	db.add(did, data["username"]);
+	db.add(did, data['username']);
 	return { success: !r.error, message: r.message.toString() };
 }

@@ -71,7 +71,8 @@
 		border-style: solid;
 		border-color: var(--accent);
 	}
-	button:hover, button:focus {
+	button:hover,
+	button:focus {
 		border-style: groove;
 	}
 </style>
