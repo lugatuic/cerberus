@@ -29,7 +29,7 @@
 			if (result.type === 'failure') {
 				ui_msg = result.data.message;
 			} else {
-				ui_msg = "Form executed.";
+				ui_msg = "Success! Now try logging in!";
 			}
 			await applyAction(result);
 			update();

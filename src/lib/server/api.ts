@@ -200,12 +200,12 @@ export class ldap_class {
 			// User Info:
 			"cn": `${userinfo["username"]}`, //req
 			"employeeID": `${userinfo["uin"]}`,//req
-			"department": `${userinfo["major"] ?? "undefined"}`,
-			"company": `${userinfo["college"] ?? "undefined"}`,
+			"department": `${userinfo["major"]}`,
+			"company": `${userinfo["college"]}`,
 			"mail": `${userinfo["email"]}`,//req
-			"mobile": `${userinfo["phone"] ?? "0000000000"}`,
-			"displayName": `${userinfo["gname"]} ${userinfo.sname ?? ""}`,//req
-			"sn": `${userinfo["lname"] ?? "undefined"}`,
+			"mobile": `${userinfo["phone"]}`,
+			"displayName": `${userinfo["gname"]} ${userinfo["sname"] ?? ""}`,//req
+			"sn": `${userinfo["lname"]}`,
 			"sAMAccountname": `${userinfo["username"]}`,//req
 			// "dn": `${userinfo.username}`,//req
 			"userPassword": `${userinfo["password"]}`,//req
@@ -214,6 +214,12 @@ export class ldap_class {
 		};
 
 		let entry = _entry;
+
+		Object.keys(entry).forEach((k) => {
+			if (!entry[k]) {
+				delete entry[k];
+			}
+		});
 
 		// Object.keys(_entry).forEach((k) => {
 		// 	console.log(`Making Attr ${k} with ${_entry[k]}`)

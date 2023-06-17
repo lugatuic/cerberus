@@ -22,7 +22,7 @@ knx.schema.hasTable('users').then(function (exists) {
 		return knx.schema.createTable('users', function (table) {
 			table.increments();
 			table.string('discord_id');
-			table.string('netid').unique();
+			table.string('netid');
 		});
 	}
 });
