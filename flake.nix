@@ -1,8 +1,8 @@
 {
-  description = "Cerberus Dev Environment 22.11";
+  description = "Cerberus Dev Environment 23.05";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/22.11";
+    nixpkgs.url = "nixpkgs";
     flake-utils.url = "github:numtide/flake-utils";
   };
 

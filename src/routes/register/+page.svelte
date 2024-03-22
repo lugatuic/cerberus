@@ -15,11 +15,11 @@
 		if (data.get('password') !== data.get('password2')) {
 			ui_msg = 'Password mismatch!';
 			cancel();
-		}
+		} else
 		if (!_password_req(data.get('password'))) {
 			ui_msg = 'Password must contain lower,upper,digit,special';
 			cancel();
-		}
+		} else
 		ui_msg = 'Thinking about it...';
 		// if (!cl_discord_code) {
 		// 	ui_msg = 'Make sure the discord code is in the URL!';
@@ -113,7 +113,7 @@
 							form="regform"
 							name="username"
 							type="text"
-							pattern="[a-z]+[0-9]+"
+							pattern="[a-z]+[0-9]*"
 							required
 						/></td
 					>
