@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { PageData } from './$types';
+	import type { PageData, ActionData } from './$types';
 	import { invalidateAll } from '$app/navigation';
 	import { enhance, applyAction, deserialize } from '$app/forms';
 	import { slide } from 'svelte/transition';
